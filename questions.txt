@@ -1,0 +1,6 @@
+Questions for the web services project:
+
+1.  How should we simulate the error in the cancel booking?
+    (should we make set a flag with the function call that makes it to fail or should we make it fail at random?)
+
+2.  Are flights requried to "match" : date_for_travel < date_for_hometrip? 

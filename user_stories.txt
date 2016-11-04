@@ -1,0 +1,54 @@
+User stories for TravelGood web services project.
+
+User stories:
+________________________________________________
+| US #1 : plan itinerary
+| US #2 : book success
+| US #3 : cancel planning
+| US #4 : cancel booked itinerary
+| US #5 : booking fails
+| US #6 : cancelling booking fails
+________________________________________________
+
+US #1 : plan itinerary
+________________________________________________
+1.  create empty itinerary
+2.  gets list of flights
+3.  adds a flight
+4.  gets list of hotels
+5.  adds and hotel
+
+US #2 : book success
+________________________________________________
+1.  - US #1 done
+2.  types in credit card info
+3.  clicks book
+4.  checks the status of bookings
+
+US #3 : cancel planning
+________________________________________________
+1.  - US #1 done
+2. user clicks cancel
+
+US #4 : cancel booked itinerary
+________________________________________________
+1.  - US #2 done
+2.  user selects a booking
+3.  cancels the booking
+4.  checks the status of the booking
+
+US #5 : booking fails
+________________________________________________
+1.  - US #1 done
+2.  types in the credit card information
+3.  clicks book
+4.  receives an error
+5.  checks the status (rejected)
+
+US #6 : cancelling booking fails
+________________________________________________
+1.  - US #2 done
+2.  selects a booking
+3.  clicks cancel
+4.  receives an error
+5.  checks status (error)
