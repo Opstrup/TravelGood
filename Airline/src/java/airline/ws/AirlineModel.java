@@ -1,15 +1,34 @@
 package airline.ws;
 
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.List;
+import airline.ws.Flight;
+
+import java.util.*;
 
 public class AirlineModel {
-    Hashtable<Integer, Flight> flightDB = new Hashtable<Integer, Flight>();
-    
-    public List<Flight> getFlights(String destination, String startOfTravel, Date departureDate) {
-        // Loop over the hashtable of flights and create a list from the result
-        // return list when loop is over
+
+    List <airline.ws.FlightInformation> flightInformationDB;
+
+    public AirlineModel(){
+        //TODO populate the DB (file?)
+        this.flightInformationDB= new ArrayList<airline.ws.FlightInformation>();
+    }
+
+    public List<airline.ws.FlightInformation> getFlights(String startAirport, String destinationAirport, Date departureDate) {
+
+        List<airline.ws.FlightInformation> result = new ArrayList<airline.ws.FlightInformation>();
+
+        for(airline.ws.FlightInformation flightInformation : flightInformationDB){
+            Flight flight = flightInformation.getFlight();
+            if(startAirport.equals(flight.getStartAirport()) &&
+                    destinationAirport.equals(flight.getDestinationAirport()) &&
+                    departureDate.equals(flight.getDepartureDate()) &&
+                    flight.getAvailableSeats()>0){
+                result.add(flightInformation);
+            }
+        }
+
+        return result;
+
     }
     
 }
