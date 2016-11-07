@@ -20,7 +20,10 @@ public class HotelTests {
     public HotelTests() {
         Hotel hotel1 = new Hotel("NiceView1", new Address("Copenhagen", "Somestreet 5"), 560);
         Hotel hotel2 = new Hotel("NiceView2", new Address("Copenhagen", "Somestreet 55"), 200);
-        
+
+        //the constructor Date(int, int) is deprecated.
+        // use instead:
+        // Date departureDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
         hotel1.addFullyBookedPeriode(new OwnPeriod(new Date(2016-1900,10,1), new Date(2016-1900,10,30)));
         
         hm = new HotelModel();

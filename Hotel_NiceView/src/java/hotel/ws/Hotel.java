@@ -5,7 +5,6 @@
  */
 package hotel.ws;
 
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.List;
  */
 public class Hotel {
     private String hotelName;
+    //private String address //simpler?
     private Address address;
     private float pricePerDay; // Consider price per day
     private List<OwnPeriod> fullyBooked = new ArrayList<>(); 
@@ -25,14 +25,16 @@ public class Hotel {
     }
 
 
-    
+    //I would also include fullyBooked in the constructor parameters
+    // to ease the process of population of the DB!
     public Hotel(String hotelName, Address address, float pricePerDay){
         this.hotelName = hotelName;
         this.address = address;
         this.pricePerDay = pricePerDay;
         
     }
-    
+
+    //if fullyBooked is in the constructor this becomes useless
     public void addFullyBookedPeriode(OwnPeriod period){
         fullyBooked.add(period);
     }

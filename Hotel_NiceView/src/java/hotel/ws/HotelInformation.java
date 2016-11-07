@@ -13,8 +13,8 @@ import java.util.Date;
  */
 class HotelInformation {
     private Hotel hotel;
-    private String hotelName;
-    private Address hotelAddress;
+    private String hotelName; //not necessary (already in hotel?)
+    private Address hotelAddress; //not necessary
     private int bookingNumber;
     private float priceForStay;
     private boolean creditCardGuarantee;
