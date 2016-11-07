@@ -6,6 +6,9 @@ import static org.junit.Assert.*;
 
 public class AirlineTests {
     
+    /*
+     * Simepl unit test of the flight class 
+     */
     @Test
     public void creationOfAFlightTest() {
         Date depature = new Date(2016, 11, 10);
