@@ -3,13 +3,13 @@ package airline.ws;
 public class FlightInformation {
     private int bookingNumber;
     private int flightPrice;
-    private String airlineName;
+    private String reservationAgency;
     private airline.ws.Flight flight;
 
     public FlightInformation(int bookingNumber, int flightPrice, String airlineName, airline.ws.Flight flight) {
         this.bookingNumber = bookingNumber;
         this.flightPrice = flightPrice;
-        this.airlineName = airlineName;
+        this.reservationAgency = airlineName;
         this.flight = flight;
     }
 
@@ -21,8 +21,8 @@ public class FlightInformation {
         return flightPrice;
     }
 
-    public String getAirlineName() {
-        return airlineName;
+    public String getReservationAgency() {
+        return reservationAgency;
     }
 
     public airline.ws.Flight getFlight() {
