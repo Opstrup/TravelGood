@@ -8,11 +8,10 @@ public class FlightInformation {
     private String reservationAgency;
     private airline.ws.Flight flight;
 
-    //bookngNumber is kept as parameter for testing purposes
-    public FlightInformation(int bookingNumber, int flightPrice, String airlineName, airline.ws.Flight flight) {
-        this.bookingNumber = new Random().nextInt(50) +1;
-        this.flightPrice = flightPrice;
-        this.reservationAgency = airlineName;
+    public FlightInformation(Flight flight) {
+        bookingNumber = new Random().nextInt(50) +1;
+        flightPrice = new Random().nextInt(50) +1;
+        reservationAgency = "LameDuck";
         this.flight = flight;
     }
 

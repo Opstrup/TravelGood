@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Flight {
 
+    private int flightID;
     private String startAirport;
     private String destinationAirport;
     private Date departureDate;
@@ -11,7 +12,9 @@ public class Flight {
     private String airlineName;
     private int availableSeats;
 
-    public Flight(String startAirport, String destinationAirport, Date departureDate, Date arrivalDate, String airlineName, int availableSeats) {
+    public Flight(int flightID, String startAirport, String destinationAirport, Date departureDate,
+                  Date arrivalDate, String airlineName, int availableSeats) {
+        this.flightID = flightID;
         this.startAirport = startAirport;
         this.destinationAirport = destinationAirport;
         this.departureDate = departureDate;
@@ -32,15 +35,11 @@ public class Flight {
         return departureDate;
     }
 
-    public Date getArrivalDate() {
-        return arrivalDate;
-    }
-
-    public String getAirlineName() {
-        return airlineName;
-    }
-
     public int getAvailableSeats() {
         return availableSeats;
+    }
+
+    public int getFlightID() {
+        return flightID;
     }
 }

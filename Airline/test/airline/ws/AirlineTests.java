@@ -8,14 +8,13 @@ import static org.junit.Assert.*;
 public class AirlineTests extends airline.ws.AirlineModel{
 
     public AirlineTests(){
-        this.flightInformationDB = new ArrayList<airline.ws.FlightInformation>();
+        this.flightsDB = new ArrayList<>();
 
         Date departureDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
         Date arrivalDate = (Date) departureDate.clone();
 
-        airline.ws.Flight testFlight = new airline.ws.Flight("Paris", "Copenhagen", departureDate, arrivalDate, "Ryanair", 10);
-        airline.ws.FlightInformation testFlightInfo = new airline.ws.FlightInformation(1, 100, "Lameduck", testFlight);
-        this.flightInformationDB.add(testFlightInfo);
+        Flight testFlight = new Flight(101, "Paris", "Copenhagen", departureDate, arrivalDate, "Ryanair", 10);
+        this.flightsDB.add(testFlight);
     }
 
 
@@ -26,17 +25,15 @@ public class AirlineTests extends airline.ws.AirlineModel{
 
         Date departureDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
         Date arrivalDate = (Date) departureDate.clone();
+        Flight expectedFlight = new Flight(101, "Paris", "Copenhagen", departureDate, arrivalDate, "Ryanair", 10);
 
-        airline.ws.Flight expectedFlight = new airline.ws.Flight("Paris", "Copenhagen", departureDate, arrivalDate, "Ryanair", 10);
-        airline.ws.FlightInformation expectedFlightInfo = new airline.ws.FlightInformation(1, 100, "Lameduck", expectedFlight);
-
-        List<airline.ws.FlightInformation> actualResult = model.getFlights("Paris", "Copenhagen", departureDate);
+        List<FlightInformation> actualResult = model.getFlights("Paris", "Copenhagen", departureDate);
 
         assert actualResult.size() == 1;
 
-        airline.ws.FlightInformation actualFlightInfo = actualResult.get(0);
+        Flight actualFlight = actualResult.get(0).getFlight();
 
-        assertEquals(expectedFlightInfo.getBookingNumber(), actualFlightInfo.getBookingNumber());
+        assertEquals(expectedFlight.getFlightID(), actualFlight.getFlightID());
 
     }
 }

@@ -6,24 +6,27 @@ import java.util.*;
 
 public class AirlineModel {
 
-    List <airline.ws.FlightInformation> flightInformationDB;
+    protected List <Flight> flightsDB;
 
     public AirlineModel(){
         //TODO populate the DB (file?)
-        this.flightInformationDB= new ArrayList<airline.ws.FlightInformation>();
+        // we can use a file with one flight for each line, formatted this way:
+        // startAirport;destinationAirport;departureDate;arrivalDate;airlineName;availableSeats
+        // and add a flight from each line using the split(";") operation
+        flightsDB= new ArrayList<>();
     }
 
     public List<airline.ws.FlightInformation> getFlights(String startAirport, String destinationAirport, Date departureDate) {
 
-        List<airline.ws.FlightInformation> result = new ArrayList<airline.ws.FlightInformation>();
+        List<FlightInformation> result = new ArrayList<>();
 
-        for(airline.ws.FlightInformation flightInformation : flightInformationDB){
-            Flight flight = flightInformation.getFlight();
-            if(startAirport.equals(flight.getStartAirport()) &&
-                    destinationAirport.equals(flight.getDestinationAirport()) &&
-                    departureDate.equals(flight.getDepartureDate()) &&
+        for(Flight flight : flightsDB){
+            if(flight.getStartAirport().equals(startAirport) &&
+                    flight.getDestinationAirport().equals(destinationAirport) &&
+                    flight.getDepartureDate().equals(departureDate) &&
                     flight.getAvailableSeats()>0){
-                result.add(flightInformation);
+                FlightInformation flightInfo = new FlightInformation(flight);
+                result.add(flightInfo);
             }
         }
 
