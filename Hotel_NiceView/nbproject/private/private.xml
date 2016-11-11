@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/arhjo/Documents/NetBeansProjects/Hotel_NiceView/web/index.html</file>
-            <file>file:/C:/Users/arhjo/Documents/NetBeansProjects/Hotel_NiceView/src/java/hotel/ws/Hotel.java</file>
-            <file>file:/C:/Users/arhjo/Documents/NetBeansProjects/Hotel_NiceView/src/java/hotel/ws/HotelModel.java</file>
-            <file>file:/C:/Users/arhjo/Documents/NetBeansProjects/Hotel_NiceView/src/java/hotel/ws/HotelController.java</file>
-            <file>file:/C:/Users/arhjo/Documents/NetBeansProjects/Hotel_NiceView/test/hotel/ws/HotelTests.java</file>
-            <file>file:/C:/Users/arhjo/Documents/NetBeansProjects/Hotel_NiceView/src/java/hotel/ws/HotelInformation.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

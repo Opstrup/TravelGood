@@ -6,7 +6,7 @@ public class FlightInformation {
     private int bookingNumber;
     private int flightPrice;
     private String reservationAgency;
-    private airline.ws.Flight flight;
+    private Flight flight;
 
     public FlightInformation(Flight flight) {
         bookingNumber = new Random().nextInt(50) +1;
@@ -27,7 +27,7 @@ public class FlightInformation {
         return reservationAgency;
     }
 
-    public airline.ws.Flight getFlight() {
+    public Flight getFlight() {
         return flight;
     }
 }
