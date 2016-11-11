@@ -1,0 +1,29 @@
+package travelgood.ws;
+
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import java.util.Date;
+import java.util.List;
+
+//@WebService(serviceName = "TravelAgencyService")
+public class TravelAgencyController {
+
+    private TravelAgencyModel model = new TravelAgencyModel();
+
+    @WebMethod(operationName = "createFirstItinerary")
+    public Itinerary createFirstItinerary() {
+        return model.createFirstItinerary();
+    }
+
+    @WebMethod(operationName = "createAnotherItinerary")
+    public Object createAnotherItinerary(){
+        try {
+            return model.createAnotherItinerary();
+        } catch (Exception e) {
+            //the user has not created a first itinerary
+            //return a fault?
+            return new Exception("First you have to request your first itinerary!");
+        }
+    }
+
+}
