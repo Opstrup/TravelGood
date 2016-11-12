@@ -7,35 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AirlineTests{
-
-//    public AirlineTests(){
-//        this.flightsDB = new ArrayList<>();
-//
-//        Date departureDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
-//        Date arrivalDate = (Date) departureDate.clone();
-//
-//        Flight testFlight = new Flight(101, "Paris", "Copenhagen", departureDate, arrivalDate, "Ryanair", 10);
-//        this.flightsDB.add(testFlight);
-//    }
-
-//    @Test
-//    public void getFlightsTest() {
-//
-//        AirlineTests model = new AirlineTests();
-//
-//        Date departureDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
-//        Date arrivalDate = (Date) departureDate.clone();
-//        Flight expectedFlight = new Flight(101, "Paris", "Copenhagen", departureDate, arrivalDate, "Ryanair", 10);
-//
-//        List<FlightInformation> actualResult = model.getFlights("Paris", "Copenhagen", departureDate);
-//
-//        assert actualResult.size() == 1;
-//
-//        Flight actualFlight = actualResult.get(0).getFlight();
-//
-//        assertEquals(expectedFlight.getFlightID(), actualFlight.getFlightID());
-//
-//    }
         
     @Test
     public void should_return_arrayList_test() throws IOException {
@@ -43,5 +14,20 @@ public class AirlineTests{
         List <FlightInformation> flightInfoList = new ArrayList<>();
         
         assertTrue(UUT.getFlights(null, null, null) instanceof ArrayList);
+    }
+    
+    @Test
+    public void should_return_empty_arrayList_test() throws IOException {
+        AirlineModel UUT = new AirlineModel("flightDB.txt");
+        assertTrue(UUT.getFlights(null, null, null).isEmpty());
+    }
+    
+    @Test
+    public void should_return_arrayList_with_one_element_test() throws IOException {
+        // db contains: copenhagen;rome;2016-08-10;2016-09-10;Ryanair;10
+        AirlineModel UUT = new AirlineModel("flightDB.txt");
+        Date departureDate = new GregorianCalendar(2016, 8, 10).getTime();
+        List<FlightInformation> result = UUT.getFlights("copenhagen", "rome", departureDate);
+        assertTrue(result.size() > 0);
     }
 }

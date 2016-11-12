@@ -8,11 +8,11 @@ import java.util.List;
 
 @WebService(serviceName = "AirlineService")
 public class AirlineController {
-    String dbFilePath = "flightDB.txt";
+    private String dbFilePath = "flightDB.txt";
     private AirlineModel model;
     
     public void AirlineController() throws IOException {
-     this.model = new AirlineModel(dbFilePath);    
+     this.model = new AirlineModel(this.dbFilePath);    
     }
     
     @WebMethod(operationName = "getFlights")
