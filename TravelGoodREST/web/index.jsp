@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 08-11-2016, 18:25:52
-    Author     : Opstrup
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
