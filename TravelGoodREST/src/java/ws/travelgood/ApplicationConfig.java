@@ -24,7 +24,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.travelgood.AirlineResource.class);
-        resources.add(ws.travelgood.itinerarieResource.class);
+        resources.add(ws.travelgood.ItinerarieResource.class);
     }
     
 }

@@ -20,7 +20,7 @@ public class TestAirlineResource {
     
     public TestAirlineResource() {}
     
-    // Annotation the test methods as: @Test
+    // Annotating the test methods as: @Test
     @Test
     public void testGetFlights() {
         String expected = "This is airliner service LameDuck.";
