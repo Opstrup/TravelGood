@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
+    <system systemId="http://localhost:8080/Airline/AirlineService?wsdl" uri="src/localhost_8080/Airline/AirlineService.wsdl"/>
+    <system systemId="http://localhost:8080/Airline/AirlineService?xsd=1" uri="src/localhost_8080/Airline/AirlineService.xsd_1.xsd"/>
+</catalog>
