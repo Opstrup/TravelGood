@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://enterprise.netbeans.org/bpel/TravelGoodBPEL/travelGoodBPEL" xmlns:ns2="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" xmlns:ns3="http://ws.airline/" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint display-name="PartnerLink1" endpoint-name="travelGoodBPELPortTypeRole_myRole" file-path="travelGoodBPEL.bpel" interface-name="ns2:travelGoodBPELPortType" name="endpoint1" process-name="travelGoodBPEL" service-name="ns1:PartnerLink1"/>
+        <endpoint display-name="AirlineService" endpoint-name="AirlineControllerRole_partnerRole" file-path="travelGoodBPEL.bpel" interface-name="ns3:AirlineController" name="endpoint2" process-name="travelGoodBPEL" service-name="ns1:AirlineService"/>
+        <endpoint endpoint-name="AirlineControllerPort" interface-name="ns3:AirlineController" name="endpoint3" service-name="ns3:AirlineService"/>
+        <endpoint endpoint-name="travelGoodBPELPort" interface-name="ns2:travelGoodBPELPortType" name="endpoint4" service-name="ns2:travelGoodBPELService"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="TravelGoodBPEL.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TravelGoodBPELComposite-TravelGoodBPEL" unit-name="TravelGoodBPEL" unknown="false" x="147" y="72">
+            <provides endpoint="endpoint1"/>
+            <consumes endpoint="endpoint2"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="TravelGoodBPELComposite-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port x="67" y="114">
+                    <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/localhost_8080/Airline/AirlineService.wsdl#xpointer(/definitions/service[@name='AirlineService']/port[@name='AirlineControllerPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint3"/>
+                    <provides endpoint="endpoint3"/>
+                </port>
+                <port x="67" y="37">
+                    <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/travelGoodBPEL.wsdl#xpointer(/definitions/service[@name='travelGoodBPELService']/port[@name='travelGoodBPELPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint4"/>
+                    <provides endpoint="endpoint4"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint2" provider="endpoint3" state="unchanged"/>
+        <connection consumer="endpoint4" provider="endpoint1" state="unchanged"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/localhost_8080/Airline/AirlineService.wsdl#xpointer(/definitions/portType[@name='AirlineController'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/travelGoodBPEL.wsdl#xpointer(/definitions/portType[@name='travelGoodBPELPortType'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/localhost_8080/Airline/AirlineService.wsdl#xpointer(/definitions/binding[@name='AirlineControllerPortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/travelGoodBPEL.wsdl#xpointer(/definitions/binding[@name='travelGoodBPELBinding'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/localhost_8080/Airline/AirlineService.wsdl#xpointer(/definitions/service[@name='AirlineService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/travelGoodBPEL.wsdl#xpointer(/definitions/service[@name='travelGoodBPELService'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

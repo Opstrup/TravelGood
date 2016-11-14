@@ -8,10 +8,18 @@
     <message name="createItinerayResponse">
         <part name="part1" type="xsd:string"/>
     </message>
+    <message name="travelGoodBPELOperationRequest"/>
+    <message name="travelGoodBPELOperationResponse">
+        <part name="part1" type="xsd:string"/>
+    </message>
     <portType name="travelGoodBPELPortType">
         <operation name="createItineray">
             <input name="input1" message="tns:createItinerayRequest"/>
             <output name="output1" message="tns:createItinerayResponse"/>
+        </operation>
+        <operation name="getFlights">
+            <input name="input2" message="tns:travelGoodBPELOperationRequest"/>
+            <output name="output2" message="tns:travelGoodBPELOperationResponse"/>
         </operation>
     </portType>
     <binding name="travelGoodBPELBinding" type="tns:travelGoodBPELPortType">
