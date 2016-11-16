@@ -12,34 +12,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author sdws
- */
+
 public class ClientTest {
     
-    public ClientTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void should_return_empty_itinerary(){
+        //
+    }
+    
+    private static String createItineray() {
+        ws.travelgood.TravelGoodBPELService service = new ws.travelgood.TravelGoodBPELService();
+        ws.travelgood.TravelGoodBPELPortType port = service.getTravelGoodBPELPort();
+        return port.createItineray();
+    }
+    
 }
+
