@@ -1,0 +1,1 @@
+ws.travelgood.ItinerarieResource
