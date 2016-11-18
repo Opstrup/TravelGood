@@ -1,4 +1,4 @@
-package ws.pr;
+package ws.rs;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,9 +16,12 @@ import javax.ws.rs.Consumes;
  * Service description: The airliner service provides 
  *  flight information, booking and canceling of the flight.
  */
+
+/**
+ * @author Vitali
+ */
 @Path("lameDuck")
 public class AirlineResource {
-   
      /**
      * Retrieves representation of an instance.
      * @return an instance of java.lang.String

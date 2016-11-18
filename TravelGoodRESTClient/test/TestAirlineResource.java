@@ -16,7 +16,7 @@ public class TestAirlineResource {
     
     // Specificly targeting a web resource "airline", in a Client that contains several target methods.
     //                                  |--host--|port|root|App path--|resource path|, which we want to access.
-    WebTarget r = client.target("http://localhost:8080/tg/webresources/lameDuck"); 
+    WebTarget r = client.target("http://localhost:8080/ws.pr/webresources/lameDuck"); 
     
     public TestAirlineResource() {}
     
