@@ -1,4 +1,4 @@
-package ws.pr;
+package ws.rs;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -8,7 +8,6 @@ import javax.ws.rs.Produces;
 /**
  * @author Vitali
  */
-
 @Path("Itinerarie")
 public class ItinerarieResource {
     
@@ -29,7 +28,4 @@ public class ItinerarieResource {
         public String cancelIntinerarie() {
         return "You get 50% discount of cancelation";
     }
-    
-    
-    
 }
