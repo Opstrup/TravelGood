@@ -3,40 +3,61 @@
     xmlns="http://schemas.xmlsoap.org/wsdl/"
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-    <types/>
-    <message name="createItinerayRequest"/>
-    <message name="createItinerayResponse">
-        <part name="part1" type="xsd:string"/>
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL">
+            <xsd:complexType name="itineraryType">
+                <xsd:sequence>
+                    <xsd:element name="flightsList" maxOccurs="unbounded" type="tns:flightType"></xsd:element>
+                    <xsd:element name="hotelsList"></xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="itineraryID" type="xsd:string"/>
+            </xsd:complexType>
+            <xsd:complexType name="flightType">
+                <xsd:sequence>
+                    <xsd:element name="bookingNumber" type="xsd:int"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="flightsListType">
+                <xsd:sequence>
+                    <xsd:element name="newElement" type="tns:flightType" maxOccurs="unbounded"></xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="createItinerayRequest">
+        <part name="createItinerary_req" type="xsd:anyType"/>
     </message>
-    <message name="travelGoodBPELOperationRequest"/>
-    <message name="travelGoodBPELOperationResponse">
-        <part name="part1" type="xsd:string"/>
+    <message name="createItinerayResponse">
+        <part name="createItinerary_resp" type="tns:itineraryType"/>
+    </message>
+    <message name="getFlightsRequest">
+        <part name="startAirport" type="xsd:string"/>
+        <part name="endAirport" type="xsd:string"/>
+    </message>
+    <message name="getFlightsResponse">
+        <part name="flightsList_resp" type="tns:flightsListType"/>
     </message>
     <portType name="travelGoodBPELPortType">
-        <operation name="createItineray">
+        <operation name="createItinerary" parameterOrder="createItinerary_req">
             <input name="input1" message="tns:createItinerayRequest"/>
             <output name="output1" message="tns:createItinerayResponse"/>
-        </operation>
-        <operation name="getFlights">
-            <input name="input2" message="tns:travelGoodBPELOperationRequest"/>
-            <output name="output2" message="tns:travelGoodBPELOperationResponse"/>
         </operation>
     </portType>
     <binding name="travelGoodBPELBinding" type="tns:travelGoodBPELPortType">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="createItineray">
+        <operation name="createItinerary">
             <soap:operation/>
             <input name="input1">
                 <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL"/>
             </input>
             <output name="output1">
-                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL"/>
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" parts="createItinerary_resp"/>
             </output>
         </operation>
     </binding>
     <service name="travelGoodBPELService">
         <port name="travelGoodBPELPort" binding="tns:travelGoodBPELBinding">
-            <soap:address location="http://localhost:${HttpDefaultPort}/travelGoodBPELService/travelGoodBPELPort"/>
+            <soap:address location="http://localhost:9080/travelGoodBPELService/travelGoodBPELPort"/>
         </port>
     </service>
     <plnk:partnerLinkType name="travelGoodBPEL">
