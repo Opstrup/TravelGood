@@ -5,18 +5,22 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import java.util.Date;
 import java.util.List;
+import javax.jws.WebParam;
 
 @WebService(serviceName = "AirlineService")
 public class AirlineController {
     private String dbFilePath = "flightDB.txt";
     private AirlineModel model;
     
-    public void AirlineController() throws IOException {
+    public AirlineController() throws IOException {
      this.model = new AirlineModel(this.dbFilePath);    
     }
     
     @WebMethod(operationName = "getFlights")
-    public List<airline.ws.FlightInformation> getFlights(String startAirport, String destinationAirport, Date departureDate) {
+    public List<airline.ws.FlightInformation> getFlights(
+            @WebParam(name = "startAirport")String startAirport,
+            @WebParam(name = "endAirport")String destinationAirport,
+            @WebParam(name = "startDate") java.util.Date departureDate) {
         return model.getFlights(startAirport, destinationAirport, departureDate);
     }
 }
