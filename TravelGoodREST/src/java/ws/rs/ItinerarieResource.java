@@ -4,6 +4,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Vitali
@@ -12,11 +14,12 @@ import javax.ws.rs.Produces;
 public class ItinerarieResource {
     
     @GET
-    @Produces("text/plain")
-    public String createIntinerarie() {
-        return "This is your itinerary 1.";
+    @Produces(MediaType.APPLICATION_XML)
+    public Response createIntinerarie() {
+        Itinerary newIntinerary = new Itinerary();
+        return Response.ok(newIntinerary).build();
     }
-//    
+
 //    @PUT
 //    @Produces("text/plain")
 //    public String bookIntinerarie() {
