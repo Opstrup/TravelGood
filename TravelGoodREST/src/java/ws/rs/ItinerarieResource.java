@@ -16,16 +16,16 @@ public class ItinerarieResource {
     public String createIntinerarie() {
         return "This is your itinerary 1.";
     }
-    
-    @PUT
-    @Produces("text/plain")
-    public String bookIntinerarie() {
-        return "Itinerary 1 is now bokked.";
-    }
-    
-    @PUT
-    @Produces("text/plain")
-        public String cancelIntinerarie() {
-        return "You get 50% discount of cancelation";
-    }
+//    
+//    @PUT
+//    @Produces("text/plain")
+//    public String bookIntinerarie() {
+//        return "Itinerary 1 is now bokked.";
+//    }
+//    
+//    @PUT
+//    @Produces("text/plain")
+//        public String cancelIntinerarie() {
+//        return "You get 50% discount of cancelation";
+//    }
 }
