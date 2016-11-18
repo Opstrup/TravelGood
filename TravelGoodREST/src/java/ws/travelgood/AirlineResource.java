@@ -1,4 +1,4 @@
-package ws.travelgood;
+package ws.pr;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

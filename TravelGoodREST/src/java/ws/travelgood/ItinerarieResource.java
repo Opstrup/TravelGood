@@ -1,4 +1,4 @@
-package ws.travelgood;
+package ws.pr;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
  * @author Vitali
  */
 
-@Path("itinerarie")
+@Path("Itinerarie")
 public class ItinerarieResource {
     
     @GET
