@@ -5,7 +5,7 @@
     <client name="travelGoodBPELPort">
       <wsdl-url>http://localhost:9080/travelGoodBPELService/travelGoodBPELPort?wsdl</wsdl-url>
       <local-wsdl-file>localhost_9080/travelGoodBPELService/travelGoodBPELPort.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">ws.travelgood</package-name>
+      <package-name>org.netbeans.j2ee.wsdl.travelgoodbpel.src.travelgoodbpel</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -31,10 +31,6 @@
         <wsimport-option>
           <wsimport-option-name>xendorsed</wsimport-option-name>
           <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>ws.travelgood</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>

@@ -7,7 +7,7 @@
         <endpoint display-name="AirlineService" endpoint-name="AirlineControllerRole_partnerRole" file-path="travelGoodBPEL.bpel" interface-name="ns1:AirlineController" name="endpoint4" process-name="travelGoodBPEL" service-name="ns3:AirlineService"/>
     </endpoints>
     <service-units>
-        <service-engine-service-unit artifacts-zip="TravelGoodBPEL.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TravelGoodBPELComposite-TravelGoodBPEL" unit-name="TravelGoodBPEL" unknown="false" x="147" y="72">
+        <service-engine-service-unit artifacts-zip="TravelGoodBPEL.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TravelGoodBPELComposite-TravelGoodBPEL" unit-name="TravelGoodBPEL" unknown="false" x="141" y="97">
             <provides endpoint="endpoint3"/>
             <consumes endpoint="endpoint4"/>
         </service-engine-service-unit>

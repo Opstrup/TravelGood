@@ -19,7 +19,7 @@
     <target name="wsimport-client-travelGoodBPELPort" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/travelGoodBPELPort"/>
         <property name="wsdl-travelGoodBPELPort" location="xml-resources/web-service-references/travelGoodBPELPort/wsdl/localhost_9080/travelGoodBPELService/travelGoodBPELPort.wsdl"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/travelGoodBPELPort" destdir="${build.generated.dir}/jax-wsCache/travelGoodBPELPort" wsdl="${wsdl-travelGoodBPELPort}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:9080/travelGoodBPELService/travelGoodBPELPort?wsdl" xnocompile="true" xendorsed="true" package="ws.travelgood">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/travelGoodBPELPort" destdir="${build.generated.dir}/jax-wsCache/travelGoodBPELPort" wsdl="${wsdl-travelGoodBPELPort}" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:9080/travelGoodBPELService/travelGoodBPELPort?wsdl" xnocompile="true" xendorsed="true">
             <depends file="${wsdl-travelGoodBPELPort}"/>
             <produces dir="${build.generated.dir}/jax-wsCache/travelGoodBPELPort"/>
         </wsimport>
@@ -31,7 +31,7 @@
     </target>
     <target name="wsimport-client-clean-travelGoodBPELPort" depends="-init-project">
         <delete dir="${build.generated.dir}/jax-wsCache/travelGoodBPELPort"/>
-        <delete dir="${build.generated.sources.dir}/jax-ws/ws/travelgood"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/org/netbeans/j2ee/wsdl/travelgoodbpel/src/travelgoodbpel"/>
     </target>
     <target name="wsimport-client-generate" depends="wsimport-client-travelGoodBPELPort"/>
 </project>
