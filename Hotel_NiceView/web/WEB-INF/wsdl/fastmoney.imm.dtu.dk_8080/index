@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<META name="serviceInspection" content="inspection.wsil">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, post-check=0, pre-check=0">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate, max-age=0">
+<META HTTP-EQUIV="Expires" CONTENT="Tue, 03 Jul 2001 06:00:00 GMT">
+<head>
+<meta content="text/html; charset=ISO-8859-1"
+http-equiv="content-type">
+  <title>FastMoney Bank (Course 02267: Software Developement of Web Services)</title>
+</head>
+<body   >
+<center><h2>FastMoney Bank</h2></center> 
+
+This is the Web site of FastMoney Bank for the exam project of <a href="http://www.imm.dtu.dk/courses/02267">course 02267</a>. We don't offer our services as a Web application; instead, we offer as set of Web services for credit card transfers. 
+<p>
+
+The following is a link to the <a href="accounts.xls">credit card and account information</a> of customers and companies that use FastMoney Bank. The information on the offered Web services can be found in a WSIL file at the usual place. There is also an <a href="BankServiceTypes.xsd">XML schema document</a> available with details about the datatypes the Bank uses, like datatypes used for credit cards and accounts.
+
+<P>
+
+
+<hr>
+<center><a href="cnt-index.html">Contents</a></center>
+
+<hr>
+<address> <a href="http://people.compute.dtu.dk/huba">Hubert Baumeister</a></address>
+<address>October 30, 2015</address>
+
+</body>
+</html>

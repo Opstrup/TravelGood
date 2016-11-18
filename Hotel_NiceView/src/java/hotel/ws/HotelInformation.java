@@ -6,6 +6,7 @@
 package hotel.ws;
 
 import java.util.Date;
+import java.util.Random;
 
 /**
  *
@@ -20,11 +21,11 @@ class HotelInformation {
     private boolean creditCardGuarantee;
     private String nameOfHotelService;
 
-    public HotelInformation(Hotel hotel, int bookingNumber, boolean creditCardGuarantee, String nameOfHotelService) {
+    public HotelInformation(Hotel hotel, boolean creditCardGuarantee, String nameOfHotelService) {
         this.hotel = hotel;
         this.hotelName = hotel.getHotelName();
         this.hotelAddress = hotel.getAddress();
-        this.bookingNumber = bookingNumber;
+        bookingNumber = new Random().nextInt(50) +1;
         this.creditCardGuarantee = creditCardGuarantee;
         this.nameOfHotelService = nameOfHotelService;
     }
@@ -48,7 +49,7 @@ class HotelInformation {
         return priceForStay;
     }
 
-    public boolean isCreditCardGuarantee() {
+    public boolean needsCreditCardGuarantee() {
         return creditCardGuarantee;
     }
 

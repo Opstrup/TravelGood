@@ -24,20 +24,20 @@ public class HotelTests {
         //the constructor Date(int, int) is deprecated.
         // use instead:
         // Date departureDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
-        hotel1.addFullyBookedPeriode(new OwnPeriod(new Date(2016-1900,10,1), new Date(2016-1900,10,30)));
+        hotel1.addFullyBookedPeriode(new OwnPeriod(new Date(2016,10,1), new Date(2016,10,30)));
         
         hm = new HotelModel();
-        hm.hotelInformationDB.add(new HotelInformation(hotel1, 5 , true, "NiceView"));
-        hm.hotelInformationDB.add(new HotelInformation(hotel2, 156, true, "NiceView"));
+        hm.hotelInformationDB.add(new HotelInformation(hotel1, true, "NiceView"));
+        hm.hotelInformationDB.add(new HotelInformation(hotel2, true, "NiceView"));
         
         
     }
     
     @Test
     public void firstTest(){
-       List<HotelInformation> result = hm.getHotels("Copenhagen", new Date(2016-1900,10,02), new Date(2016-1900,10,05));
-       
-        assertEquals(1, result.size());
+       List<HotelInformation> result = hm.getHotels("Copenhagen", new Date(2016,10,02), new Date(2016,10,05));
+        
+       assertEquals(1, result.size());
     }
 
     // TODO add test methods here.
