@@ -1,4 +1,4 @@
-package ws.travelgood;
+package ws.pr;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -6,9 +6,9 @@ import javax.ws.rs.core.Application;
 /**
  * @author Vitali
  */
-@javax.ws.rs.ApplicationPath("webresources") //http://localhost8080/pr/webresources/airline//("webresources")
+@javax.ws.rs.ApplicationPath("webresources") //("webresources")
 public class ApplicationConfig extends Application {
-    
+
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
@@ -23,8 +23,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(ws.travelgood.AirlineResource.class);
-        resources.add(ws.travelgood.ItinerarieResource.class);
+        resources.add(ws.pr.AirlineResource.class);
     }
     
 }

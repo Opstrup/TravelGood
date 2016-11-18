@@ -1,4 +1,4 @@
-package ws.travelgood;
+package ws.pr;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
