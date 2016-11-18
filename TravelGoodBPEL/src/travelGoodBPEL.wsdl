@@ -15,7 +15,17 @@
             <xsd:complexType name="flightType">
                 <xsd:sequence>
                     <xsd:element name="bookingNumber" type="xsd:int"></xsd:element>
+                    <xsd:element name="price" type="xsd:int"></xsd:element>
+                    <xsd:element name="reservationAgency" type="xsd:string"></xsd:element>
+                    <xsd:element name="flightID" type="xsd:int"></xsd:element>
+                    <xsd:element name="startAirport" type="xsd:string"></xsd:element>
+                    <xsd:element name="endAirport" type="xsd:string"></xsd:element>
+                    <xsd:element name="startDate" type="xsd:date"></xsd:element>
+                    <xsd:element name="endDate" type="xsd:date"></xsd:element>
+                    <xsd:element name="airlineName" type="xsd:string"></xsd:element>
+                    <xsd:element name="availableSeats" type="xsd:int"></xsd:element>
                 </xsd:sequence>
+                <xsd:attribute name="status" type="xsd:string"/>
             </xsd:complexType>
             <xsd:complexType name="flightsListType">
                 <xsd:sequence>
@@ -41,6 +51,10 @@
         <operation name="createItinerary" parameterOrder="createItinerary_req">
             <input name="input1" message="tns:createItinerayRequest"/>
             <output name="output1" message="tns:createItinerayResponse"/>
+        </operation>
+        <operation name="getFlights">
+            <input name="input2" message="tns:getFlightsRequest"/>
+            <output name="output2" message="tns:getFlightsResponse"/>
         </operation>
     </portType>
     <binding name="travelGoodBPELBinding" type="tns:travelGoodBPELPortType">
