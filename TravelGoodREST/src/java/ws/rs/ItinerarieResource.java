@@ -17,11 +17,8 @@ public class ItinerarieResource {
 //    @Produces(MediaType.APPLICATION_JSON)
     @Produces("application/json")
     public Itinerary createIntinerarie() {
-//        Integer id = 0;
         Itinerary newIntinerary = new Itinerary(5);
-//        newIntinerary.SetID(id);
         return newIntinerary;
-//        return newIntinerary;
     }
 
 //    @PUT

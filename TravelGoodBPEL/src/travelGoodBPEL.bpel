@@ -14,15 +14,16 @@
     <import namespace="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper" location="AirlineServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://ws.airline/" location="http://localhost:8080/Airline/AirlineService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
+        <partnerLink name="AirlinePartnerLink" xmlns:tns="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper" partnerLinkType="tns:AirlineControllerLinkType" partnerRole="AirlineControllerRole"/>
         <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" partnerLinkType="tns:travelGoodBPEL" myRole="travelGoodBPELPortTypeRole"/>
-        <partnerLink name="AirlineService" xmlns:tns="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper" partnerLinkType="tns:AirlineControllerLinkType" partnerRole="AirlineControllerRole"/>
     </partnerLinks>
     <variables>
+        <variable name="GetFlightsOutUser" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:getFlightsResponse"/>
+        <variable name="GetFlightsOutAirline" xmlns:tns="http://ws.airline/" messageType="tns:getFlightsResponse"/>
         <variable name="CreateItinerayIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:createItinerayRequest"/>
-        <variable name="GetFlightsOut1" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:getFlightsResponse"/>
         <variable name="GetFlightsOut" xmlns:tns="http://ws.airline/" messageType="tns:getFlightsResponse"/>
-        <variable name="GetFlightsIn1" xmlns:tns="http://ws.airline/" messageType="tns:getFlights"/>
-        <variable name="GetFlightsIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:getFlightsRequest"/>
+        <variable name="GetFlightsInAgency" xmlns:tns="http://ws.airline/" messageType="tns:getFlights"/>
+        <variable name="GetFlightsInUser" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:getFlightsRequest"/>
         <variable name="CreateItinerayOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:createItinerayResponse"/>
     </variables>
     <sequence>
@@ -34,5 +35,38 @@
             </copy>
         </assign>
         <reply name="createItineraryReply" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="CreateItinerayOut"/>
+        <pick name="Pick1">
+            <onMessage partnerLink="PartnerLink1" operation="getFlights" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="GetFlightsInUser">
+                <sequence name="Sequence1">
+                    <assign name="Assign1">
+                        <copy>
+                            <from variable="GetFlightsInUser" part="startAirport"/>
+                            <to>$GetFlightsInAgency.parameters/arg0</to>
+                        </copy>
+                        <copy>
+                            <from variable="GetFlightsInUser" part="endAirport"/>
+                            <to>$GetFlightsInAgency.parameters/arg1</to>
+                        </copy>
+                    </assign>
+                    <invoke name="getFlightsInvoke" partnerLink="AirlinePartnerLink" operation="getFlights" xmlns:tns="http://ws.airline/" portType="tns:AirlineController" inputVariable="GetFlightsInAgency" outputVariable="GetFlightsOutAirline"/>
+                    <forEach name="ForEach1" parallel="no" counterName="ForEach1Counter">
+                        <startCounterValue>1</startCounterValue>
+                        <finalCounterValue>count($GetFlightsOutAirline.parameters/return)</finalCounterValue>
+                        <completionCondition>
+                            <branches/>
+                        </completionCondition>
+                        <scope name="Scope1">
+                            <assign name="Assign2">
+                                <copy>
+                                        <from>$GetFlightsOutAirline.parameters/return</from>
+                                            <to>$GetFlightsOutUser.flightsList_resp/newElement</to>
+                                    </copy>
+                            </assign>
+                        </scope>
+                    </forEach>
+                    <reply name="getFlightsReply" partnerLink="PartnerLink1" operation="getFlights" portType="tns:travelGoodBPELPortType" variable="GetFlightsOutUser"/>
+                </sequence>
+            </onMessage>
+        </pick>
     </sequence>
 </process>

@@ -14,35 +14,18 @@ import java.util.Random;
  */
 class HotelInformation {
     private Hotel hotel;
-    private String hotelName; //not necessary (already in hotel?)
-    private Address hotelAddress; //not necessary
     private int bookingNumber;
     private float priceForStay;
     private boolean creditCardGuarantee;
-    private String nameOfHotelService;
+    private String nameOfHotelService = "NiceView";
 
-    public HotelInformation(Hotel hotel, boolean creditCardGuarantee, String nameOfHotelService) {
+    public HotelInformation(Hotel hotel, boolean creditCardGuarantee) {
         this.hotel = hotel;
-        this.hotelName = hotel.getHotelName();
-        this.hotelAddress = hotel.getAddress();
         bookingNumber = new Random().nextInt(50) +1;
         this.creditCardGuarantee = creditCardGuarantee;
-        this.nameOfHotelService = nameOfHotelService;
     }
        public Hotel getHotel() {
         return hotel;
-    }
-
-    public String getHotelName() {
-        return hotelName;
-    }
-
-    public Address getHotelAddress() {
-        return hotelAddress;
-    }
-
-    public int getBookingNumber() {
-        return bookingNumber;
     }
 
     public float getPriceForStay() {
