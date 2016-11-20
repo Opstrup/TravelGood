@@ -1,19 +1,20 @@
 package airline.ws;
 
 import java.util.Date;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class Flight {
 
     private int flightID;
     private String startAirport;
     private String destinationAirport;
-    private Date departureDate;
-    private Date arrivalDate;
+    private XMLGregorianCalendar departureDate;
+    private XMLGregorianCalendar arrivalDate;
     private String airlineName;
     private int availableSeats;
 
-    public Flight(int flightID, String startAirport, String destinationAirport, Date departureDate,
-                  Date arrivalDate, String airlineName, int availableSeats) {
+    public Flight(int flightID, String startAirport, String destinationAirport, XMLGregorianCalendar departureDate,
+                  XMLGregorianCalendar arrivalDate, String airlineName, int availableSeats) {
         this.flightID = flightID;
         this.startAirport = startAirport;
         this.destinationAirport = destinationAirport;
@@ -31,7 +32,7 @@ public class Flight {
         return destinationAirport;
     }
 
-    public Date getDepartureDate() {
+    public XMLGregorianCalendar getDepartureDate() {
         return departureDate;
     }
 

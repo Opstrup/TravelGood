@@ -11,6 +11,11 @@ import java.nio.file.Paths;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class AirlineModel {
 
@@ -25,24 +30,32 @@ public class AirlineModel {
         URL url = getClass().getResource(dbFilePath);
         
         Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8).forEach((line)-> {
+            try {
                 String[] flightInformationArray = line.split(";");
             
                 String startAirport = flightInformationArray[0];
                 String destinationAirport = flightInformationArray[1];
                 String departureDateString[] = flightInformationArray[2].split("-");
-                Date departureDate = new GregorianCalendar(Integer.parseInt(departureDateString[0]), Integer.parseInt(departureDateString[1]), Integer.parseInt(departureDateString[2])).getTime();
+                XMLGregorianCalendar departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(
+                        Integer.parseInt(departureDateString[0]), Integer.parseInt(departureDateString[1]), Integer.parseInt(departureDateString[2])));
+                //Date departureDate = new GregorianCalendar(Integer.parseInt(departureDateString[0]), Integer.parseInt(departureDateString[1]), Integer.parseInt(departureDateString[2])).getTime();
                 String arrivalDateString[] = flightInformationArray[3].split("-");
-                Date arrivalDate = new GregorianCalendar(Integer.parseInt(arrivalDateString[0]), Integer.parseInt(arrivalDateString[1]), Integer.parseInt(arrivalDateString[2])).getTime();
+                XMLGregorianCalendar arrivalDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(
+                        Integer.parseInt(arrivalDateString[0]), Integer.parseInt(arrivalDateString[1]), Integer.parseInt(arrivalDateString[2])));
+                //Date arrivalDate = new GregorianCalendar(Integer.parseInt(arrivalDateString[0]), Integer.parseInt(arrivalDateString[1]), Integer.parseInt(arrivalDateString[2])).getTime();
                 String airlineName = flightInformationArray[4];
                 int availableSeats = Integer.parseInt(flightInformationArray[5]);
                 
                 Flight newFlight = new Flight(flightId.incrementAndGet(), startAirport, destinationAirport, departureDate, arrivalDate, airlineName, availableSeats);
                 flightsDB.add(newFlight);
+            } catch (DatatypeConfigurationException ex) {
+                Logger.getLogger(AirlineModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
         );             
     }
 
-    public List<FlightInformation> getFlights(String startAirport, String destinationAirport, Date departureDate) {
+    public List<FlightInformation> getFlights(String startAirport, String destinationAirport, XMLGregorianCalendar departureDate) {
 
         List<FlightInformation> result = new ArrayList<>();
 
