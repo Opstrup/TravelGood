@@ -6,6 +6,7 @@ import javax.jws.WebMethod;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebParam;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 @WebService(serviceName = "AirlineService")
 public class AirlineController {
@@ -20,7 +21,7 @@ public class AirlineController {
     public List<airline.ws.FlightInformation> getFlights(
             @WebParam(name = "startAirport")String startAirport,
             @WebParam(name = "endAirport")String destinationAirport,
-            @WebParam(name = "startDate") java.util.Date departureDate) {
+            @WebParam(name = "startDate") XMLGregorianCalendar departureDate) {
         return model.getFlights(startAirport, destinationAirport, departureDate);
     }
 }
