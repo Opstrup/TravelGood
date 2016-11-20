@@ -14,34 +14,52 @@ import java.util.List;
  * @author arhjo
  */
 public class HotelModel {
+    List<Hotel> hotelDB;
     List<HotelInformation> hotelInformationDB;
     
+    
     public HotelModel(){
+        hotelDB = new ArrayList<>();
         hotelInformationDB = new ArrayList<>();
+
     }
     
     public List<HotelInformation> getHotels(String city, Date arrivalDate, Date departureDate){
-        List<HotelInformation> resultList = new ArrayList<>();
-        for(HotelInformation hotelInfo : hotelInformationDB){
-            if(hotelInfo.getHotel().getAddress().getCity().equals(city) && !hotelInfo.getHotel().fullyBooked(arrivalDate,departureDate)){
+        List<HotelInformation> results = new ArrayList<>();
+        for(Hotel hotel : hotelDB){
+            if(hotel.getAddress().getCity().equals(city)){
+                HotelInformation hotelInfo = new HotelInformation(hotel);
                 hotelInfo.calculatePrice(arrivalDate, departureDate);
-                resultList.add(hotelInfo);
+                results.add(hotelInfo);
+                hotelInformationDB.add(hotelInfo);
             }
         }
-        return resultList;
+        return results;
     }
     
     public boolean bookHotel(int bookingNumber, CreditCardInfoType ccInfo) throws CreditCardFaultMessage{
         for(HotelInformation hotelInfo : hotelInformationDB){
             if(hotelInfo.getBookingNumber() == bookingNumber){
-                if(hotelInfo.needsCreditCardGuarantee()){
-                    return validateCreditCard(07, ccInfo, bookingNumber);
+                if(hotelInfo.getHotel().isCreditCardNeeded()){
+                     if(validateCreditCard(7, ccInfo, hotelInfo.getPriceForStay())){
+                         hotelInfo.setStatus("Confirmed");
+                         return true;
+                     }
                 }else{
                     return true;
                 }
             }
         }
+        //TODO: Throw exception if it does not succeed
         return false;       
+    }
+    
+    public void cancelHotel(int bookingNumber){
+        for(HotelInformation hotelInfo: hotelInformationDB){
+            if(hotelInfo.getBookingNumber() == bookingNumber){
+                hotelInfo.setStatus("Cancelled");
+            }
+        }
     }
     
  //   The bookHotel operation takes a booking number and credit card information (depending

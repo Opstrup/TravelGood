@@ -18,25 +18,21 @@ public class Hotel {
     //private String address //simpler?
     private Address address;
     private float pricePerDay; // Consider price per day
-    private List<OwnPeriod> fullyBooked = new ArrayList<>(); 
+    private boolean creditCardNeeded;
 
-    public List<OwnPeriod> getFullyBooked() {
-        return fullyBooked;
-    }
-
-
+    
     //I would also include fullyBooked in the constructor parameters
     // to ease the process of population of the DB!
-    public Hotel(String hotelName, Address address, float pricePerDay){
+    public Hotel(String hotelName, Address address, float pricePerDay, boolean creditCardNeeded){
         this.hotelName = hotelName;
         this.address = address;
         this.pricePerDay = pricePerDay;
+        this.creditCardNeeded = creditCardNeeded;
         
     }
-
-    //if fullyBooked is in the constructor this becomes useless
-    public void addFullyBookedPeriode(OwnPeriod period){
-        fullyBooked.add(period);
+    
+    public boolean isCreditCardNeeded() {
+        return creditCardNeeded;
     }
 
     public String getHotelName() {
@@ -54,16 +50,4 @@ public class Hotel {
     // A = period
     // B = Parameters
 
-    boolean fullyBooked(Date arrivalDate, Date departureDate) {
-        for(OwnPeriod period : fullyBooked){
-            if(arrivalDate.after(period.getStartDate()) && departureDate.after(period.getEndDate())){
-                return true;
-            }else if(arrivalDate.before(period.getStartDate())&& departureDate.before(period.getEndDate())){
-                return true;
-            }else if(arrivalDate.after(period.getStartDate()) && departureDate.before(period.getEndDate())){
-                return true;
-            }
-        }
-       return false;
-    }
 }
