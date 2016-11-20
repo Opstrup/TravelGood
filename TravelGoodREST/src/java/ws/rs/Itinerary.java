@@ -6,22 +6,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Itinerary {
+
+    public enum BookingStatus {
+        NOTBOOKED, BOOKED
+    }
     
     public int ID;
+    public BookingStatus status;
     
     public Itinerary() { };
     
-//    public Itinerary(Integer id) {
-//        if (id == null) {
-//            Random randomIDGenerator = new Random();
-//            this.ID = randomIDGenerator.nextInt();
-//        } else {
-//            this.ID = id;
-//        }
-//    }
-    
     public Itinerary(int ID) {
         this.ID = ID;
+        this.status = BookingStatus.NOTBOOKED;
     }
     
     public void SetID(Integer id) {
