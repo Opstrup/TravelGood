@@ -14,10 +14,11 @@ import javax.ws.rs.core.Response;
 public class ItinerarieResource {
     
     @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public Response createIntinerarie() {
-        Itinerary newIntinerary = new Itinerary();
-        return Response.ok(newIntinerary).build();
+//    @Produces(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
+    public Itinerary createIntinerarie() {
+        Itinerary newIntinerary = new Itinerary(5);
+        return newIntinerary;
     }
 
 //    @PUT

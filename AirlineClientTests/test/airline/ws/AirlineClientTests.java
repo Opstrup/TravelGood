@@ -2,6 +2,8 @@ package airline.ws;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -11,17 +13,21 @@ import static org.junit.Assert.*;
 public class AirlineClientTests {
     
     @Test
-    public void should_return_flight() throws DatatypeConfigurationException {
+    public void should_return_flight() {
         //db contains 
         //copenhagen;rome;2016-8-10;2016-9-10;Ryanair;10
         //Date depDate = new GregorianCalendar(2016, 8, 10).getTime();
-        XMLGregorianCalendar depDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
-        
-        String startAirport = "Copenhagen";
-        String endAirport = "Rome";
+        XMLGregorianCalendar depDate = null;
+        try {
+            depDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
+        } catch (DatatypeConfigurationException ex) {
+            Logger.getLogger(AirlineClientTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String startAirport = "copenhagen";
+        String endAirport = "rome";
         
         java.util.List<airline.ws.FlightInformation> result = getFlights(startAirport, endAirport, depDate);
-        assertTrue(result.size()>0);
+        assert(result.size()>0);
         
     }
 

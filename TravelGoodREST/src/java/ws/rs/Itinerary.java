@@ -4,20 +4,27 @@ import java.util.Random;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Opstrup
- */
 @XmlRootElement
 public class Itinerary {
- 
-    @XmlElement
-    private Integer ID = null;
     
-    public void Itinerary(Integer id) {
-        if (id == null) {
-            Random randomIDGenerator = new Random();
-            this.ID = randomIDGenerator.nextInt();
-        }
-    }    
+    public int ID;
+    
+    public Itinerary() { };
+    
+//    public Itinerary(Integer id) {
+//        if (id == null) {
+//            Random randomIDGenerator = new Random();
+//            this.ID = randomIDGenerator.nextInt();
+//        } else {
+//            this.ID = id;
+//        }
+//    }
+    
+    public Itinerary(int ID) {
+        this.ID = ID;
+    }
+    
+    public void SetID(Integer id) {
+        this.ID = id;
+    }
 }
