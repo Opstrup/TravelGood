@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
-  <services/>
+  <services>
+    <service name="HotelController">
+      <implementation-class>hotel.ws.HotelController</implementation-class>
+    </service>
+  </services>
   <clients>
     <client name="BankService">
       <wsdl-url>http://fastmoney.imm.dtu.dk:8080/BankService?wsdl</wsdl-url>

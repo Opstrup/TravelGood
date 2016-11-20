@@ -15,37 +15,45 @@ import java.util.Random;
 class HotelInformation {
     private Hotel hotel;
     private int bookingNumber;
-    private float priceForStay;
-    private boolean creditCardGuarantee;
+    private int priceForStay;
     private String nameOfHotelService = "NiceView";
+    private String status;
 
-    public HotelInformation(Hotel hotel, boolean creditCardGuarantee) {
+    
+    
+    public HotelInformation(Hotel hotel) {
         this.hotel = hotel;
         bookingNumber = new Random().nextInt(50) +1;
-        this.creditCardGuarantee = creditCardGuarantee;
+        status = "Unconfirmed";
     }
        public Hotel getHotel() {
         return hotel;
     }
-
-    public float getPriceForStay() {
-        return priceForStay;
+       
+       
+    public String getStatus() {
+        return status;
     }
 
-    public boolean needsCreditCardGuarantee() {
-        return creditCardGuarantee;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+       
+    public int getPriceForStay() {
+        return priceForStay;
     }
 
     public String getNameOfHotelService() {
         return nameOfHotelService;
     }    
     
-    public void setPriceForStay(float priceForStay) {
-        this.priceForStay = priceForStay;
-    }
 
     public void calculatePrice(Date arrivalDate, Date departureDate) {
         long diff = departureDate.getTime() - arrivalDate.getTime();
-        this.priceForStay =  hotel.getPricePerDay()*(diff/86400000); /*Miliseconds pr. day, rewrite is needed to find price*/
+        this.priceForStay =  (int) (hotel.getPricePerDay()*(diff/86400000)); /*Miliseconds pr. day, rewrite is needed to find price*/
+    }
+
+    public int getBookingNumber() {
+        return bookingNumber;
     }
 }
