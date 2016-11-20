@@ -20,8 +20,5 @@ public class Itinerary {
         this.ID = ID;
         this.status = BookingStatus.NOTBOOKED;
     }
-    
-    public void SetID(Integer id) {
-        this.ID = id;
-    }
+
 }

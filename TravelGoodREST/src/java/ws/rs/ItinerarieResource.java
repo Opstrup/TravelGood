@@ -1,54 +1,48 @@
 package ws.rs;
 
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-@Path("Itinerarie")
+@Path("itinerarie")
 public class ItinerarieResource {
     
     /**
-     * Simpel hashmap for storing the itineraries
+     * Simpel list for storing the itineraries
      */
-    public Hashtable<Integer, Itinerary> itineraryDb = new Hashtable<>();
+    public static List<Itinerary> itineraryDb = new ArrayList<>();
     
     @PUT
     @Produces("application/json")
     public Itinerary createIntinerarie() {
-        Itinerary newIntinerary = new Itinerary(5);
+        int intineraryId = itineraryDb.size();
+        Itinerary newIntinerary = new Itinerary(intineraryId);
+        itineraryDb.add(newIntinerary);
+        
         return newIntinerary;
     }
     
     @GET
     @Produces("application/json")
-    public Hashtable getItineraies() {
-        return this.itineraryDb;
+    public List<Itinerary> getItineraies() {
+        return itineraryDb;
     }
     
     @GET @Path("/{itineraryId}")
     @Produces("application/json")
     public Itinerary getItineraryStatus(@PathParam("itineraryId") String id) {
-        Itinerary fakeIntinerary = new Itinerary(5);
-        fakeIntinerary.status = Itinerary.BookingStatus.BOOKED;
-        this.itineraryDb.put(1, fakeIntinerary);
-        
         Itinerary newIntinerary = this.itineraryDb.get(Integer.parseInt(id));
+        
+        /*
+         * TODO:
+         * This could fail if no itinerary with the id is found
+         * return 404 error code.
+         */
         
         return newIntinerary;
     }
-
-//    @PUT
-//    @Produces("text/plain")
-//    public String bookIntinerarie() {
-//        return "Itinerary 1 is now bokked.";
-//    }
-//    
-//    @PUT
-//    @Produces("text/plain")
-//        public String cancelIntinerarie() {
-//        return "You get 50% discount of cancelation";
-//    }
 }

@@ -1,5 +1,7 @@
 package ws.rs;
 
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
@@ -15,16 +17,11 @@ public class ApplicationConfig extends Application {
         
         // Register costume resource classes
         resources.add(Itinerary.class);
+        resources.add(List.class);
         addRestResourceClasses(resources);
         return resources;
     }
 
-    /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
-     */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.rs.AirlineResource.class);
         resources.add(ws.rs.ItinerarieResource.class);
