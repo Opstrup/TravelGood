@@ -7,6 +7,7 @@ package hotel.ws;
 
 import java.util.Date;
 import java.util.Random;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  *
@@ -19,18 +20,15 @@ class HotelInformation {
     private String nameOfHotelService = "NiceView";
     private String status;
 
-    
-    
     public HotelInformation(Hotel hotel) {
         this.hotel = hotel;
         bookingNumber = new Random().nextInt(50) +1;
         status = "Unconfirmed";
     }
-       public Hotel getHotel() {
+    public Hotel getHotel() {
         return hotel;
     }
-       
-       
+         
     public String getStatus() {
         return status;
     }
@@ -48,9 +46,10 @@ class HotelInformation {
     }    
     
 
-    public void calculatePrice(Date arrivalDate, Date departureDate) {
-        long diff = departureDate.getTime() - arrivalDate.getTime();
-        this.priceForStay =  (int) (hotel.getPricePerDay()*(diff/86400000)); /*Miliseconds pr. day, rewrite is needed to find price*/
+    public void calculatePrice(XMLGregorianCalendar arrivalDate, XMLGregorianCalendar departureDate) {
+        //long diff = departureDate. - arrivalDate.getTime();
+       // this.priceForStay =  (int) (hotel.getPricePerDay()*(diff/86400000)); /*Miliseconds pr. day, rewrite is needed to find price*/
+        this.priceForStay = (int)(departureDate.toGregorianCalendar().compareTo(arrivalDate.toGregorianCalendar()) / 86400000);
     }
 
     public int getBookingNumber() {

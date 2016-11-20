@@ -6,8 +6,8 @@
 package hotel.ws;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  *
@@ -24,7 +24,7 @@ public class HotelModel {
 
     }
     
-    public List<HotelInformation> getHotels(String city, Date arrivalDate, Date departureDate){
+    public List<HotelInformation> getHotels(String city, XMLGregorianCalendar arrivalDate, XMLGregorianCalendar departureDate){
         List<HotelInformation> results = new ArrayList<>();
         for(Hotel hotel : hotelDB){
             if(hotel.getAddress().getCity().equals(city)){

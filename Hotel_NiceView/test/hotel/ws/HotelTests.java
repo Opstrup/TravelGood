@@ -6,7 +6,13 @@
 package hotel.ws;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,6 +22,9 @@ import static org.junit.Assert.*;
  */
 public class HotelTests {
     HotelModel hm;
+    
+    XMLGregorianCalendar arrivalDate = null;
+    XMLGregorianCalendar departureDate = null;
     
     public HotelTests() {
         Hotel hotel1 = new Hotel("NiceView1", new Address("Copenhagen", "Somestreet 5"), 560,false);
@@ -32,27 +41,43 @@ public class HotelTests {
         hm.hotelDB.add(hotel3);
     }
     
+    public void setDates(int arrivalYear, int arrivalMonth, int arrivalDay, int departureYear, int departureMonth, int departureDay){
+        try {
+            arrivalDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(arrivalYear, arrivalMonth, arrivalDay));
+            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(departureYear, departureMonth, departureDay));
+        } catch (DatatypeConfigurationException ex) {
+            Logger.getLogger(HotelTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     @Test
     public void getHotelsTest1(){
-       List<HotelInformation> result = hm.getHotels("Copenhagen", new Date(2016,10,2), new Date(2016,10,5));
+      
+       setDates(2016, 11, 28, 2016, 12, 4);
+       List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
+
        assertEquals(2, result.size());
     }
     
     @Test
     public void getHotelsTest2(){
-        List<HotelInformation> result = hm.getHotels("Rønne", new Date(2016,11,20),new Date(2016,11,24));
+        setDates(2016, 11, 28, 2016, 12, 4);
+        List<HotelInformation> result = hm.getHotels("Rønne", arrivalDate,departureDate);
         assertEquals(0, result.size());
     }
     
     @Test 
     public void getHotelsTest3(){   
-        List<HotelInformation> result = hm.getHotels("Østerlars", new Date(2016,11,20), new Date(2016,11,24));
+        setDates(2016, 11, 28, 2016, 12, 4);
+        List<HotelInformation> result = hm.getHotels("Østerlars", arrivalDate, departureDate);
         assertEquals(1, result.size());
     }
     
     @Test
     public void bookHotelTest1() throws CreditCardFaultMessage{
-       List<HotelInformation> result = hm.getHotels("Copenhagen", new Date(2016,11,11), new Date(2016,11,12));
+       setDates(2016, 11, 28, 2016, 12, 4);
+       List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
        assertEquals(2, result.size());
        
        HotelInformation hotelWithoutCreditGuarantee = null;
@@ -68,7 +93,8 @@ public class HotelTests {
     
     @Test
     public void bookHotelTest2() throws CreditCardFaultMessage{
-       List<HotelInformation> result = hm.getHotels("Copenhagen", new Date(2016,11,11), new Date(2016,11,12));
+       setDates(2016, 11, 28, 2016, 12, 4);
+       List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
        assertEquals(2, result.size());
        
        HotelInformation hotelWithCreditGuarantee = null;
@@ -77,8 +103,7 @@ public class HotelTests {
                hotelWithCreditGuarantee = hotelInfo;
            }
        }
-       
-       
+           
        CreditCardInfoType ccInfo = new hotel.ws.CreditCardInfoType();
        hotel.ws.CreditCardInfoType.ExpirationDate expDate = new hotel.ws.CreditCardInfoType.ExpirationDate();
        expDate.setMonth(10);
@@ -88,16 +113,8 @@ public class HotelTests {
        ccInfo.setName("Luca");
        ccInfo.setNumber("12345678");
        
-       hm.bookHotel(hotelWithCreditGuarantee.getBookingNumber(), ccInfo);
-       
-       
-       
+       hm.bookHotel(hotelWithCreditGuarantee.getBookingNumber(), ccInfo);  
     }
-    
-    
-    
-    
-    
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
