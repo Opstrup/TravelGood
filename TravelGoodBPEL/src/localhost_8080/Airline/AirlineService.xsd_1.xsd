@@ -1,10 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.airline/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.airline/">
-
-<xs:element name="AirlineController" type="tns:AirlineController"/>
-
-<xs:element name="AirlineControllerResponse" type="tns:AirlineControllerResponse"/>
-
-<xs:element name="IOException" type="tns:IOException"/>
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.airline/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.airline/">
 
 <xs:element name="getFlights" type="tns:getFlights"/>
 
@@ -12,9 +6,9 @@
 
 <xs:complexType name="getFlights">
 <xs:sequence>
-<xs:element name="arg0" type="xs:string" minOccurs="0"/>
-<xs:element name="arg1" type="xs:string" minOccurs="0"/>
-<xs:element name="arg2" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="startAirport" type="xs:string" minOccurs="0"/>
+<xs:element name="endAirport" type="xs:string" minOccurs="0"/>
+<xs:element name="startDate" type="xs:anySimpleType" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -25,20 +19,23 @@
 </xs:complexType>
 
 <xs:complexType name="flightInformation">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="AirlineController">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="AirlineControllerResponse">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="IOException">
 <xs:sequence>
-<xs:element name="message" type="xs:string" minOccurs="0"/>
+<xs:element name="bookingNumber" type="xs:int"/>
+<xs:element name="flight" type="tns:flight" minOccurs="0"/>
+<xs:element name="flightPrice" type="xs:int"/>
+<xs:element name="reservationAgency" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="flight">
+<xs:sequence>
+<xs:element name="airlineName" type="xs:string" minOccurs="0"/>
+<xs:element name="arrivalDate" type="xs:anySimpleType" minOccurs="0"/>
+<xs:element name="availableSeats" type="xs:int"/>
+<xs:element name="departureDate" type="xs:anySimpleType" minOccurs="0"/>
+<xs:element name="destinationAirport" type="xs:string" minOccurs="0"/>
+<xs:element name="flightID" type="xs:int"/>
+<xs:element name="startAirport" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

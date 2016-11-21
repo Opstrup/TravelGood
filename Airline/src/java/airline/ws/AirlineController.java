@@ -9,11 +9,7 @@ import javax.jws.WebParam;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-@WebService(serviceName = "AirlineService",	
-        targetNamespace = "http://ws.airline/")
-
-//@SOAPBinding(style=SOAPBinding.Style.RPC,use=SOAPBinding.Use.LITERAL,
-//			parameterStyle=SOAPBinding.ParameterStyle.WRAPPED)
+@WebService(serviceName = "AirlineService")
 
 public class AirlineController {
     private String dbFilePath = "flightDB.txt";

@@ -9,4 +9,7 @@
     <plnk:partnerLinkType name="AirlineControllerLinkType">
         <plnk:role name="AirlineControllerRole" portType="ns:AirlineController"/>
     </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="AirlineLinkType">
+        <plnk:role name="AirlineControllerRole" portType="ns:AirlineController"/>
+    </plnk:partnerLinkType>
 </definitions>
