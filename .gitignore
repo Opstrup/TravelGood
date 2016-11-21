@@ -19,3 +19,7 @@
 /TravelGoodBPELTest/dist/
 /AirlineClientTests/dist/
 /Hotel_NiceView/dist/
+TravelGoodREST/src/conf/xml-resources/
+TravelGoodREST/web/WEB-INF/wsdl/
+*.xml
+*.xsd
