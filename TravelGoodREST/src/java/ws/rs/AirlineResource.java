@@ -17,13 +17,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class AirlineResource {
 
     @GET
-    @Produces("application/json")    
+    @Produces("application/json")
     public List<FlightInformation> getFlightsForItinerary () throws DatatypeConfigurationException {
         String startAirport = "copenhagen";
         String endAirport = "rome";
         XMLGregorianCalendar departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
         List<FlightInformation> flights = getFlights(startAirport, endAirport, departureDate);
-
+        
         return flights;
     }
     
@@ -36,7 +36,7 @@ public class AirlineResource {
     @PUT
     @Produces("text/plain")
     public String cancleFlight () {
-        return "Returning 50% of the booking by ID.";
+        return "Returning 50% of the booking by ID...";
     }    
 
     private static java.util.List<airline.ws.FlightInformation> getFlights(java.lang.String startAirport, java.lang.String endAirport, java.lang.Object startDate) {
