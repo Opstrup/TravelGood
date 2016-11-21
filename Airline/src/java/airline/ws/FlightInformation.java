@@ -19,15 +19,32 @@ public class FlightInformation {
         return bookingNumber;
     }
 
+    public void setBookingNumber(int bookingNumber) {
+        this.bookingNumber = bookingNumber;
+    }
+
     public int getFlightPrice() {
         return flightPrice;
+    }
+
+    public void setFlightPrice(int flightPrice) {
+        this.flightPrice = flightPrice;
     }
 
     public String getReservationAgency() {
         return reservationAgency;
     }
 
+    public void setReservationAgency(String reservationAgency) {
+        this.reservationAgency = reservationAgency;
+    }
+
     public Flight getFlight() {
         return flight;
     }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
 }

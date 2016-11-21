@@ -23,24 +23,61 @@ public class Flight {
         this.airlineName = airlineName;
         this.availableSeats = availableSeats; //when booked, availableSeats -= 1
     }
+    
+    public int getFlightID() {
+        return flightID;
+    }
+
+    public void setFlightID(int flightID) {
+        this.flightID = flightID;
+    }
 
     public String getStartAirport() {
         return startAirport;
+    }
+
+    public void setStartAirport(String startAirport) {
+        this.startAirport = startAirport;
     }
 
     public String getDestinationAirport() {
         return destinationAirport;
     }
 
+    public void setDestinationAirport(String destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
     public XMLGregorianCalendar getDepartureDate() {
         return departureDate;
+    }
+
+    public void setDepartureDate(XMLGregorianCalendar departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public XMLGregorianCalendar getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(XMLGregorianCalendar arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public String getAirlineName() {
+        return airlineName;
+    }
+
+    public void setAirlineName(String airlineName) {
+        this.airlineName = airlineName;
     }
 
     public int getAvailableSeats() {
         return availableSeats;
     }
 
-    public int getFlightID() {
-        return flightID;
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
     }
+    
 }

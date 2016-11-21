@@ -6,9 +6,15 @@ import javax.jws.WebMethod;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebParam;
+import javax.jws.soap.SOAPBinding;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-@WebService(serviceName = "AirlineService")
+@WebService(serviceName = "AirlineService",	
+        targetNamespace = "http://ws.airline/")
+
+//@SOAPBinding(style=SOAPBinding.Style.RPC,use=SOAPBinding.Use.LITERAL,
+//			parameterStyle=SOAPBinding.ParameterStyle.WRAPPED)
+
 public class AirlineController {
     private String dbFilePath = "flightDB.txt";
     private AirlineModel model;
@@ -24,4 +30,5 @@ public class AirlineController {
             @WebParam(name = "startDate") XMLGregorianCalendar departureDate) {
         return model.getFlights(startAirport, destinationAirport, departureDate);
     }
+  
 }
