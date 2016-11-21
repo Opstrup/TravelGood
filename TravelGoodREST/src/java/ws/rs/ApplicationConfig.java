@@ -1,6 +1,5 @@
 package ws.rs;
 
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import javax.ws.rs.core.Application;

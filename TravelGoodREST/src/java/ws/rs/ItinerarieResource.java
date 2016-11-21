@@ -32,7 +32,8 @@ public class ItinerarieResource {
         return itineraryDb;
     }
     
-    @GET @Path("/{itineraryId}")
+    @GET 
+    @Path("/{itineraryId}")
     @Produces("application/json")
     public Itinerary getItineraryStatus(@PathParam("itineraryId") String id) {
         Itinerary newIntinerary = this.itineraryDb.get(Integer.parseInt(id));
