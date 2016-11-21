@@ -8,15 +8,13 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class AirlineClientTests {
     
     @Test
-    public void should_return_flight() {
+    public void should_return_flights() {
         //db contains 
         //copenhagen;rome;2016-8-10;2016-9-10;Ryanair;10
-        //Date depDate = new GregorianCalendar(2016, 8, 10).getTime();
         XMLGregorianCalendar depDate = null;
         try {
             depDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
@@ -27,7 +25,7 @@ public class AirlineClientTests {
         String endAirport = "rome";
         
         java.util.List<airline.ws.FlightInformation> result = getFlights(startAirport, endAirport, depDate);
-        assert(result.size()>0);
+        assert(result.size() > 0);
         
     }
 
@@ -36,7 +34,4 @@ public class AirlineClientTests {
         airline.ws.AirlineController port = service.getAirlineControllerPort();
         return port.getFlights(startAirport, endAirport, startDate);
     }
-
-    
-    
 }

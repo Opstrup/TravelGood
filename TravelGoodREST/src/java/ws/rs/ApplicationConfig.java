@@ -1,5 +1,6 @@
 package ws.rs;
 
+import airline.ws.FlightInformation;
 import java.util.List;
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -17,6 +18,7 @@ public class ApplicationConfig extends Application {
         // Register costume resource classes
         resources.add(Itinerary.class);
         resources.add(List.class);
+        resources.add(FlightInformation.class);
         addRestResourceClasses(resources);
         return resources;
     }

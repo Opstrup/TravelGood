@@ -1,7 +1,6 @@
 package ws.rs;
 
 import airline.ws.FlightInformation;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -9,22 +8,24 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
-/**
- * @author Vitali
- */
-@Path("lameDuck")
+
+@Path("airline")
 public class AirlineResource {
 
-//    @GET
-//    @Produces("application/json")    
-//    public List<FlightInformation> getFlights () {
-//        String startAirport = "copenhagen";
-//        String endAirport = "rome";
-//        Date departureDate = new GregorianCalendar(2016, 8, 10).getTime();
-//        Date startDate = new GregorianCalendar(2016, 8, 10).getTime();
-//        return getFlights_1(startAirport, endAirport, departureDate);
-//    }
+    @GET
+    @Produces("application/json")    
+    public List<FlightInformation> getFlightsForItinerary () throws DatatypeConfigurationException {
+        String startAirport = "copenhagen";
+        String endAirport = "rome";
+        XMLGregorianCalendar departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
+        List<FlightInformation> flights = getFlights(startAirport, endAirport, departureDate);
+
+        return flights;
+    }
     
     @POST
     @Produces("text/plain")
@@ -38,7 +39,7 @@ public class AirlineResource {
         return "Returning 50% of the booking by ID.";
     }    
 
-    private static java.util.List<airline.ws.FlightInformation> getFlights_1(java.lang.String startAirport, java.lang.String endAirport, javax.xml.datatype.XMLGregorianCalendar startDate) {
+    private static java.util.List<airline.ws.FlightInformation> getFlights(java.lang.String startAirport, java.lang.String endAirport, java.lang.Object startDate) {
         airline.ws.AirlineService service = new airline.ws.AirlineService();
         airline.ws.AirlineController port = service.getAirlineControllerPort();
         return port.getFlights(startAirport, endAirport, startDate);
