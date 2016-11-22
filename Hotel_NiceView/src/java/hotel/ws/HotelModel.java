@@ -6,16 +6,16 @@
 package hotel.ws;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  *
  * @author arhjo
  */
 public class HotelModel {
-    List<Hotel> hotelDB;
-    List<HotelInformation> hotelInformationDB;
+    List<hotel.ws.Hotel> hotelDB;
+    List<hotel.ws.HotelInformation> hotelInformationDB;
     
     
     public HotelModel(){
@@ -24,11 +24,11 @@ public class HotelModel {
 
     }
     
-    public List<HotelInformation> getHotels(String city, Date arrivalDate, Date departureDate){
-        List<HotelInformation> results = new ArrayList<>();
+    public List<hotel.ws.HotelInformation> getHotels(String city, XMLGregorianCalendar arrivalDate, XMLGregorianCalendar departureDate){
+        List<hotel.ws.HotelInformation> results = new ArrayList<>();
         for(Hotel hotel : hotelDB){
             if(hotel.getAddress().getCity().equals(city)){
-                HotelInformation hotelInfo = new HotelInformation(hotel);
+                hotel.ws.HotelInformation hotelInfo = new hotel.ws.HotelInformation(hotel);
                 hotelInfo.calculatePrice(arrivalDate, departureDate);
                 results.add(hotelInfo);
                 hotelInformationDB.add(hotelInfo);
@@ -37,7 +37,7 @@ public class HotelModel {
         return results;
     }
     
-    public boolean bookHotel(int bookingNumber, CreditCardInfoType ccInfo) throws CreditCardFaultMessage{
+    public boolean bookHotel(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage{
         for(HotelInformation hotelInfo : hotelInformationDB){
             if(hotelInfo.getBookingNumber() == bookingNumber){
                 if(hotelInfo.getHotel().isCreditCardNeeded()){
@@ -46,6 +46,7 @@ public class HotelModel {
                          return true;
                      }
                 }else{
+                    hotelInfo.setStatus("Confirmed");
                     return true;
                 }
             }
@@ -69,10 +70,12 @@ public class HotelModel {
  //   was not valid, there was not enough money on the client account, or if for other reasons the booking
  //   fails.
 
-    private static boolean validateCreditCard(int group, hotel.ws.CreditCardInfoType creditCardInfo, int amount) throws CreditCardFaultMessage {
-        hotel.ws.BankService service = new hotel.ws.BankService();
-        hotel.ws.BankPortType port = service.getBankPort();
+    private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {
+        bankservice.ws.BankService service = new bankservice.ws.BankService();
+        bankservice.ws.BankPortType port = service.getBankPort();
         return port.validateCreditCard(group, creditCardInfo, amount);
     }
+
+
     
 }

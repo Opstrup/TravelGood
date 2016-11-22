@@ -45,7 +45,7 @@
     </target>
     <target name="wsimport-client-BankService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/BankService"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BankService" destdir="${build.generated.dir}/jax-wsCache/BankService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" xnocompile="true" xendorsed="true" package="hotel.ws">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BankService" destdir="${build.generated.dir}/jax-wsCache/BankService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" xnocompile="true" xendorsed="true" package="bankservice.ws">
             <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/BankService"/>
         </wsimport>
@@ -56,7 +56,7 @@
         </copy>
     </target>
     <target name="wsimport-client-clean-BankService" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/hotel/ws"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/bankservice/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/BankService"/>
     </target>
     <target name="wsimport-client-generate" depends="wsimport-client-BankService"/>

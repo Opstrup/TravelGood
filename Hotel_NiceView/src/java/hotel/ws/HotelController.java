@@ -5,11 +5,15 @@
  */
 package hotel.ws;
 
-import java.util.Date;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.xml.datatype.XMLGregorianCalendar;
+import hotel.ws.Address;
+import hotel.ws.Hotel;
+import hotel.ws.HotelInformation;
+import hotel.ws.HotelModel;
 
 /**
  *
@@ -17,20 +21,27 @@ import javax.jws.WebService;
  */
 @WebService(serviceName = "HotelService")
 public class HotelController {
-    private HotelModel hotelModel;
+    public HotelModel hotelModel;
     
     
     public HotelController(){
         hotelModel = new HotelModel();
+        
+        hotelModel.hotelDB.add(new Hotel("NiceView1", new Address("Paris", "Somestreet 44"), 125, true));
+        hotelModel.hotelDB.add(new Hotel("NiceView2", new Address("Paris", "Somestreet 11"), 300, false));
+        hotelModel.hotelDB.add(new Hotel("NiceView3", new Address("Copenhagen", "Somestreet 22"), 525, true));
+        hotelModel.hotelDB.add(new Hotel("NiceView4", new Address("Copenhagen", "Somestreet 33"), 425, false));
+        hotelModel.hotelDB.add(new Hotel("NiceView5", new Address("Milan", "Somestreet 55"), 310, false));
+        
     }
     
     @WebMethod(operationName ="getHotels")
-    public List<HotelInformation> getHotels(@WebParam(name="city") String city,@WebParam (name = "arrivalDate") Date arrivalDate, @WebParam (name="departureDate") Date departureDate){
+    public List<hotel.ws.HotelInformation> getHotels(@WebParam(name="city") String city,@WebParam (name = "arrivalDate") XMLGregorianCalendar arrivalDate, @WebParam (name="departureDate") XMLGregorianCalendar departureDate){
         return hotelModel.getHotels(city, arrivalDate, departureDate);
     }
     
     @WebMethod(operationName ="bookHotel")
-    public boolean bookHotel(@WebParam (name = "bookingNumber") int bookingNumber, @WebParam (name = "CreditCardInformation") CreditCardInfoType ccInfo) throws CreditCardFaultMessage{
+    public boolean bookHotel(@WebParam (name = "bookingNumber") int bookingNumber, @WebParam (name = "CreditCardInformation") bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage{
         return hotelModel.bookHotel(bookingNumber, ccInfo);
     }
     

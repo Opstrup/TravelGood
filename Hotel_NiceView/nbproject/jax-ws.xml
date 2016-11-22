@@ -9,7 +9,7 @@
     <client name="BankService">
       <wsdl-url>http://fastmoney.imm.dtu.dk:8080/BankService?wsdl</wsdl-url>
       <local-wsdl-file>fastmoney.imm.dtu.dk_8080/BankService.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">hotel.ws</package-name>
+      <package-name forceReplace="true">bankservice.ws</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -38,7 +38,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>hotel.ws</wsimport-option-value>
+          <wsimport-option-value>bankservice.ws</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>

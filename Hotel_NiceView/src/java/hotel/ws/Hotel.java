@@ -4,25 +4,17 @@
  * and open the template in the editor.
  */
 package hotel.ws;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 /**
  *
  * @author arhjo
  */
 public class Hotel {
     private String hotelName;
-    //private String address //simpler?
     private Address address;
     private float pricePerDay; // Consider price per day
     private boolean creditCardNeeded;
 
     
-    //I would also include fullyBooked in the constructor parameters
-    // to ease the process of population of the DB!
     public Hotel(String hotelName, Address address, float pricePerDay, boolean creditCardNeeded){
         this.hotelName = hotelName;
         this.address = address;
@@ -39,6 +31,17 @@ public class Hotel {
         return hotelName;
     }
 
+      public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void setCreditCardNeeded(boolean creditCardNeeded) {
+        this.creditCardNeeded = creditCardNeeded;
+    }
+    
+    public void setHotelName(String name){
+        this.hotelName = name;
+    }
     public Address getAddress() {
         return address;
     }
