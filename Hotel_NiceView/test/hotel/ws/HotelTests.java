@@ -5,7 +5,6 @@
  */
 package hotel.ws;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,9 +30,6 @@ public class HotelTests {
         Hotel hotel2 = new Hotel("NiceView2", new Address("Copenhagen", "Somestreet 55"), 200,true);
         Hotel hotel3 = new Hotel("NiceView3", new Address("Østerlars","Somestreet 60"),110,true);
 
-        //the constructor Date(int, int) is deprecated.
-        // use instead:
-        // Date departureDate = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
         
         hm = new HotelModel();
         hm.hotelDB.add(hotel1);
@@ -75,7 +71,7 @@ public class HotelTests {
     }
     
     @Test
-    public void bookHotelTest1() throws CreditCardFaultMessage{
+    public void bookHotelTest1() throws bankservice.ws.CreditCardFaultMessage{
        setDates(2016, 11, 28, 2016, 12, 4);
        List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
        assertEquals(2, result.size());
@@ -86,13 +82,13 @@ public class HotelTests {
                hotelWithoutCreditGuarantee = hotelInfo;
            }
        }
-       CreditCardInfoType ccInfo = null;
+       bankservice.ws.CreditCardInfoType ccInfo = null;
        boolean res = hm.bookHotel(hotelWithoutCreditGuarantee.getBookingNumber(),ccInfo);
     }
     
     
     @Test
-    public void bookHotelTest2() throws CreditCardFaultMessage{
+    public void bookHotelTest2() throws bankservice.ws.CreditCardFaultMessage{
        setDates(2016, 11, 28, 2016, 12, 4);
        List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
        assertEquals(2, result.size());
@@ -104,8 +100,8 @@ public class HotelTests {
            }
        }
            
-       CreditCardInfoType ccInfo = new hotel.ws.CreditCardInfoType();
-       hotel.ws.CreditCardInfoType.ExpirationDate expDate = new hotel.ws.CreditCardInfoType.ExpirationDate();
+       bankservice.ws.CreditCardInfoType ccInfo = new bankservice.ws.CreditCardInfoType();
+       bankservice.ws.CreditCardInfoType.ExpirationDate expDate = new bankservice.ws.CreditCardInfoType.ExpirationDate();
        expDate.setMonth(10);
        expDate.setYear(17);
        

@@ -13,9 +13,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *
  * @author arhjo
  */
-class HotelInformation {
+public class HotelInformation {
     private Hotel hotel;
     private int bookingNumber;
+
+    
     private int priceForStay;
     private String nameOfHotelService = "NiceView";
     private String status;
@@ -28,7 +30,23 @@ class HotelInformation {
     public Hotel getHotel() {
         return hotel;
     }
-         
+    
+    public void setBookingNumber(int bookingNumber) {
+        this.bookingNumber = bookingNumber;
+    }
+
+    public void setPriceForStay(int priceForStay) {
+        this.priceForStay = priceForStay;
+    }
+
+    public void setNameOfHotelService(String nameOfHotelService) {
+        this.nameOfHotelService = nameOfHotelService;
+    }
+    
+    public void setHotel(Hotel hotel){
+        this.hotel = hotel;
+    }
+    
     public String getStatus() {
         return status;
     }
