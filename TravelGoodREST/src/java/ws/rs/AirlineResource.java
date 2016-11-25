@@ -13,23 +13,36 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
-@Path("airline")
+@Path("airline")  // Defines the path to the base URL.
 public class AirlineResource {
 
     @GET
-    @Produces("application/json")
+    @Produces("application/json") // Defining which MIME type is delivered by a method annotated with any HTTP annotated methods.
     public List<FlightInformation> getFlightsForItinerary () throws DatatypeConfigurationException {
         String startAirport = "copenhagen";
-        String endAirport = "rome";
+        String endAirport = "rome"; 
         XMLGregorianCalendar departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
         List<FlightInformation> flights = getFlights(startAirport, endAirport, departureDate);
-        
         return flights;
     }
     
     @POST
     @Produces("text/plain")
     public boolean bookFlight () {
+        
+        /* OPPERATION
+        This opperation takes a booking number and credit card information and permanently books the
+        fight after first having charged the credit card for the ight using the chargeCreditCard
+        of the bank.       
+        */
+        
+        
+        /* RETURN
+        Returns true, if the booking was successful and returns a fault (i.e., throws an exception) 
+        if the credit card information was not valid, there was not enough money on the client 
+        account, or if for other reasons the booking fails.
+        */
+        
         return true;
     }
     

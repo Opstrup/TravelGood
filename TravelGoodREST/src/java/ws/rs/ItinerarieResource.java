@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 public class ItinerarieResource {
     
     /**
-     * Simpel list for storing the itineraries
+     * Simple list for storing the itineraries
      */
     public static List<Itinerary> itineraryDb = new ArrayList<>();
     
@@ -22,7 +22,6 @@ public class ItinerarieResource {
         int intineraryId = itineraryDb.size();
         Itinerary newIntinerary = new Itinerary(intineraryId);
         itineraryDb.add(newIntinerary);
-        
         return newIntinerary;
     }
     
