@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -26,24 +27,14 @@ public class HotelResource {
     @Path("/{city}")
     @Consumes("application/json")
     @Produces("application/json")   
-    public List<HotelInformation> getHotelsForItinerary (@PathParam("city") String city, @QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate){
+    public List<HotelInformation> getHotelsForItinerary (
+                @PathParam("city") String city, 
+                @QueryParam("start") String startDate,
+                @QueryParam("end") String endDate){
         
-        // format of the dates: DD-MM-YYYY
-        int startYear = Integer.parseInt(startDate.split("-")[2]);
-        int endYear = Integer.parseInt(endDate.split("-")[2]);
-        int startMonth = Integer.parseInt(startDate.split("-")[1]);
-        int endMonth = Integer.parseInt(endDate.split("-")[1]);
-        int startDay = Integer.parseInt(startDate.split("-")[0]);
-        int endDay = Integer.parseInt(endDate.split("-")[0]);
         
-        XMLGregorianCalendar stDate = null;
-        XMLGregorianCalendar enDate = null;
-        try {
-            stDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(startYear, startMonth, startDay));
-            enDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(endYear, endMonth, endDay));
-        } catch (DatatypeConfigurationException ex) {
-            Logger.getLogger(HotelResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        XMLGregorianCalendar stDate = DateParser.parse(startDate);
+        XMLGregorianCalendar enDate = DateParser.parse(endDate);
         
         List<HotelInformation> hotels = getHotels(city, stDate, enDate);
         
