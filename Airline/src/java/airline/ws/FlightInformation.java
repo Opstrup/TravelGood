@@ -4,14 +4,13 @@ import java.util.Random;
 
 public class FlightInformation {
     private int bookingNumber;
-    private int flightPrice;
+    
     private String reservationAgency;
     private Flight flight;
     private String status;
     
     public FlightInformation(Flight flight) {
         bookingNumber = new Random().nextInt(50) +1;
-        flightPrice = new Random().nextInt(50) +1;
         reservationAgency = "LameDuck";
         this.flight = flight;
     }
@@ -20,12 +19,6 @@ public class FlightInformation {
     }
     public void setBookingNumber(int bookingNumber) {
         this.bookingNumber = bookingNumber;
-    }
-    public int getFlightPrice() {
-        return flightPrice;
-    }
-    public void setFlightPrice(int flightPrice) {
-        this.flightPrice = flightPrice;
     }
     public String getReservationAgency() {
         return reservationAgency;

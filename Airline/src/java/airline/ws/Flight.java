@@ -12,10 +12,11 @@ public class Flight {
     private XMLGregorianCalendar arrivalDate;
     private String airlineName;
     private int availableSeats;
-    boolean creditCardNeed;
+    private boolean creditCardNeed;
+    private int flightPrice;
 
     public Flight(int flightID, String startAirport, String destinationAirport, XMLGregorianCalendar departureDate,
-                  XMLGregorianCalendar arrivalDate, String airlineName, int availableSeats, boolean isCreditCardNeeded) {
+                  XMLGregorianCalendar arrivalDate, String airlineName, int availableSeats, boolean isCreditCardNeeded, int price) {
         this.flightID = flightID;
         this.startAirport = startAirport;
         this.destinationAirport = destinationAirport;
@@ -24,8 +25,14 @@ public class Flight {
         this.airlineName = airlineName;
         this.availableSeats = availableSeats; //when booked, availableSeats -= 1
         this.creditCardNeed = isCreditCardNeeded;
+        this.flightPrice = price;
     }
-    
+    public int getFlightPrice() {
+        return flightPrice;
+    }
+    public void setFlightPrice(int flightPrice) {
+        this.flightPrice = flightPrice;
+    }
     public int getFlightID() {
         return flightID;
     }

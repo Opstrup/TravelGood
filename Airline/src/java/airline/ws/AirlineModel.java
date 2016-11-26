@@ -43,11 +43,11 @@ public class AirlineModel {
                 if(flightInfo.getFlight().isCreditCardNeeded()){
                     try {
                         //Charge credit card, and not validate credit card.
-                        if(validateCreditCard(7, ccInfo, flightInfo.getFlightPrice())){
+                        if(validateCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice())){
                             try {
                                 AccountType lameDuckAccountType = new AccountType();
                                 lameDuckAccountType.setName("LameDuck");
-                                lameDuckAccountType.setName("50208812");
+                                lameDuckAccountType.setNumber("50208812");
                                 chargeCreditCard(7, ccInfo, bookingNumber, lameDuckAccountType);
                                 flightInfo.setStatus("Confirmed");
                                 return true;
@@ -70,24 +70,24 @@ public class AirlineModel {
     }
     
     public boolean cancelFly(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage, Exception {
-        for(FlightInformation flightInfo : flightsInformationDB){
-            if(flightInfo.getBookingNumber() == bookingNumber){
-                try {
-                    if(refundCreditCart(7, ccInfo, flightInfo.getFlightPrice(), account)) {
-                        flightInfo.setStatus("Canceled");
-                        return true;
-                    }
-                }
-                catch (bankservice.ws.CreditCardFaultMessage exFaultMessage) {
-                    //throw exFaultMessage;               
-                    flightInfo.setStatus("Canceled");
-                    return true;
-                }
-            }
-            else {
-                throw new Exception("BookingNo do not exsist");
-            }
-        }
+//        for(FlightInformation flightInfo : flightsInformationDB){
+//            if(flightInfo.getBookingNumber() == bookingNumber){
+//                try {
+//                    if(refundCreditCart(7, ccInfo, flightInfo.getFlightPrice(), account)) {
+//                        flightInfo.setStatus("Canceled");
+//                        return true;
+//                    }
+//                }
+//                catch (bankservice.ws.CreditCardFaultMessage exFaultMessage) {
+//                    //throw exFaultMessage;               
+//                    flightInfo.setStatus("Canceled");
+//                    return true;
+//                }
+//            }
+//            else {
+//                throw new Exception("BookingNo do not exsist");
+//            }
+//        }
         return false;
     }
 
@@ -95,14 +95,12 @@ public class AirlineModel {
         XMLGregorianCalendar depatureDateFlightOne = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
         XMLGregorianCalendar arrivalDateFlightOne = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 27));
 
-        Flight flightOne = new Flight(1, "Copenhagen", "Rome", depatureDateFlightOne, arrivalDateFlightOne, "EasyJet", 10, true);
-        FlightInformation flightInformationOne = new FlightInformation(flightOne);
+        Flight flightOne = new Flight(1, "Copenhagen", "Rome", depatureDateFlightOne, arrivalDateFlightOne, "EasyJet", 10, true, 100);
         
         XMLGregorianCalendar depatureDateFlightTwo = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
         XMLGregorianCalendar arrivalDateFlightTwo = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 27));
 
-        Flight flightTwo = new Flight(1, "Copenhagen", "Rome", depatureDateFlightTwo, arrivalDateFlightTwo, "EasyJet", 10, false);
-        FlightInformation flightInformationTwo = new FlightInformation(flightOne);
+        Flight flightTwo = new Flight(1, "Copenhagen", "Rome", depatureDateFlightTwo, arrivalDateFlightTwo, "EasyJet", 10, true, 10000);
         
         flightsDB.add(flightOne);
         flightsDB.add(flightTwo);

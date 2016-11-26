@@ -32,7 +32,6 @@
 <xs:sequence>
 <xs:element name="bookingNumber" type="xs:int"/>
 <xs:element name="flight" type="tns:flight" minOccurs="0"/>
-<xs:element name="flightPrice" type="xs:int"/>
 <xs:element name="reservationAgency" type="xs:string" minOccurs="0"/>
 <xs:element name="status" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -46,6 +45,7 @@
 <xs:element name="departureDate" type="xs:anySimpleType" minOccurs="0"/>
 <xs:element name="destinationAirport" type="xs:string" minOccurs="0"/>
 <xs:element name="flightID" type="xs:int"/>
+<xs:element name="flightPrice" type="xs:int"/>
 <xs:element name="startAirport" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
