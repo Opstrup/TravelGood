@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="travelGoodv2" targetNamespace="http://j2ee.netbeans.org/wsdl/TravelGoodv2BPEL/src/travelGoodv2"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodv2BPEL/src/travelGoodv2" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types/>
+    <message name="createItineraryRequest"/>
+    <message name="createItineraryResponse">
+        <part name="part1" type="xsd:string"/>
+    </message>
+    <portType name="travelGoodv2PortType">
+        <operation name="createItinerary">
+            <input name="input1" message="tns:createItineraryRequest"/>
+            <output name="output1" message="tns:createItineraryResponse"/>
+        </operation>
+    </portType>
+    <binding name="travelGoodv2Binding" type="tns:travelGoodv2PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="createItinerary">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/TravelGoodv2BPEL/src/travelGoodv2"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/TravelGoodv2BPEL/src/travelGoodv2"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="travelGoodv2Service">
+        <port name="travelGoodv2Port" binding="tns:travelGoodv2Binding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/travelGoodv2Service/travelGoodv2Port"/>
+        </port>
+    </service>
+    <plnk:partnerLinkType name="travelGoodv2">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="travelGoodv2PortTypeRole" portType="tns:travelGoodv2PortType"/>
+    </plnk:partnerLinkType>
+</definitions>
