@@ -9,7 +9,7 @@
     xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
     xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
     xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
-    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxxf="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/XPathFunctions" xmlns:ns0="http://enterprise.netbeans.org/bpel/WizardCorrelationProperties">
     <import namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" location="travelGoodBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper" location="AirlineServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://ws.airline/" location="http://localhost:8080/Airline/AirlineService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
@@ -18,6 +18,8 @@
         <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" partnerLinkType="tns:travelGoodBPEL" myRole="travelGoodBPELPortTypeRole"/>
     </partnerLinks>
     <variables>
+        <variable name="BookItineraryOut_User" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:bookItineraryResponse"/>
+        <variable name="BookItineraryIn_User" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:bookItineraryRequest"/>
         <variable name="GetFlightsOutUser" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:getFlightsResponse"/>
         <variable name="GetFlightsOutAirline" xmlns:tns="http://ws.airline/" messageType="tns:getFlightsResponse"/>
         <variable name="CreateItinerayIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:createItinerayRequest"/>
@@ -26,26 +28,50 @@
         <variable name="GetFlightsInUser" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:getFlightsRequest"/>
         <variable name="CreateItinerayOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" messageType="tns:createItinerayResponse"/>
     </variables>
+    <correlationSets>
+        <correlationSet name="CorrelationSet1" properties="tns:ClientIdentifier" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL"/>
+    </correlationSets>
     <sequence>
-        <receive name="createItineraryReceive" createInstance="yes" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="CreateItinerayIn"/>
-        <assign name="EmptyItineraryAssign">
+        <receive name="createItineraryReceive" createInstance="yes" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="CreateItinerayIn">
+            <correlations>
+                <correlation set="CorrelationSet1" initiate="yes"/>
+            </correlations>
+        </receive>
+        <assign name="GenerateRandomItineraryID">
             <copy>
-                <from>'1'</from>
-                <to>$CreateItinerayOut.createItinerary_resp/@itineraryID</to>
+                <from>sxxf:getGUID()</from>
+                <to variable="CreateItinerayOut" part="createItinerary_resp"/>
             </copy>
         </assign>
-        <reply name="createItineraryReply" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="CreateItinerayOut"/>
+        <assign name="AssignItineraryToBooking">
+            <copy>
+                <from variable="CreateItinerayOut" part="createItinerary_resp"/>
+                <to>$BookItineraryOut_User.bookedItinerary/@itineraryID</to>
+            </copy>
+        </assign>
+        <reply name="createItineraryReply" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="CreateItinerayOut">
+            <correlations>
+                <correlation set="CorrelationSet1" initiate="no"/>
+            </correlations>
+        </reply>
         <pick name="Pick1">
             <onMessage partnerLink="PartnerLink1" operation="getFlights" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="GetFlightsInUser">
+                <correlations>
+                    <correlation set="CorrelationSet1" initiate="no"/>
+                </correlations>
                 <sequence name="Sequence1">
-                    <assign name="Assign1">
+                    <assign name="Assign3">
                         <copy>
                             <from variable="GetFlightsInUser" part="startAirport"/>
-                            <to>$GetFlightsInAgency.parameters/arg0</to>
+                            <to>$GetFlightsInAgency.parameters/startAirport</to>
                         </copy>
                         <copy>
                             <from variable="GetFlightsInUser" part="endAirport"/>
-                            <to>$GetFlightsInAgency.parameters/arg1</to>
+                            <to>$GetFlightsInAgency.parameters/endAirport</to>
+                        </copy>
+                        <copy>
+                            <from variable="GetFlightsInUser" part="depDate"/>
+                            <to>$GetFlightsInAgency.parameters/startDate</to>
                         </copy>
                     </assign>
                     <invoke name="getFlightsInvoke" partnerLink="AirlinePartnerLink" operation="getFlights" xmlns:tns="http://ws.airline/" portType="tns:AirlineController" inputVariable="GetFlightsInAgency" outputVariable="GetFlightsOutAirline"/>
@@ -58,13 +84,115 @@
                         <scope name="Scope1">
                             <assign name="Assign2">
                                 <copy>
-                                        <from>$GetFlightsOutAirline.parameters/return</from>
-                                            <to>$GetFlightsOutUser.flightsList_resp/newElement</to>
-                                    </copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/bookingNumber
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/bookingNumber</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flight/airlineName
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/airlineName</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flight/arrivalDate
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/endDate</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flight/availableSeats
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/availableSeats</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flight/departureDate
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/startDate</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flight/destinationAirport
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/endAirport</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flight/flightID
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/flightID</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flight/startAirport
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/startAirport</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/flightPrice
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/price</to>
+                                </copy>
+                                <copy>
+                                    <from>$GetFlightsOutAirline.parameters/return[$ForEach1Counter]/reservationAgency
+                                        <sxed:editor>
+                                            <sxed:predicate path="$GetFlightsOutAirline.parameters/return[$ForEach1Counter]" source="from"/>
+                                        </sxed:editor>
+                                    </from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/reservationAgency</to>
+                                </copy>
+                                <copy>
+                                    <from>'UNCONFIRMED'</from>
+                                    <to>$GetFlightsOutUser.flightsList_resp/newElement/@status</to>
+                                </copy>
                             </assign>
                         </scope>
                     </forEach>
-                    <reply name="getFlightsReply" partnerLink="PartnerLink1" operation="getFlights" portType="tns:travelGoodBPELPortType" variable="GetFlightsOutUser"/>
+                    <reply name="getFlightsReply" partnerLink="PartnerLink1" operation="getFlights" portType="tns:travelGoodBPELPortType" variable="GetFlightsOutUser">
+                        <correlations>
+                            <correlation set="CorrelationSet1" initiate="no"/>
+                        </correlations>
+                    </reply>
+                </sequence>
+            </onMessage>
+            <onMessage partnerLink="PartnerLink1" operation="bookItinerary" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" portType="tns:travelGoodBPELPortType" variable="BookItineraryIn_User">
+                <correlations>
+                    <correlation set="CorrelationSet1" initiate="no"/>
+                </correlations>
+                <sequence name="Sequence2">
+                    <assign name="Assign4">
+                        <copy>
+                            <from>'CONFIRMED'</from>
+                            <to>$BookItineraryOut_User.bookedItinerary/@itineraryStatus</to>
+                        </copy>
+                    </assign>
+                    <reply name="Reply1" partnerLink="PartnerLink1" operation="bookItinerary" portType="tns:travelGoodBPELPortType" variable="BookItineraryOut_User">
+                        <correlations>
+                            <correlation set="CorrelationSet1" initiate="no"/>
+                        </correlations>
+                    </reply>
                 </sequence>
             </onMessage>
         </pick>

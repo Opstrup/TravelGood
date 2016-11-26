@@ -4,7 +4,7 @@
         <endpoint endpoint-name="AirlineControllerPort" interface-name="ns1:AirlineController" name="endpoint1" service-name="ns1:AirlineService"/>
         <endpoint endpoint-name="travelGoodBPELPort" interface-name="ns2:travelGoodBPELPortType" name="endpoint2" service-name="ns2:travelGoodBPELService"/>
         <endpoint display-name="PartnerLink1" endpoint-name="travelGoodBPELPortTypeRole_myRole" file-path="travelGoodBPEL.bpel" interface-name="ns2:travelGoodBPELPortType" name="endpoint3" process-name="travelGoodBPEL" service-name="ns3:PartnerLink1"/>
-        <endpoint display-name="AirlineService" endpoint-name="AirlineControllerRole_partnerRole" file-path="travelGoodBPEL.bpel" interface-name="ns1:AirlineController" name="endpoint4" process-name="travelGoodBPEL" service-name="ns3:AirlineService"/>
+        <endpoint display-name="AirlinePartnerLink" endpoint-name="AirlineControllerRole_partnerRole" file-path="travelGoodBPEL.bpel" interface-name="ns1:AirlineController" name="endpoint4" process-name="travelGoodBPEL" service-name="ns3:AirlinePartnerLink"/>
     </endpoints>
     <service-units>
         <service-engine-service-unit artifacts-zip="TravelGoodBPEL.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="TravelGoodBPELComposite-TravelGoodBPEL" unit-name="TravelGoodBPEL" unknown="false" x="141" y="97">
