@@ -10,10 +10,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class AirlineModel {
     protected List <Flight> flightsDB;
     protected List <FlightInformation> flightsInformationDB;
-       
+    protected AccountType lameDuckAccountType;
+    
     public AirlineModel() {
         flightsDB = new ArrayList<>();
         flightsInformationDB = new ArrayList<>();
+        lameDuckAccountType.setName("LameDuck");
+        lameDuckAccountType.setNumber("50208812");
         
         try {
             populateDb();
@@ -42,12 +45,8 @@ public class AirlineModel {
             if(flightInfo.getBookingNumber() == bookingNumber){
                 if(flightInfo.getFlight().isCreditCardNeeded()){
                     try {
-                        //Charge credit card, and not validate credit card.
                         if(validateCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice())){
                             try {
-                                AccountType lameDuckAccountType = new AccountType();
-                                lameDuckAccountType.setName("LameDuck");
-                                lameDuckAccountType.setNumber("50208812");
                                 chargeCreditCard(7, ccInfo, bookingNumber, lameDuckAccountType);
                                 flightInfo.setStatus("Confirmed");
                                 return true;
@@ -69,26 +68,20 @@ public class AirlineModel {
         return false;       
     }
     
-    public boolean cancelFly(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage, Exception {
-//        for(FlightInformation flightInfo : flightsInformationDB){
-//            if(flightInfo.getBookingNumber() == bookingNumber){
-//                try {
-//                    if(refundCreditCart(7, ccInfo, flightInfo.getFlightPrice(), account)) {
-//                        flightInfo.setStatus("Canceled");
-//                        return true;
-//                    }
-//                }
-//                catch (bankservice.ws.CreditCardFaultMessage exFaultMessage) {
-//                    //throw exFaultMessage;               
-//                    flightInfo.setStatus("Canceled");
-//                    return true;
-//                }
-//            }
-//            else {
-//                throw new Exception("BookingNo do not exsist");
-//            }
-//        }
-        return false;
+    public void cancelFlight(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception {
+        for(FlightInformation flightInfo : flightsInformationDB){
+            if(flightInfo.getBookingNumber() == bookingNumber){
+                try {
+                    if(refundCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice()/2, lameDuckAccountType)) {
+                        flightInfo.setStatus("Canceled");
+                    }
+                }
+                catch (bankservice.ws.CreditCardFaultMessage exFaultMessage) {
+                    throw exFaultMessage;
+                }
+            }
+        }
+        throw new Exception("BookingNo. do not exsist");
     }
 
     private void populateDb () throws DatatypeConfigurationException {
@@ -112,7 +105,7 @@ public class AirlineModel {
         return port.validateCreditCard(group, creditCardInfo, amount);
     }
     
-    private static boolean refundCreditCart(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage {
+    private static boolean refundCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage {
         bankservice.ws.BankService service = new bankservice.ws.BankService();
         bankservice.ws.BankPortType port = service.getBankPort();
         return port.refundCreditCard(group, creditCardInfo, amount, account);

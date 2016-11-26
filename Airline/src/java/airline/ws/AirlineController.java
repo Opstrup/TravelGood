@@ -36,9 +36,9 @@ public class AirlineController {
     @WebMethod(operationName = "cancleFlight")
     public void cancleFlight (@WebParam (name = "bookingNumber") int bookingNumber,
                               @WebParam (name = "flightPrice") int flightPrice,
-                              @WebParam (name = "CreditCardInformation")
-                              bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage {
+                              @WebParam (name = "CreditCardInformation") 
+                              bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception {
       
-        //model.cancelFly(bookingNumber,ccInfo); 
+        model.cancelFlight(bookingNumber, ccInfo);
     }
 }
