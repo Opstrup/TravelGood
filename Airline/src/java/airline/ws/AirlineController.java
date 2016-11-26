@@ -21,6 +21,7 @@ public class AirlineController {
                                 @WebParam(name = "startAirport")String startAirport,
                                 @WebParam(name = "endAirport")String destinationAirport,
                                 @WebParam(name = "startDate") XMLGregorianCalendar departureDate) {
+
         return this.model.getFlights(startAirport, destinationAirport, departureDate);
     }
  
@@ -29,18 +30,7 @@ public class AirlineController {
                                @WebParam (name = "CreditCardInformation") 
                                bankservice.ws.CreditCardInfoType ccInfo)throws bankservice.ws.CreditCardFaultMessage{
         
-        // 1.) chargeCreditCard
-        // 2.) permanently books the flight
-        
         return model.bookFlight(bookingNumber,ccInfo);
-        
-        /*
-        The bookFlight operation takes a booking number and credit card information and permanently books the 
-        flight after first having charged the credit card for the flight using the chargeCreditCard of the bank. 
-        The bookFlight operation returns true, if the booking was successful and returns a fault 
-        (i.e., throws an exception) if the credit card information was not valid, there was not enough money on
-        the client account, or if for other reasons the booking fails.
-        */
     }
     
     @WebMethod(operationName = "cancleFlight")
