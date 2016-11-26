@@ -42,6 +42,7 @@ public class AirlineController {
         the client account, or if for other reasons the booking fails.
         */
     }
+    
     @WebMethod(operationName = "cancleFlight")
     public void cancleFlight (@WebParam (name = "bookingNumber") int bookingNumber,
                               @WebParam (name = "flightPrice") int flightPrice,
@@ -50,6 +51,4 @@ public class AirlineController {
       
         //model.cancelFly(bookingNumber,ccInfo); 
     }
-	
-    
 }

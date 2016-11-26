@@ -43,6 +43,7 @@ public class AirlineModel {
                     try {
                         //Charge credit card, and not validate credit card.
                         if(validateCreditCard(7, ccInfo, flightInfo.getFlightPrice())){
+                            
                             flightInfo.setStatus("Confirmed");
                             return true;
                         }
