@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package test.ws;
 
 import java.util.GregorianCalendar;
@@ -17,7 +12,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author arhjo
  */
 public class NiceViewTest {

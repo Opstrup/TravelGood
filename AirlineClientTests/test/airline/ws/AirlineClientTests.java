@@ -25,9 +25,14 @@ public class AirlineClientTests {
         String endAirport = "rome";
         
         java.util.List<airline.ws.FlightInformation> result = getFlights(startAirport, endAirport, depDate);
-        assert(result.size() > 0);
+        assert(result.size() > 0); 
+    }
+    
+    @Test
+    public void bookFlightTest () {
         
     }
+    
 
     private static java.util.List<airline.ws.FlightInformation> getFlights(java.lang.String startAirport, java.lang.String endAirport, javax.xml.datatype.XMLGregorianCalendar startDate) {
         airline.ws.AirlineService service = new airline.ws.AirlineService();

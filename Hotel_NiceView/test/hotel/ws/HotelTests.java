@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hotel.ws;
 
 import java.util.GregorianCalendar;
@@ -16,7 +11,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author arhjo
  */
 public class HotelTests {
@@ -30,7 +24,6 @@ public class HotelTests {
         Hotel hotel2 = new Hotel("NiceView2", new Address("Copenhagen", "Somestreet 55"), 200,true);
         Hotel hotel3 = new Hotel("NiceView3", new Address("Østerlars","Somestreet 60"),110,true);
 
-        
         hm = new HotelModel();
         hm.hotelDB.add(hotel1);
         hm.hotelDB.add(hotel2);
@@ -44,7 +37,6 @@ public class HotelTests {
         } catch (DatatypeConfigurationException ex) {
             Logger.getLogger(HotelTests.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     @Test
@@ -52,7 +44,6 @@ public class HotelTests {
       
        setDates(2016, 11, 28, 2016, 12, 4);
        List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
-
        assertEquals(2, result.size());
     }
     
@@ -85,8 +76,7 @@ public class HotelTests {
        bankservice.ws.CreditCardInfoType ccInfo = null;
        boolean res = hm.bookHotel(hotelWithoutCreditGuarantee.getBookingNumber(),ccInfo);
     }
-    
-    
+       
     @Test
     public void bookHotelTest2() throws bankservice.ws.CreditCardFaultMessage{
        setDates(2016, 11, 28, 2016, 12, 4);
@@ -111,9 +101,5 @@ public class HotelTests {
        
        hm.bookHotel(hotelWithCreditGuarantee.getBookingNumber(), ccInfo);  
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
 }
