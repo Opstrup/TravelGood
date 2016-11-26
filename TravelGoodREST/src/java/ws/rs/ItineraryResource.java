@@ -1,14 +1,17 @@
 package ws.rs;
 
+import ws.rs.Itinerary;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 import ws.rs.HotelResource;
 
 @Path("itinerary")
@@ -18,8 +21,21 @@ public class ItineraryResource {
      */
     public static List<Itinerary> itineraryDb = new ArrayList<>();
     
+    /**
+     * @return a list of all user's itineraries
+     */
+    @GET
+    @Produces("application/json,application/xml")
+    public List<Itinerary> getItineraries() {
+        return itineraryDb;
+    }
+    
+    /**
+     * Adds an itinerary to the database and returns the newly created itinerary
+     * @return 
+     */
     @PUT
-    @Produces("application/json")
+    @Produces("application/json,application/xml")
     public Itinerary createItinerary() {
         int itineraryId = itineraryDb.size();
         Itinerary newItinerary = new Itinerary(String.valueOf(itineraryId));
@@ -28,16 +44,14 @@ public class ItineraryResource {
         return newItinerary;
     }
     
-    @GET
-    @Produces("application/json")
-    public List<Itinerary> getItineraries() {
-        return itineraryDb;
-    }
-    
+    /**
+     * @param id of the itinerary
+     * @return the specified itinerary
+     */
     @GET 
     @Path("/{itineraryId}")
     @Produces("application/json")
-    public Itinerary getItineraryStatus(@PathParam("itineraryId") String id) {
+    public Itinerary getItinerary(@PathParam("itineraryId") String id) {
         Itinerary newItinerary = this.itineraryDb.get(Integer.parseInt(id));
         
         /*
@@ -49,8 +63,8 @@ public class ItineraryResource {
         return newItinerary;
     }
       
-    @POST
-    @Path("/{itineraryID}/hotel/{bookingNumber}")
+    @PUT
+    @Path("/{itineraryId}/hotel/{bookingNumber}")
     @Produces("application/json")
     public Itinerary addHotelToItinerary(
             @PathParam("itineraryId") String itineraryID,
@@ -58,7 +72,7 @@ public class ItineraryResource {
         
         for(Itinerary itinerary : itineraryDb)
             if(itinerary.ID.equals(itineraryID)){
-                for(HotelInformation hotelInfo : HotelResource.getSearchedHotels())
+                for(HotelInformation hotelInfo: HotelResource.getSearchedHotels())
                     if(hotelInfo.getBookingNumber() == Integer.parseInt(bookingNumber)){
                         itinerary.hotels.add(hotelInfo);
                         return itinerary;
@@ -70,6 +84,12 @@ public class ItineraryResource {
         //no itineraryID: 404
         return null;
                
+    }
+    
+    @DELETE
+    @Path("/reset")
+    public void resetItineraryDB(){
+        itineraryDb = new ArrayList();
     }
     
 }
