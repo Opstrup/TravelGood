@@ -14,6 +14,9 @@ public class HotelModel {
     
     public HotelModel(){
         hotelDB = new ArrayList<>();
+        hotelDB.add(new Hotel("NiceView1", new Address("copenhagen", "Somestreet 5"), 560,false));
+        hotelDB.add(new Hotel("NiceView2", new Address("copenhagen", "Somestreet 55"), 200,true));
+        hotelDB.add(new Hotel("NiceView3", new Address("Østerlars","Somestreet 60"),110,true));
         hotelInformationDB = new ArrayList<>();
     }
     
