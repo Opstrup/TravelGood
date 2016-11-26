@@ -2,6 +2,7 @@ package airline.ws;
 
 import bankservice.ws.CreditCardFaultMessage;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -17,19 +18,21 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 public class AirlineModel {
-
     protected List <Flight> flightsDB;
     protected List <airline.ws.FlightInformation> flightsInformationDB;
-    public String url = "C:/Users/Vitali/Desktop/TravelGood/Airline/build/web/WEB-INF/classes/airline/ws/flightDB.txt";
-
+  //  public String url = "C:/Users/Vitali/Desktop/TravelGood/Airline/build/web/WEB-INF/classes/airline/ws/flightDB.txt";
+    public String url = "C:/Users/Vitali/Dropbox/Apps/Travel/Airline/build/web/WEB-INF/classes/airline/ws/flightDB.txt";
     
-    public AirlineModel(String dbFilePath) throws IOException{
+    private static final boolean IS_WINDOWS = System.getProperty( "os.name" ).contains( "indow" );
+       
+    public AirlineModel(String dbFilePath) throws IOException {
         // startAirport;destinationAirport;departureDate;arrivalDate;airlineName;availableSeats
         // and add a flight from each line using the split(";") operation
         flightsDB = new ArrayList<>();
         flightsInformationDB = new ArrayList<>();
         AtomicInteger flightId = new AtomicInteger(0);
-       // URL url = getClass().getResource(dbFilePath);  //Getting path probelm with file/C: the "/" need to be taken away.
+        
+        //URL urlp = getClass().getResource(dbFilePath);  //Getting path probelm with file/C: the "/" need to be taken away.
 
         //Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8).forEach((line)-> {
         Files.lines(Paths.get(url), StandardCharsets.UTF_8).forEach((line)-> {
@@ -77,9 +80,10 @@ public class AirlineModel {
             if(flightInfo.getBookingNumber() == bookingNumber){
                 if(flightInfo.getFlight().isCreditCardNeeded()){
                     try {
+                        //Charge credit card, and not validate credit card.
                         if(validateCreditCard(7, ccInfo, flightInfo.getFlightPrice())){
-                        flightInfo.setStatus("Confirmed");
-                        return true;
+                            flightInfo.setStatus("Confirmed");
+                            return true;
                         }
                     }
                     catch (bankservice.ws.CreditCardFaultMessage exFaultMessage) {
@@ -93,19 +97,7 @@ public class AirlineModel {
             }
         }
         return false;       
-    }
-    
-    private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {
-        bankservice.ws.BankService service = new bankservice.ws.BankService();
-        bankservice.ws.BankPortType port = service.getBankPort();
-        return port.validateCreditCard(group, creditCardInfo, amount);
-    }
-    private static boolean refundCreditCart(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage {
-        bankservice.ws.BankService service = new bankservice.ws.BankService();
-        bankservice.ws.BankPortType port = service.getBankPort();
-        return port.refundCreditCard(group, creditCardInfo, amount, account);
-    }
-    
+    }   
     public boolean cancelFly(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage, Exception {
         for(FlightInformation flightInfo : flightsInformationDB){
             if(flightInfo.getBookingNumber() == bookingNumber){
@@ -122,9 +114,21 @@ public class AirlineModel {
                 }
             }
             else {
-                throw new Exception("BookingNo do not eksist");
+                throw new Exception("BookingNo do not exsist");
             }
         }
         return false;
     }
+
+    private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {
+        bankservice.ws.BankService service = new bankservice.ws.BankService();
+        bankservice.ws.BankPortType port = service.getBankPort();
+        return port.validateCreditCard(group, creditCardInfo, amount);
+    }
+    private static boolean refundCreditCart(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage {
+        bankservice.ws.BankService service = new bankservice.ws.BankService();
+        bankservice.ws.BankPortType port = service.getBankPort();
+        return port.refundCreditCard(group, creditCardInfo, amount, account);
+    }
+
 }

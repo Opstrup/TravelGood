@@ -19,20 +19,22 @@ public class AirlineController {
     private String dbFilePath = "flightDB.txt";
     private AirlineModel model;
     
+    // Create airline list.
+    
     public AirlineController() throws IOException {
      this.model = new AirlineModel(this.dbFilePath);    
     }
     
     @WebMethod(operationName = "getFlights")
     public List<airline.ws.FlightInformation> getFlights(
-            @WebParam(name = "startAirport")String startAirport,
-            @WebParam(name = "endAirport")String destinationAirport,
-            @WebParam(name = "startDate") XMLGregorianCalendar departureDate) {
+                                @WebParam(name = "startAirport")String startAirport,
+                                @WebParam(name = "endAirport")String destinationAirport,
+                                @WebParam(name = "startDate") XMLGregorianCalendar departureDate) {
         return model.getFlights(startAirport, destinationAirport, departureDate);
     }
  
     @WebMethod(operationName = "bookFlight")
-    public boolean bookFlight (@WebParam (name = "bookingNumber") int bookingNumber, 
+    public boolean bookFlight(@WebParam (name = "bookingNumber") int bookingNumber, 
                                @WebParam (name = "CreditCardInformation") 
                                bankservice.ws.CreditCardInfoType ccInfo)throws bankservice.ws.CreditCardFaultMessage{
         
@@ -48,8 +50,15 @@ public class AirlineController {
         (i.e., throws an exception) if the credit card information was not valid, there was not enough money on
         the client account, or if for other reasons the booking fails.
         */
-        
+    }
+    @WebMethod(operationName = "cancleFlight")
+    public void cancleFlight (@WebParam (name = "bookingNumber") int bookingNumber,
+                              @WebParam (name = "flightPrice") int flightPrice,
+                              @WebParam (name = "CreditCardInformation")
+                              bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage {
+      
+        //model.cancelFly(bookingNumber,ccInfo); 
     }
 	
-  
+    
 }

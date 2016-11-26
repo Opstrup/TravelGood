@@ -13,19 +13,19 @@ import static org.junit.Assert.*;
 
 public class AirlineTests{
         
-    //@Test
+    @Test
     public void should_return_arrayList_test() throws IOException {
         AirlineModel UUT = new AirlineModel("flightDB.txt");
         List <FlightInformation> flightInfoList = new ArrayList<>();
         
         assertTrue(UUT.getFlights(null, null, null) instanceof ArrayList);
     } 
-    //@Test
+    @Test
     public void should_return_empty_arrayList_test() throws IOException {
         AirlineModel UUT = new AirlineModel("flightDB.txt");
         assertTrue(UUT.getFlights(null, null, null).isEmpty());
     }
-    //@Test
+    @Test
     public void should_return_arrayList_with_one_element_test() throws IOException {
         // db contains: copenhagen;rome;2016-08-10;2016-09-10;Ryanair;10
         AirlineModel UUT = new AirlineModel("flightDB.txt");
@@ -44,7 +44,7 @@ public class AirlineTests{
     
 // Need to know what bank account parameters have, in bank service methode.  
        
-    //@Test // When no credit card are valid in the list.
+    @Test // When no credit card are valid in the list.
     public void bookFlights() throws bankservice.ws.CreditCardFaultMessage, IOException {
         AirlineModel airlineModel = new AirlineModel("flightDB.txt");
         XMLGregorianCalendar departureDate = null;
@@ -76,7 +76,7 @@ public class AirlineTests{
              assertFalse(false);
         }
     }
-    //@Test //If credit card is needed.
+    @Test //If credit card is needed.
     public void bookFlights1() throws bankservice.ws.CreditCardFaultMessage, IOException {
         AirlineModel airlineModel = new AirlineModel("flightDB.txt");
         XMLGregorianCalendar departureDate = null;
@@ -114,7 +114,7 @@ public class AirlineTests{
             assertFalse(false);
         }
     }   
-    //@Test //Test if cresitcard exist, we test the exception! (This is valid test) Per defaul, the credit card is faul, we test this.
+    @Test //Test if cresitcard exist, we test the exception! (This is valid test) Per defaul, the credit card is faul, we test this.
     public void bookFlights2() throws bankservice.ws.CreditCardFaultMessage, IOException {
         AirlineModel airlineModel = new AirlineModel("flightDB.txt");
         XMLGregorianCalendar departureDate = null;
