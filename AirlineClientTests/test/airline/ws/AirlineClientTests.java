@@ -151,6 +151,34 @@ public class AirlineClientTests {
         cancelFlight(testFlightInformation.bookingNumber, testFlightInformation.getFlight().getFlightPrice(), ccit);
     }
 
+    @Test (expected=airline.ws.Exception_Exception.class) 
+    public void should_throw_an_no_bookingno_exception_booked_flight () throws CreditCardFaultMessage, Exception_Exception {
+        XMLGregorianCalendar depDate = null;
+        try {
+            depDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
+        } catch (DatatypeConfigurationException ex) {
+            Logger.getLogger(AirlineClientTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String startAirport = "Copenhagen";
+        String endAirport = "Rome";
+        
+        java.util.List<airline.ws.FlightInformation> result = getFlights(startAirport, endAirport, depDate);
+        FlightInformation testFlightInformation = result.get(0);
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccit = new CreditCardInfoType();
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate expDate = new dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate();
+        expDate.setMonth(5);
+        expDate.setYear(9);
+                
+        // Valid card info
+        ccit.setExpirationDate(expDate);
+        ccit.setName("Thor-Jensen Claus");
+        ccit.setNumber("50408825");
+        
+        bookFlight(9999, ccit);
+        
+        cancelFlight(9999, testFlightInformation.getFlight().getFlightPrice(), ccit);
+    }
+    
     private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws CreditCardFaultMessage {
         airline.ws.AirlineService service = new airline.ws.AirlineService();
         airline.ws.AirlineController port = service.getAirlineControllerPort();
