@@ -18,8 +18,6 @@ class HotelInformation {
     private int priceForStay;
     private String nameOfHotelService = "NiceView";
     private String status;
-
-    
     
     public HotelInformation(Hotel hotel) {
         this.hotel = hotel;
@@ -56,4 +54,21 @@ class HotelInformation {
     public int getBookingNumber() {
         return bookingNumber;
     }
+    
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public void setBookingNumber(int bookingNumber) {
+        this.bookingNumber = bookingNumber;
+    }
+
+    public void setPriceForStay(int priceForStay) {
+        this.priceForStay = priceForStay;
+    }
+
+    public void setNameOfHotelService(String nameOfHotelService) {
+        this.nameOfHotelService = nameOfHotelService;
+    }
+
 }

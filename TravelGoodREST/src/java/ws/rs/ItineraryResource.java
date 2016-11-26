@@ -1,5 +1,6 @@
 package ws.rs;
 
+import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -8,6 +9,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import ws.rs.HotelResource;
 
 @Path("itinerary")
 public class ItineraryResource {
@@ -46,25 +48,29 @@ public class ItineraryResource {
         
         return newItinerary;
     }
-    
-    /*
+      
     @POST
-    @Path("/{itineraryID}/hotel/{hotelID}")
+    @Path("/{itineraryID}/hotel/{bookingNumber}")
     @Produces("application/json")
     public Itinerary addHotelToItinerary(
             @PathParam("itineraryId") String itineraryID,
-            @PathParam("hotelId") String hotelID){
+            @PathParam("bookingNumber") String bookingNumber){
         
-        
-        
-        for(Itinerary itinerary : itineraryDb){
+        for(Itinerary itinerary : itineraryDb)
             if(itinerary.ID.equals(itineraryID)){
-                
-                List 
-                
+                for(HotelInformation hotelInfo : HotelResource.getSearchedHotels())
+                    if(hotelInfo.getBookingNumber() == Integer.parseInt(bookingNumber)){
+                        itinerary.hotels.add(hotelInfo);
+                        return itinerary;
+                    }
+                //No hotelInfoID 404
+                return null;
             }
-                
-        }
-    */
+            
+        //no itineraryID: 404
+        return null;
+               
+    }
+    
 }
     

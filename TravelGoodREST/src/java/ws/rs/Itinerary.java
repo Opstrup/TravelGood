@@ -1,5 +1,8 @@
 package ws.rs;
 
+import hotel.ws.HotelInformation;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,6 +16,7 @@ public class Itinerary {
     
     public String ID;
     public BookingStatus status;
+    public List<HotelInformation> hotels = new ArrayList<>();
     
     public Itinerary() { };
     

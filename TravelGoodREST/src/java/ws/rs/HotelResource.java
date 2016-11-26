@@ -23,10 +23,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @Path("hotel")
 public class HotelResource {
     
+    private static List<HotelInformation> searchedHotels = new ArrayList();
+    
     @GET
     @Path("/{city}")
     @Consumes("application/json")
-    @Produces("application/json")   
+    @Produces("application/json")
     public List<HotelInformation> getHotelsForItinerary (
                 @PathParam("city") String city, 
                 @QueryParam("start") String startDate,
@@ -36,6 +38,9 @@ public class HotelResource {
         XMLGregorianCalendar enDate = DateParser.parse(endDate);
         
         List<HotelInformation> hotels = getHotels(city, stDate, enDate);
+        for(HotelInformation hotelInfo : hotels){
+            searchedHotels.add(hotelInfo);
+        }
         
         return hotels;
     }
@@ -46,5 +51,7 @@ public class HotelResource {
         return port.getHotels(city, arrivalDate, departureDate);
     }
      
-    
+     public static List<HotelInformation> getSearchedHotels() {
+        return searchedHotels;
+    }
 }
