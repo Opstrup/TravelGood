@@ -10,7 +10,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class AirlineModel {
     protected List <Flight> flightsDB;
     protected List <FlightInformation> flightsInformationDB;
-    protected AccountType lameDuckAccountType;
+    protected AccountType lameDuckAccountType = new AccountType();
     
     public AirlineModel() {
         flightsDB = new ArrayList<>();
@@ -68,12 +68,13 @@ public class AirlineModel {
         return false;       
     }
     
-    public void cancelFlight(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception {
+    public boolean cancelFlight(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception {
         for(FlightInformation flightInfo : flightsInformationDB){
             if(flightInfo.getBookingNumber() == bookingNumber){
                 try {
                     if(refundCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice()/2, lameDuckAccountType)) {
                         flightInfo.setStatus("Canceled");
+                        return true;
                     }
                 }
                 catch (bankservice.ws.CreditCardFaultMessage exFaultMessage) {
@@ -81,7 +82,7 @@ public class AirlineModel {
                 }
             }
         }
-        throw new Exception("BookingNo. do not exsist");
+        return false;
     }
 
     private void populateDb () throws DatatypeConfigurationException {

@@ -33,12 +33,13 @@ public class AirlineController {
         return model.bookFlight(bookingNumber,ccInfo);
     }
     
-    @WebMethod(operationName = "cancleFlight")
-    public void cancleFlight (@WebParam (name = "bookingNumber") int bookingNumber,
+    @WebMethod(operationName = "cancelFlight")
+    public void cancelFlight (@WebParam (name = "bookingNumber") int bookingNumber,
                               @WebParam (name = "flightPrice") int flightPrice,
                               @WebParam (name = "CreditCardInformation") 
                               bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception {
       
-        model.cancelFlight(bookingNumber, ccInfo);
+        if (!model.cancelFlight(bookingNumber, ccInfo))
+            throw new Exception("BookingNo. do not exsist");
     }
 }

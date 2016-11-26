@@ -38,31 +38,4 @@ public class AirlineTests{
         assertTrue(result.size() > 0);
     }
     
-    @Test
-    public void bookFlights() throws bankservice.ws.CreditCardFaultMessage, IOException {
-        AirlineModel airlineModel = new AirlineModel();
-        XMLGregorianCalendar departureDate = null;
-        
-        try {
-            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
-        } catch (DatatypeConfigurationException ex) {
-            Logger.getLogger(AirlineTests.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        List<FlightInformation> result = airlineModel.getFlights("Copenhagen", "Rome", departureDate);
-        assertTrue(result.size() > 0);
-        
-        FlightInformation fligtWithoutCreditGuarantee = null;
-    
-        //Looking for flight with out card.
-        for(FlightInformation flyInfo: result){
-            if(!flyInfo.getFlight().isCreditCardNeeded()){
-                fligtWithoutCreditGuarantee = flyInfo;
-            }
-        }
-        bankservice.ws.CreditCardInfoType ccInfo = null;
-       
-        int flyId = fligtWithoutCreditGuarantee.getBookingNumber();
-        boolean res = airlineModel.bookFlight(flyId, ccInfo);
-        assertTrue(res);
-    }   
 }

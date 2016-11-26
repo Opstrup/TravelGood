@@ -2,13 +2,15 @@
 
 <xs:import namespace="http://types.fastmoney.imm.dtu.dk" schemaLocation="http://localhost:8080/Airline/AirlineService?xsd=2"/>
 
+<xs:element name="Exception" type="tns:Exception"/>
+
 <xs:element name="bookFlight" type="tns:bookFlight"/>
 
 <xs:element name="bookFlightResponse" type="tns:bookFlightResponse"/>
 
-<xs:element name="cancleFlight" type="tns:cancleFlight"/>
+<xs:element name="cancelFlight" type="tns:cancelFlight"/>
 
-<xs:element name="cancleFlightResponse" type="tns:cancleFlightResponse"/>
+<xs:element name="cancelFlightResponse" type="tns:cancelFlightResponse"/>
 
 <xs:element name="getFlights" type="tns:getFlights"/>
 
@@ -63,7 +65,7 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="cancleFlight">
+<xs:complexType name="cancelFlight">
 <xs:sequence>
 <xs:element name="bookingNumber" type="xs:int"/>
 <xs:element name="flightPrice" type="xs:int"/>
@@ -71,7 +73,13 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="cancleFlightResponse">
+<xs:complexType name="cancelFlightResponse">
 <xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="Exception">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
 </xs:complexType>
 </xs:schema>

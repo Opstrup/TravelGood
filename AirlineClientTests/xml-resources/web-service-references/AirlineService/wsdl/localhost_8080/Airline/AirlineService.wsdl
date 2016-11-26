@@ -16,35 +16,39 @@
 <message name="getFlightsResponse">
 <part name="parameters" element="tns:getFlightsResponse"/>
 </message>
-<message name="cancleFlight">
-<part name="parameters" element="tns:cancleFlight"/>
-</message>
-<message name="cancleFlightResponse">
-<part name="parameters" element="tns:cancleFlightResponse"/>
-</message>
-<message name="CreditCardFaultMessage">
-<part xmlns:ns1="http://fastmoney.imm.dtu.dk" name="fault" element="ns1:CreditCardFault"/>
-</message>
 <message name="bookFlight">
 <part name="parameters" element="tns:bookFlight"/>
 </message>
 <message name="bookFlightResponse">
 <part name="parameters" element="tns:bookFlightResponse"/>
 </message>
+<message name="CreditCardFaultMessage">
+<part xmlns:ns1="http://fastmoney.imm.dtu.dk" name="fault" element="ns1:CreditCardFault"/>
+</message>
+<message name="cancelFlight">
+<part name="parameters" element="tns:cancelFlight"/>
+</message>
+<message name="cancelFlightResponse">
+<part name="parameters" element="tns:cancelFlightResponse"/>
+</message>
+<message name="Exception">
+<part name="fault" element="tns:Exception"/>
+</message>
 <portType name="AirlineController">
 <operation name="getFlights">
 <input wsam:Action="http://ws.airline/AirlineController/getFlightsRequest" message="tns:getFlights"/>
 <output wsam:Action="http://ws.airline/AirlineController/getFlightsResponse" message="tns:getFlightsResponse"/>
 </operation>
-<operation name="cancleFlight">
-<input wsam:Action="http://ws.airline/AirlineController/cancleFlightRequest" message="tns:cancleFlight"/>
-<output wsam:Action="http://ws.airline/AirlineController/cancleFlightResponse" message="tns:cancleFlightResponse"/>
-<fault message="tns:CreditCardFaultMessage" name="CreditCardFaultMessage" wsam:Action="http://ws.airline/AirlineController/cancleFlight/Fault/CreditCardFaultMessage"/>
-</operation>
 <operation name="bookFlight">
 <input wsam:Action="http://ws.airline/AirlineController/bookFlightRequest" message="tns:bookFlight"/>
 <output wsam:Action="http://ws.airline/AirlineController/bookFlightResponse" message="tns:bookFlightResponse"/>
 <fault message="tns:CreditCardFaultMessage" name="CreditCardFaultMessage" wsam:Action="http://ws.airline/AirlineController/bookFlight/Fault/CreditCardFaultMessage"/>
+</operation>
+<operation name="cancelFlight">
+<input wsam:Action="http://ws.airline/AirlineController/cancelFlightRequest" message="tns:cancelFlight"/>
+<output wsam:Action="http://ws.airline/AirlineController/cancelFlightResponse" message="tns:cancelFlightResponse"/>
+<fault message="tns:CreditCardFaultMessage" name="CreditCardFaultMessage" wsam:Action="http://ws.airline/AirlineController/cancelFlight/Fault/CreditCardFaultMessage"/>
+<fault message="tns:Exception" name="Exception" wsam:Action="http://ws.airline/AirlineController/cancelFlight/Fault/Exception"/>
 </operation>
 </portType>
 <binding name="AirlineControllerPortBinding" type="tns:AirlineController">
@@ -58,7 +62,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="cancleFlight">
+<operation name="bookFlight">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -70,7 +74,7 @@
 <soap:fault name="CreditCardFaultMessage" use="literal"/>
 </fault>
 </operation>
-<operation name="bookFlight">
+<operation name="cancelFlight">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -80,6 +84,9 @@
 </output>
 <fault name="CreditCardFaultMessage">
 <soap:fault name="CreditCardFaultMessage" use="literal"/>
+</fault>
+<fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
 </fault>
 </operation>
 </binding>
