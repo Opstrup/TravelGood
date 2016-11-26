@@ -3,22 +3,19 @@ package airline.ws;
 import java.io.IOException;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
-import java.util.Date;
 import java.util.List;
 import javax.jws.WebParam;
-import javax.jws.soap.SOAPBinding;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 @WebService(serviceName = "AirlineService")
 
 public class AirlineController {
-    private String dbFilePath = "flightDB.txt";
     private AirlineModel model;
     
     // Create airline list.
     
     public AirlineController() throws IOException {
-     this.model = new AirlineModel(this.dbFilePath);    
+        this.model = new AirlineModel();    
     }
     
     @WebMethod(operationName = "getFlights")

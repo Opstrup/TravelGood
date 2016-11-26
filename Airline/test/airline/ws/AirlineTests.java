@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -15,46 +14,41 @@ public class AirlineTests{
         
     @Test
     public void should_return_arrayList_test() throws IOException {
-        AirlineModel UUT = new AirlineModel("flightDB.txt");
-        List <FlightInformation> flightInfoList = new ArrayList<>();
+        AirlineModel UUT = new AirlineModel();
         
         assertTrue(UUT.getFlights(null, null, null) instanceof ArrayList);
     } 
     @Test
     public void should_return_empty_arrayList_test() throws IOException {
-        AirlineModel UUT = new AirlineModel("flightDB.txt");
+        AirlineModel UUT = new AirlineModel();
         assertTrue(UUT.getFlights(null, null, null).isEmpty());
     }
     @Test
     public void should_return_arrayList_with_one_element_test() throws IOException {
-        // db contains: copenhagen;rome;2016-08-10;2016-09-10;Ryanair;10
-        AirlineModel UUT = new AirlineModel("flightDB.txt");
+        AirlineModel UUT = new AirlineModel();
         XMLGregorianCalendar departureDate = null;
         
         try {
-            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
+            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
         } catch (DatatypeConfigurationException ex) {
             Logger.getLogger(AirlineTests.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        List<FlightInformation> result = UUT.getFlights("copenhagen", "rome", departureDate);
+        List<FlightInformation> result = UUT.getFlights("Copenhagen", "Rome", departureDate);
         assertTrue(result.size() > 0);
     }
     
-    
-// Need to know what bank account parameters have, in bank service methode.  
-       
-    @Test // When no credit card are valid in the list.
+    @Test
     public void bookFlights() throws bankservice.ws.CreditCardFaultMessage, IOException {
-        AirlineModel airlineModel = new AirlineModel("flightDB.txt");
+        AirlineModel airlineModel = new AirlineModel();
         XMLGregorianCalendar departureDate = null;
         
         try {
-            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
+            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
         } catch (DatatypeConfigurationException ex) {
             Logger.getLogger(AirlineTests.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<FlightInformation> result = airlineModel.getFlights("copenhagen", "rome", departureDate); //Adding cities to list.
+        List<FlightInformation> result = airlineModel.getFlights("Copenhagen", "Rome", departureDate);
         assertTrue(result.size() > 0);
         
         FlightInformation fligtWithoutCreditGuarantee = null;
@@ -67,26 +61,22 @@ public class AirlineTests{
         }
         bankservice.ws.CreditCardInfoType ccInfo = null;
        
-        if (fligtWithoutCreditGuarantee != null) {
-            int flyId = fligtWithoutCreditGuarantee.getBookingNumber();
-            boolean res = airlineModel.bookFlight(flyId, ccInfo);
-            assertTrue(res);
-        }
-        else {
-             assertFalse(false);
-        }
+        int flyId = fligtWithoutCreditGuarantee.getBookingNumber();
+        boolean res = airlineModel.bookFlight(flyId, ccInfo);
+        assertTrue(res);
     }
-    @Test //If credit card is needed.
+    
+    @Test
     public void bookFlights1() throws bankservice.ws.CreditCardFaultMessage, IOException {
-        AirlineModel airlineModel = new AirlineModel("flightDB.txt");
+        AirlineModel airlineModel = new AirlineModel();
         XMLGregorianCalendar departureDate = null;
         
         try {
-            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
+            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
         } catch (DatatypeConfigurationException ex) {
             Logger.getLogger(AirlineTests.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<FlightInformation> result = airlineModel.getFlights("copenhagen", "rome", departureDate);
+        List<FlightInformation> result = airlineModel.getFlights("Copenhagen", "Rome", departureDate);
         assertTrue(result.size() > 0);
         
         FlightInformation fligtWithoutCreditGuarantee = null;
@@ -105,26 +95,22 @@ public class AirlineTests{
         ccInfo.setName("Luca");
         ccInfo.setNumber("12345678");
        
-        if (fligtWithoutCreditGuarantee != null) {
-            int flyId = fligtWithoutCreditGuarantee.getBookingNumber();
-            boolean res = airlineModel.bookFlight(flyId, ccInfo);
-            assertTrue(res);
-        }
-        else {
-            assertFalse(false);
-        }
-    }   
-    @Test //Test if cresitcard exist, we test the exception! (This is valid test) Per defaul, the credit card is faul, we test this.
+        int flyId = fligtWithoutCreditGuarantee.getBookingNumber();
+        boolean res = airlineModel.bookFlight(flyId, ccInfo);
+        assertTrue(res);
+    }
+    
+    @Test 
     public void bookFlights2() throws bankservice.ws.CreditCardFaultMessage, IOException {
-        AirlineModel airlineModel = new AirlineModel("flightDB.txt");
+        AirlineModel airlineModel = new AirlineModel();
         XMLGregorianCalendar departureDate = null;
         
         try {
-            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
+            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
         } catch (DatatypeConfigurationException ex) {
             Logger.getLogger(AirlineTests.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<FlightInformation> result = airlineModel.getFlights("copenhagen", "rome", departureDate);
+        List<FlightInformation> result = airlineModel.getFlights("Copenhagen", "Rome", departureDate);
         assertTrue(result.size() > 0);
         
         FlightInformation fligtWithCreditGuarantee = null;
@@ -145,26 +131,22 @@ public class AirlineTests{
         ccInfo.setName("Luca");
         ccInfo.setNumber("12345678");
      
-        if (fligtWithCreditGuarantee != null) {
-            int flyId = fligtWithCreditGuarantee.getBookingNumber();
-            boolean res = airlineModel.bookFlight(flyId, ccInfo);
-            assertTrue(res);
-        }
-        else {
-             assertFalse(false);
-        }
+        int flyId = fligtWithCreditGuarantee.getBookingNumber();
+        boolean res = airlineModel.bookFlight(flyId, ccInfo);
+        assertTrue(res);
     }   
-    @Test //Only canceling with no creditcard garantie. Cause we only have one item in the list.
+    
+    @Test
     public void cancelFlight() throws bankservice.ws.CreditCardFaultMessage, IOException, Exception {
-        AirlineModel airlineModel = new AirlineModel("flightDB.txt");
+        AirlineModel airlineModel = new AirlineModel();
         XMLGregorianCalendar departureDate = null;
         
         try {
-            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
+            departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
         } catch (DatatypeConfigurationException ex) {
             Logger.getLogger(AirlineTests.class.getName()).log(Level.SEVERE, null, ex);
         }
-        List<FlightInformation> result = airlineModel.getFlights("copenhagen", "rome", departureDate);
+        List<FlightInformation> result = airlineModel.getFlights("Copenhagen", "Rome", departureDate);
         assertTrue(result.size() > 0);
         
         FlightInformation fligtWithNoCreditGuarantee = null;

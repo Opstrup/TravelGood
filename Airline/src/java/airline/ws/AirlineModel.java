@@ -1,66 +1,26 @@
 package airline.ws;
 
 import bankservice.ws.CreditCardFaultMessage;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 public class AirlineModel {
     protected List <Flight> flightsDB;
-    protected List <airline.ws.FlightInformation> flightsInformationDB;
-  //  public String url = "C:/Users/Vitali/Desktop/TravelGood/Airline/build/web/WEB-INF/classes/airline/ws/flightDB.txt";
-    public String url = "C:/Users/Vitali/Dropbox/Apps/Travel/Airline/build/web/WEB-INF/classes/airline/ws/flightDB.txt";
-    
-    private static final boolean IS_WINDOWS = System.getProperty( "os.name" ).contains( "indow" );
+    protected List <FlightInformation> flightsInformationDB;
        
-    public AirlineModel(String dbFilePath) throws IOException {
-        // startAirport;destinationAirport;departureDate;arrivalDate;airlineName;availableSeats
-        // and add a flight from each line using the split(";") operation
+    public AirlineModel() {
         flightsDB = new ArrayList<>();
         flightsInformationDB = new ArrayList<>();
-        AtomicInteger flightId = new AtomicInteger(0);
         
-        //URL urlp = getClass().getResource(dbFilePath);  //Getting path probelm with file/C: the "/" need to be taken away.
-
-        //Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8).forEach((line)-> {
-        Files.lines(Paths.get(url), StandardCharsets.UTF_8).forEach((line)-> {
-            try {
-                String[] flightInformationArray = line.split(";");
-                String startAirport = flightInformationArray[0];
-                String destinationAirport = flightInformationArray[1];
-                String departureDateString[] = flightInformationArray[2].split("-");
-                XMLGregorianCalendar departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(
-                        Integer.parseInt(departureDateString[0]), Integer.parseInt(departureDateString[1]), Integer.parseInt(departureDateString[2])));
-                //Date departureDate = new GregorianCalendar(Integer.parseInt(departureDateString[0]), Integer.parseInt(departureDateString[1]), Integer.parseInt(departureDateString[2])).getTime();
-                String arrivalDateString[] = flightInformationArray[3].split("-");
-                XMLGregorianCalendar arrivalDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(
-                        Integer.parseInt(arrivalDateString[0]), Integer.parseInt(arrivalDateString[1]), Integer.parseInt(arrivalDateString[2])));
-                //Date arrivalDate = new GregorianCalendar(Integer.parseInt(arrivalDateString[0]), Integer.parseInt(arrivalDateString[1]), Integer.parseInt(arrivalDateString[2])).getTime();
-                String airlineName = flightInformationArray[4];
-                int availableSeats = Integer.parseInt(flightInformationArray[5]);
-                
-                boolean isCreditCardNeeded = false; 
-                Flight newFlight = new Flight(flightId.incrementAndGet(), startAirport, destinationAirport, departureDate, arrivalDate, airlineName, availableSeats, isCreditCardNeeded);
-                flightsDB.add(newFlight);
-            } 
-            catch (DatatypeConfigurationException ex) {
-                Logger.getLogger(AirlineModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            populateDb();
+        } catch (Exception e) {
+            // Throws 500 internal error
         }
-        );             
     }
+    
     public List<FlightInformation> getFlights(String startAirport, String destinationAirport, XMLGregorianCalendar departureDate) {
         List<FlightInformation> result = new ArrayList<>();
         for(Flight flight : flightsDB){
@@ -75,6 +35,7 @@ public class AirlineModel {
         }
         return result;
     }
+    
     public boolean bookFlight(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage{
         for(FlightInformation flightInfo : flightsInformationDB){
             if(flightInfo.getBookingNumber() == bookingNumber){
@@ -97,7 +58,8 @@ public class AirlineModel {
             }
         }
         return false;       
-    }   
+    }
+    
     public boolean cancelFly(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage, Exception {
         for(FlightInformation flightInfo : flightsInformationDB){
             if(flightInfo.getBookingNumber() == bookingNumber){
@@ -120,11 +82,32 @@ public class AirlineModel {
         return false;
     }
 
+    private void populateDb () throws DatatypeConfigurationException {
+        XMLGregorianCalendar depatureDateFlightOne = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
+        XMLGregorianCalendar arrivalDateFlightOne = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 27));
+
+        Flight flightOne = new Flight(1, "Copenhagen", "Rome", depatureDateFlightOne, arrivalDateFlightOne, "EasyJet", 10, true);
+        FlightInformation flightInformationOne = new FlightInformation(flightOne);
+        
+        XMLGregorianCalendar depatureDateFlightTwo = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
+        XMLGregorianCalendar arrivalDateFlightTwo = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 27));
+
+        Flight flightTwo = new Flight(1, "Copenhagen", "Rome", depatureDateFlightTwo, arrivalDateFlightTwo, "EasyJet", 10, false);
+        FlightInformation flightInformationTwo = new FlightInformation(flightOne);
+        
+        flightsDB.add(flightOne);
+        flightsInformationDB.add(flightInformationOne);
+        
+        flightsDB.add(flightTwo);
+        flightsInformationDB.add(flightInformationTwo);
+    }
+    
     private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {
         bankservice.ws.BankService service = new bankservice.ws.BankService();
         bankservice.ws.BankPortType port = service.getBankPort();
         return port.validateCreditCard(group, creditCardInfo, amount);
     }
+    
     private static boolean refundCreditCart(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount, bankservice.ws.AccountType account) throws bankservice.ws.CreditCardFaultMessage {
         bankservice.ws.BankService service = new bankservice.ws.BankService();
         bankservice.ws.BankPortType port = service.getBankPort();
