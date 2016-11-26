@@ -27,22 +27,30 @@ public class AirlineClientTests {
         assertTrue(result.size() > 0); 
     }
     
-    @Test
-    public void should_book_flight () {
-        XMLGregorianCalendar depDate = null;
-        try {
-            depDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
-        } catch (DatatypeConfigurationException ex) {
-            Logger.getLogger(AirlineClientTests.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String startAirport = "Copenhagen";
-        String endAirport = "Rome";
-        
-        java.util.List<airline.ws.FlightInformation> result = getFlights(startAirport, endAirport, depDate);
-        FlightInformation testFlightInformation = result.get(0);
-        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccit = new CreditCardInfoType();
-        
-    }
+//    @Test
+//    public void should_book_flight () {
+//        XMLGregorianCalendar depDate = null;
+//        try {
+//            depDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
+//        } catch (DatatypeConfigurationException ex) {
+//            Logger.getLogger(AirlineClientTests.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        String startAirport = "Copenhagen";
+//        String endAirport = "Rome";
+//        
+//        java.util.List<airline.ws.FlightInformation> result = getFlights(startAirport, endAirport, depDate);
+//        FlightInformation testFlightInformation = result.get(0);
+//        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccit = new CreditCardInfoType();
+//        
+//                dk.dtu.imm.fastmoney.CreditCardInfoType.ExpirationDate expDate = new dk.dtu.imm.fastmoney.CreditCardInfoType.ExpirationDate();
+//                expDate.setMonth(10);
+//                expDate.setYear(16);
+//                
+//                ccInfo.setExpirationDate(expDate);
+//                ccInfo.setName("Andreas");
+//                ccInfo.setNumber("12345678")
+//        
+//    }
     
     @Test (expected=CreditCardFaultMessage.class) 
     public void should_not_validate_card_book_flight () throws CreditCardFaultMessage{
