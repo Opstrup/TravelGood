@@ -1,5 +1,6 @@
 package airline.ws;
 
+import bankservice.ws.AccountType;
 import bankservice.ws.CreditCardFaultMessage;
 import java.util.*;
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -43,9 +44,16 @@ public class AirlineModel {
                     try {
                         //Charge credit card, and not validate credit card.
                         if(validateCreditCard(7, ccInfo, flightInfo.getFlightPrice())){
-                            
-                            flightInfo.setStatus("Confirmed");
-                            return true;
+                            try {
+                                AccountType lameDuckAccountType = new AccountType();
+                                lameDuckAccountType.setName("LameDuck");
+                                lameDuckAccountType.setName("50208812");
+                                chargeCreditCard(7, ccInfo, bookingNumber, lameDuckAccountType);
+                                flightInfo.setStatus("Confirmed");
+                                return true;
+                            } catch (CreditCardFaultMessage e) {
+                                throw e;
+                            }
                         }
                     }
                     catch (bankservice.ws.CreditCardFaultMessage exFaultMessage) {
@@ -110,6 +118,12 @@ public class AirlineModel {
         bankservice.ws.BankService service = new bankservice.ws.BankService();
         bankservice.ws.BankPortType port = service.getBankPort();
         return port.refundCreditCard(group, creditCardInfo, amount, account);
+    }
+
+    private static boolean chargeCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount, bankservice.ws.AccountType account) throws CreditCardFaultMessage {
+        bankservice.ws.BankService service = new bankservice.ws.BankService();
+        bankservice.ws.BankPortType port = service.getBankPort();
+        return port.chargeCreditCard(group, creditCardInfo, amount, account);
     }
 
 }
