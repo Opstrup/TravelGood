@@ -12,8 +12,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class AirlineController {
     private AirlineModel model;
     
-    // Create airline list.
-    
     public AirlineController() throws IOException {
         this.model = new AirlineModel();    
     }
@@ -23,7 +21,7 @@ public class AirlineController {
                                 @WebParam(name = "startAirport")String startAirport,
                                 @WebParam(name = "endAirport")String destinationAirport,
                                 @WebParam(name = "startDate") XMLGregorianCalendar departureDate) {
-        return model.getFlights(startAirport, destinationAirport, departureDate);
+        return this.model.getFlights(startAirport, destinationAirport, departureDate);
     }
  
     @WebMethod(operationName = "bookFlight")

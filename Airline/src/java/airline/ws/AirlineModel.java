@@ -96,10 +96,7 @@ public class AirlineModel {
         FlightInformation flightInformationTwo = new FlightInformation(flightOne);
         
         flightsDB.add(flightOne);
-        flightsInformationDB.add(flightInformationOne);
-        
         flightsDB.add(flightTwo);
-        flightsInformationDB.add(flightInformationTwo);
     }
     
     private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {
