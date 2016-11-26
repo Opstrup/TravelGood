@@ -11,12 +11,12 @@ public class Itinerary {
         NOTBOOKED, BOOKED
     }
     
-    public int ID;
+    public String ID;
     public BookingStatus status;
     
     public Itinerary() { };
     
-    public Itinerary(int ID) {
+    public Itinerary(String ID) {
         this.ID = ID;
         this.status = BookingStatus.NOTBOOKED;
     }
