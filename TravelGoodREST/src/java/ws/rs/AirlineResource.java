@@ -44,4 +44,5 @@ public class AirlineResource {
         airline.ws.AirlineController port = service.getAirlineControllerPort();
         return port.getFlights(startAirport, endAirport, startDate);
     }
+
 }

@@ -8,27 +8,26 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-@Path("itinerarie")
-public class ItinerarieResource {
-    
+@Path("itinerary")
+public class ItineraryResource {
     /**
-     * Simpel list for storing the itineraries
+     * Simple list for storing the itineraries
      */
     public static List<Itinerary> itineraryDb = new ArrayList<>();
     
     @PUT
     @Produces("application/json")
-    public Itinerary createIntinerarie() {
-        int intineraryId = itineraryDb.size();
-        Itinerary newIntinerary = new Itinerary(intineraryId);
-        itineraryDb.add(newIntinerary);
+    public Itinerary createItinerary() {
+        int itineraryId = itineraryDb.size();
+        Itinerary newItinerary = new Itinerary(itineraryId);
+        itineraryDb.add(newItinerary);
         
-        return newIntinerary;
+        return newItinerary;
     }
     
     @GET
     @Produces("application/json")
-    public List<Itinerary> getItineraies() {
+    public List<Itinerary> getItineraries() {
         return itineraryDb;
     }
     
@@ -36,7 +35,7 @@ public class ItinerarieResource {
     @Path("/{itineraryId}")
     @Produces("application/json")
     public Itinerary getItineraryStatus(@PathParam("itineraryId") String id) {
-        Itinerary newIntinerary = this.itineraryDb.get(Integer.parseInt(id));
+        Itinerary newItinerary = this.itineraryDb.get(Integer.parseInt(id));
         
         /*
          * TODO:
@@ -44,6 +43,6 @@ public class ItinerarieResource {
          * return 404 error code.
          */
         
-        return newIntinerary;
+        return newItinerary;
     }
 }
