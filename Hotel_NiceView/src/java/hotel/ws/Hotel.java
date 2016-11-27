@@ -5,11 +5,11 @@ package hotel.ws;
 public class Hotel {
     private String hotelName;
     private Address address;
-    private float pricePerDay; // Consider price per day
+    private int pricePerDay; // Consider price per day
     private boolean creditCardNeeded;
 
     
-    public Hotel(String hotelName, Address address, float pricePerDay, boolean creditCardNeeded){
+    public Hotel(String hotelName, Address address, int pricePerDay, boolean creditCardNeeded){
         this.hotelName = hotelName;
         this.address = address;
         this.pricePerDay = pricePerDay;
@@ -40,8 +40,12 @@ public class Hotel {
         return address;
     }
 
-    public float getPricePerDay() {
+    public int getPricePerDay() {
         return pricePerDay;
+    }
+    
+    public void setPricePerDay(int price){
+        this.pricePerDay = price;
     }
     
     // A = period

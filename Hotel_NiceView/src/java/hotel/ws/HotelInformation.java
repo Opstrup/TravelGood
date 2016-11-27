@@ -43,14 +43,13 @@ public class HotelInformation {
     public int getPriceForStay() {
         return priceForStay;
     }
+
     public String getNameOfHotelService() {
         return nameOfHotelService;
     }    
-    public void calculatePrice(XMLGregorianCalendar arrivalDate, XMLGregorianCalendar departureDate) {
-        //long diff = departureDate. - arrivalDate.getTime();
-       // this.priceForStay =  (int) (hotel.getPricePerDay()*(diff/86400000)); /*Miliseconds pr. day, rewrite is needed to find price*/
-        this.priceForStay = (int)(departureDate.toGregorianCalendar().compareTo(arrivalDate.toGregorianCalendar()) / 86400000);
-    }
+   /* public void calculatePrice(XMLGregorianCalendar arrivalDate, XMLGregorianCalendar departureDate) {
+        this.priceForStay = (int)(departureDate.toGregorianCalendar().compareTo(arrivalDate.toGregorianCalendar()) / 86400000)*hotel.getPricePerDay();
+    }*/
     public int getBookingNumber() {
         return bookingNumber;
     }
