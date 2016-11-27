@@ -1,5 +1,6 @@
 package ws.rs;
 
+import ws.rs.DateParser;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -20,14 +21,17 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-@Path("hotel")
+@Path("hotels")
 public class HotelResource {
     
     private static List<HotelInformation> searchedHotels = new ArrayList();
+
+    public static void setSearchedHotels(List<HotelInformation> searchedHotels) {
+        HotelResource.searchedHotels = searchedHotels;
+    }
     
     @GET
     @Path("/{city}")
-    @Consumes("application/json")
     @Produces("application/json")
     public List<HotelInformation> getHotelsForItinerary (
                 @PathParam("city") String city, 
@@ -51,7 +55,7 @@ public class HotelResource {
         return port.getHotels(city, arrivalDate, departureDate);
     }
      
-     public static List<HotelInformation> getSearchedHotels() {
+    public static List<HotelInformation> getSearchedHotels() {
         return searchedHotels;
     }
 }

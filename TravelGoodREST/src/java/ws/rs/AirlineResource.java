@@ -16,7 +16,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
-@Path("airline")  // Defines the path to the base URL.
+@Path("flights")  // Defines the path to the base URL.
 public class AirlineResource {
     
     private static List<FlightInformation> searchedFlights = new ArrayList();
