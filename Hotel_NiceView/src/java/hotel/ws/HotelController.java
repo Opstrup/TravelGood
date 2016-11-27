@@ -40,7 +40,8 @@ public class HotelController {
     }
     
     @WebMethod(operationName = "cancelHotel")
-    public void cancelHotel(@WebParam(name = "bookingNumber") int bookingNumber){
-        hotelModel.cancelHotel(bookingNumber);
+    public void cancelHotel(@WebParam(name = "bookingNumber") int bookingNumber) throws Exception{
+        if (!hotelModel.cancelHotel(bookingNumber))
+            throw new Exception("Not able to cancel booked hotel");
     }
 }

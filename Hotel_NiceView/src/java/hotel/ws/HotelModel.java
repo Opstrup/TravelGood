@@ -50,12 +50,14 @@ public class HotelModel {
         return false;       
     }
     
-    public void cancelHotel(int bookingNumber){
+    public boolean cancelHotel(int bookingNumber){
         for(HotelInformation hotelInfo: hotelInformationDB){
-            if(hotelInfo.getBookingNumber() == bookingNumber){
+            if(hotelInfo.getBookingNumber() == bookingNumber && hotelInfo.getStatus() == "Confirmed"){
                 hotelInfo.setStatus("Cancelled");
+                return true;
             }
         }
+        return false;
     }
     
     private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {
