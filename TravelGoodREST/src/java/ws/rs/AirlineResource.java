@@ -7,7 +7,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -17,12 +19,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class AirlineResource {
 
     @GET
-    @Produces("application/json") // Defining which MIME type is delivered by a method annotated with any HTTP annotated methods.
-    public List<FlightInformation> getFlightsForItinerary () throws DatatypeConfigurationException {
-        String startAirport = "copenhagen";
-        String endAirport = "rome"; 
-        XMLGregorianCalendar departureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 8, 10));
-        List<FlightInformation> flights = getFlights(startAirport, endAirport, departureDate);
+    @Path("/{startAirport}/{endAirport}")
+    @Produces("application/json, application/xml")    
+    public List<FlightInformation> getFlightsForItinerary (
+                @PathParam("startAirport") String startAirport,
+                @PathParam("endAirport") String endAirport,
+                @QueryParam("departureDate") String departureDate) throws DatatypeConfigurationException {
+        
+        XMLGregorianCalendar depDate = DateParser.parse(departureDate);
+        List<FlightInformation> flights = getFlights(startAirport, endAirport, depDate);
         return flights;
     }
     
@@ -58,4 +63,5 @@ public class AirlineResource {
         return port.getFlights(startAirport, endAirport, startDate);
     }
 
+    
 }
