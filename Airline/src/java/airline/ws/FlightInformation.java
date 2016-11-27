@@ -13,6 +13,7 @@ public class FlightInformation {
         bookingNumber = new Random().nextInt(50) +1;
         reservationAgency = "LameDuck";
         this.flight = flight;
+        status = "Unconfirmed";
     }
     public int getBookingNumber() {
         return bookingNumber;

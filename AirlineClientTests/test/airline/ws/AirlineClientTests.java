@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import org.junit.Assert;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -92,8 +93,7 @@ public class AirlineClientTests {
         ccit.setExpirationDate(expDate);
         ccit.setName("Thor-Jensen Claus");
         ccit.setNumber("50408825");
-        
-        assertTrue(bookFlight(testFlightInformation.bookingNumber, ccit));
+        assertTrue(bookFlight(testFlightInformation.getBookingNumber(), ccit));
     }
     
     @Test (expected=airline.ws.CreditCardFaultMessage.class) 
