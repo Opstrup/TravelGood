@@ -10,12 +10,6 @@
 <xsd:import namespace="http://fastmoney.imm.dtu.dk" schemaLocation="http://localhost:8080/Hotel_NiceView/HotelService?xsd=3"/>
 </xsd:schema>
 </types>
-<message name="cancelHotel">
-<part name="parameters" element="tns:cancelHotel"/>
-</message>
-<message name="cancelHotelResponse">
-<part name="parameters" element="tns:cancelHotelResponse"/>
-</message>
 <message name="bookHotel">
 <part name="parameters" element="tns:bookHotel"/>
 </message>
@@ -31,11 +25,13 @@
 <message name="getHotelsResponse">
 <part name="parameters" element="tns:getHotelsResponse"/>
 </message>
+<message name="cancelHotel">
+<part name="parameters" element="tns:cancelHotel"/>
+</message>
+<message name="cancelHotelResponse">
+<part name="parameters" element="tns:cancelHotelResponse"/>
+</message>
 <portType name="HotelController">
-<operation name="cancelHotel">
-<input wsam:Action="http://ws.hotel/HotelController/cancelHotelRequest" message="tns:cancelHotel"/>
-<output wsam:Action="http://ws.hotel/HotelController/cancelHotelResponse" message="tns:cancelHotelResponse"/>
-</operation>
 <operation name="bookHotel">
 <input wsam:Action="http://ws.hotel/HotelController/bookHotelRequest" message="tns:bookHotel"/>
 <output wsam:Action="http://ws.hotel/HotelController/bookHotelResponse" message="tns:bookHotelResponse"/>
@@ -45,18 +41,13 @@
 <input wsam:Action="http://ws.hotel/HotelController/getHotelsRequest" message="tns:getHotels"/>
 <output wsam:Action="http://ws.hotel/HotelController/getHotelsResponse" message="tns:getHotelsResponse"/>
 </operation>
+<operation name="cancelHotel">
+<input wsam:Action="http://ws.hotel/HotelController/cancelHotelRequest" message="tns:cancelHotel"/>
+<output wsam:Action="http://ws.hotel/HotelController/cancelHotelResponse" message="tns:cancelHotelResponse"/>
+</operation>
 </portType>
 <binding name="HotelControllerPortBinding" type="tns:HotelController">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="cancelHotel">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="bookHotel">
 <soap:operation soapAction=""/>
 <input>
@@ -70,6 +61,15 @@
 </fault>
 </operation>
 <operation name="getHotels">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="cancelHotel">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

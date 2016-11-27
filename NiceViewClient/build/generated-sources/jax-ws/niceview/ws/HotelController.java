@@ -28,18 +28,6 @@ public interface HotelController {
 
     /**
      * 
-     * @param bookingNumber
-     */
-    @WebMethod
-    @RequestWrapper(localName = "cancelHotel", targetNamespace = "http://ws.hotel/", className = "niceview.ws.CancelHotel")
-    @ResponseWrapper(localName = "cancelHotelResponse", targetNamespace = "http://ws.hotel/", className = "niceview.ws.CancelHotelResponse")
-    @Action(input = "http://ws.hotel/HotelController/cancelHotelRequest", output = "http://ws.hotel/HotelController/cancelHotelResponse")
-    public void cancelHotel(
-        @WebParam(name = "bookingNumber", targetNamespace = "")
-        int bookingNumber);
-
-    /**
-     * 
      * @param creditCardInformation
      * @param bookingNumber
      * @return
@@ -81,5 +69,17 @@ public interface HotelController {
         Object arrivalDate,
         @WebParam(name = "departureDate", targetNamespace = "")
         Object departureDate);
+
+    /**
+     * 
+     * @param bookingNumber
+     */
+    @WebMethod
+    @RequestWrapper(localName = "cancelHotel", targetNamespace = "http://ws.hotel/", className = "niceview.ws.CancelHotel")
+    @ResponseWrapper(localName = "cancelHotelResponse", targetNamespace = "http://ws.hotel/", className = "niceview.ws.CancelHotelResponse")
+    @Action(input = "http://ws.hotel/HotelController/cancelHotelRequest", output = "http://ws.hotel/HotelController/cancelHotelResponse")
+    public void cancelHotel(
+        @WebParam(name = "bookingNumber", targetNamespace = "")
+        int bookingNumber);
 
 }
