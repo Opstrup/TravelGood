@@ -21,4 +21,5 @@
 /Hotel_NiceView/dist/
 TravelGoodREST/src/conf/xml-resources/
 TravelGoodREST/web/WEB-INF/wsdl/
-/NiceViewClient/nbproject/private/
+/NiceViewClient/nbproject/private/*
+/Hotel_NiceView/nbproject/private/*
