@@ -1,6 +1,7 @@
 package ws.rs;
 
 import airline.ws.FlightInformation;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ws.rs.GET;
@@ -17,6 +18,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 @Path("airline")  // Defines the path to the base URL.
 public class AirlineResource {
+    
+    private static List<FlightInformation> searchedFlights = new ArrayList();
 
     @GET
     @Path("/{startAirport}/{endAirport}")
@@ -28,6 +31,9 @@ public class AirlineResource {
         
         XMLGregorianCalendar depDate = DateParser.parse(departureDate);
         List<FlightInformation> flights = getFlights(startAirport, endAirport, depDate);
+        for(FlightInformation flightInfo : flights){
+            searchedFlights.add(flightInfo);
+        }
         return flights;
     }
     
@@ -56,6 +62,10 @@ public class AirlineResource {
     public String cancleFlight () {
         return "Returning 50% of the booking by ID...";
     }    
+    
+    public static List<FlightInformation> getSearchedFlights(){
+        return searchedFlights;
+    }
 
     private static java.util.List<airline.ws.FlightInformation> getFlights(java.lang.String startAirport, java.lang.String endAirport, java.lang.Object startDate) {
         airline.ws.AirlineService service = new airline.ws.AirlineService();
