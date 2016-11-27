@@ -22,7 +22,7 @@ public class HotelController {
         hotelModel.hotelDB.add(new Hotel("NiceView2", new Address("Paris", "Somestreet 11"), 300, false));
         hotelModel.hotelDB.add(new Hotel("NiceView3", new Address("Copenhagen", "Somestreet 22"), 525, true));
         hotelModel.hotelDB.add(new Hotel("NiceView4", new Address("Copenhagen", "Somestreet 33"), 425, false));
-        hotelModel.hotelDB.add(new Hotel("NiceView5", new Address("Milan", "Somestreet 55"), 310, false));
+        hotelModel.hotelDB.add(new Hotel("NiceView5", new Address("Milan", "Somestreet 55"), 9999, false));
     }
     
     @WebMethod(operationName ="getHotels")

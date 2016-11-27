@@ -37,32 +37,6 @@ public class AirlineResource {
         return flights;
     }
     
-    @POST
-    @Produces("text/plain")
-    public boolean bookFlight () {
-        
-        /* OPPERATION
-        This opperation takes a booking number and credit card information and permanently books the
-        fight after first having charged the credit card for the ight using the chargeCreditCard
-        of the bank.       
-        */
-        
-        
-        /* RETURN
-        Returns true, if the booking was successful and returns a fault (i.e., throws an exception) 
-        if the credit card information was not valid, there was not enough money on the client 
-        account, or if for other reasons the booking fails.
-        */
-        
-        return true;
-    }
-    
-    @PUT
-    @Produces("text/plain")
-    public String cancleFlight () {
-        return "Returning 50% of the booking by ID...";
-    }    
-    
     public static List<FlightInformation> getSearchedFlights(){
         return searchedFlights;
     }

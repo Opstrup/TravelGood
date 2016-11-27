@@ -14,9 +14,6 @@ public class HotelModel {
     
     public HotelModel(){
         hotelDB = new ArrayList<>();
-        hotelDB.add(new Hotel("NiceView1", new Address("copenhagen", "Somestreet 5"), 560,false));
-        hotelDB.add(new Hotel("NiceView2", new Address("copenhagen", "Somestreet 55"), 200,true));
-        hotelDB.add(new Hotel("NiceView3", new Address("østerlars","Somestreet 60"),110,true));
         hotelInformationDB = new ArrayList<>();
     }
     
@@ -25,7 +22,7 @@ public class HotelModel {
         for(Hotel hotel : hotelDB){
             if(hotel.getAddress().getCity().equals(city)){
                 hotel.ws.HotelInformation hotelInfo = new hotel.ws.HotelInformation(hotel);
-                hotelInfo.calculatePrice(arrivalDate, departureDate);
+                hotelInfo.setPriceForStay(hotel.getPricePerDay());
                 results.add(hotelInfo);
                 hotelInformationDB.add(hotelInfo);
             }

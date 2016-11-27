@@ -1,5 +1,6 @@
 package ws.rs;
 
+import airline.ws.Exception_Exception;
 import airline.ws.FlightInformation;
 import hotel.ws.CreditCardFaultMessage;
 import hotel.ws.HotelInformation;
@@ -48,7 +49,7 @@ public class ItineraryResource {
     @POST
     @Path("/{itineraryId}/book")
     @Produces("application/json")
-    public Itinerary bookItinerary(@PathParam("itineraryId") String id, @QueryParam ("name") String name, @QueryParam("number") String number,@QueryParam("expMonth") int expMonth,@QueryParam("expYear") int expYear) throws hotel.ws.CreditCardFaultMessage, airline.ws.CreditCardFaultMessage{
+    public Itinerary bookItinerary(@PathParam("itineraryId") String id, @QueryParam ("name") String name, @QueryParam("number") String number,@QueryParam("expMonth") int expMonth,@QueryParam("expYear") int expYear) throws hotel.ws.CreditCardFaultMessage, airline.ws.CreditCardFaultMessage, Exception_Exception, Exception{
         hotel.ws.CreditCardInfoType ccInfo = new hotel.ws.CreditCardInfoType();
         hotel.ws.CreditCardInfoType.ExpirationDate expDate = new hotel.ws.CreditCardInfoType.ExpirationDate();
         
@@ -69,24 +70,67 @@ public class ItineraryResource {
         ccInfoFast.setExpirationDate(expDateFast);
         ccInfoFast.setName(name);
         ccInfoFast.setNumber(number);
-        
-        
+        Itinerary it = null;
+        try {
+            for(Itinerary itinerary: itineraryDb){     
+                if(itinerary.ID.equals(id)){
+                    it = itinerary;
+                    for(HotelInformation hotelInfo: itinerary.hotels){
+                        if(bookHotel(hotelInfo.getBookingNumber(), ccInfo)){
+                            hotelInfo.setStatus("Confirmed");
+                        }
+                 }
+                     for(FlightInformation flightInfo : itinerary.flights){
+                        if(bookFlight(flightInfo.getBookingNumber(), ccInfoFast)){
+                            flightInfo.setStatus("Confirmed");
+                        }
+                }
+                itinerary.status = Itinerary.BookingStatus.BOOKED;
+                return itinerary;
+            }
+        }   
+        } catch (Exception e) {
+            if(it!= null){
+                for(HotelInformation hotelInfo: it.hotels){
+                    if(hotelInfo.getStatus().equals("Confirmed")){                        
+                        try {
+                            cancelHotel(hotelInfo.getBookingNumber());
+                            hotelInfo.setStatus("Cancelled");
+                        } catch (Exception t) {
+                            throw new Exception("Failed to cancel hotel reservation");
+                        }
+                        
+                        
+                    }
+                }
+                for(FlightInformation flightInfo: it.flights){
+                    if(flightInfo.getStatus().equals("Confirmed")){
+                        try {
+                            cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
+                            flightInfo.setStatus("Cancelled");
+                        } catch (Exception t) {
+                            throw  new Exception("Failed to cancel flight reservation");
+                        }
+                    }
+                }
+            }
+        }
+              
+        return it;
+    }
+    
+    @DELETE
+    @Path("/{itineraryId}/cancel")
+    @Produces("application/json")
+    public List<Itinerary> cancelItinerary(@PathParam("itineraryId") String id){
+        Itinerary itineraryToBeRemoved = null;
         for(Itinerary itinerary: itineraryDb){
-            for(HotelInformation hotelInfo: itinerary.hotels){
-                if(bookHotel(hotelInfo.getBookingNumber(), ccInfo)){
-                    hotelInfo.setStatus("Confirmed");
-                }
+            if(itinerary.ID.equals(id)){
+               itineraryToBeRemoved = itinerary;
             }
-            for(FlightInformation flightInfo : itinerary.flights){
-                if(bookFlight(flightInfo.getBookingNumber(), ccInfoFast)){
-                    flightInfo.setStatus("Confirmed");
-                }
-            }
-            
-            itinerary.status = Itinerary.BookingStatus.BOOKED;
-            return itinerary;
-        }      
-        return null;
+        }
+        itineraryDb.remove(itineraryToBeRemoved);
+        return itineraryDb;
     }
     
     /**
@@ -115,17 +159,15 @@ public class ItineraryResource {
             @PathParam("itineraryId") String itineraryID,
             @PathParam("bookingNumber") String bookingNumber){
         
-        for(Itinerary itinerary : itineraryDb)
+        for(Itinerary itinerary : itineraryDb){
             if(itinerary.ID.equals(itineraryID)){
                 for(HotelInformation hotelInfo: HotelResource.getSearchedHotels())
                     if(hotelInfo.getBookingNumber() == Integer.parseInt(bookingNumber)){
                         itinerary.hotels.add(hotelInfo);
                         return itinerary;
                     }
-                //No hotelInfoID 404
-                return null;
             }
-            
+        }
         //no itineraryID: 404
         return null;
                
@@ -146,7 +188,6 @@ public class ItineraryResource {
                         return itinerary;
                     }
             }
-            return null;
         }
         return null;
     }
@@ -158,16 +199,30 @@ public class ItineraryResource {
         itineraryDb = new ArrayList();
     }
 
-    private static boolean bookHotel(int bookingNumber, hotel.ws.CreditCardInfoType creditCardInformation) throws CreditCardFaultMessage {
-        hotel.ws.HotelService service = new hotel.ws.HotelService();
-        hotel.ws.HotelController port = service.getHotelControllerPort();
-        return port.bookHotel(bookingNumber, creditCardInformation);
-    }
+
 
     private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws airline.ws.CreditCardFaultMessage {
         airline.ws.AirlineService service = new airline.ws.AirlineService();
         airline.ws.AirlineController port = service.getAirlineControllerPort();
         return port.bookFlight(bookingNumber, creditCardInformation);
+    }
+
+    private static void cancelFlight(int bookingNumber, int flightPrice, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws Exception_Exception, airline.ws.CreditCardFaultMessage {
+        airline.ws.AirlineService service = new airline.ws.AirlineService();
+        airline.ws.AirlineController port = service.getAirlineControllerPort();
+        port.cancelFlight(bookingNumber, flightPrice, creditCardInformation);
+    }
+
+    private static void cancelHotel(int bookingNumber) {
+        hotel.ws.HotelService service = new hotel.ws.HotelService();
+        hotel.ws.HotelController port = service.getHotelControllerPort();
+        port.cancelHotel(bookingNumber);
+    }
+
+    private static boolean bookHotel(int bookingNumber, hotel.ws.CreditCardInfoType creditCardInformation) throws hotel.ws.Exception_Exception, CreditCardFaultMessage {
+        hotel.ws.HotelService service = new hotel.ws.HotelService();
+        hotel.ws.HotelController port = service.getHotelControllerPort();
+        return port.bookHotel(bookingNumber, creditCardInformation);
     }
     
 }
