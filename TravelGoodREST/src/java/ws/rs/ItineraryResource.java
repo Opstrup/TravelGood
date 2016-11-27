@@ -1,7 +1,7 @@
 package ws.rs;
 
 import airline.ws.FlightInformation;
-import ws.rs.Itinerary;
+import hotel.ws.CreditCardFaultMessage;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.QueryParam;
 import ws.rs.HotelResource;
 
 @Path("itinerary")
@@ -45,16 +45,49 @@ public class ItineraryResource {
         return newItinerary;
     }
     
-    @PUT
-    @Path{"/{itineraryId}/book"}
+    @POST
+    @Path("/{itineraryId}/book")
     @Produces("application/json")
-    public Itinerary bookItinerary(@PathParam("itineraryId") String id){
-        for(Itinerary itinerary: itineraryDb){
-            
-        }
+    public Itinerary bookItinerary(@PathParam("itineraryId") String id, @QueryParam ("name") String name, @QueryParam("number") String number,@QueryParam("expMonth") int expMonth,@QueryParam("expYear") int expYear) throws hotel.ws.CreditCardFaultMessage, airline.ws.CreditCardFaultMessage{
+        hotel.ws.CreditCardInfoType ccInfo = new hotel.ws.CreditCardInfoType();
+        hotel.ws.CreditCardInfoType.ExpirationDate expDate = new hotel.ws.CreditCardInfoType.ExpirationDate();
         
+        expDate.setMonth(expMonth);
+        expDate.setYear(expYear);
+        
+        ccInfo.setExpirationDate(expDate);
+        ccInfo.setName(name);
+        ccInfo.setNumber(number);
+        
+        
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = new dk.dtu.imm.fastmoney.types.CreditCardInfoType();
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate expDateFast = new dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate();
+        
+        expDateFast.setMonth(expMonth);
+        expDateFast.setYear(expYear);
+        
+        ccInfoFast.setExpirationDate(expDateFast);
+        ccInfoFast.setName(name);
+        ccInfoFast.setNumber(number);
+        
+        
+        for(Itinerary itinerary: itineraryDb){
+            for(HotelInformation hotelInfo: itinerary.hotels){
+                if(bookHotel(hotelInfo.getBookingNumber(), ccInfo)){
+                    hotelInfo.setStatus("Confirmed");
+                }
+            }
+            for(FlightInformation flightInfo : itinerary.flights){
+                if(bookFlight(flightInfo.getBookingNumber(), ccInfoFast)){
+                    flightInfo.setStatus("Confirmed");
+                }
+            }
+            
+            itinerary.status = Itinerary.BookingStatus.BOOKED;
+            return itinerary;
+        }      
+        return null;
     }
-    
     
     /**
      * @param id of the itinerary
@@ -123,6 +156,18 @@ public class ItineraryResource {
     @Path("/reset")
     public void resetItineraryDB(){
         itineraryDb = new ArrayList();
+    }
+
+    private static boolean bookHotel(int bookingNumber, hotel.ws.CreditCardInfoType creditCardInformation) throws CreditCardFaultMessage {
+        hotel.ws.HotelService service = new hotel.ws.HotelService();
+        hotel.ws.HotelController port = service.getHotelControllerPort();
+        return port.bookHotel(bookingNumber, creditCardInformation);
+    }
+
+    private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws airline.ws.CreditCardFaultMessage {
+        airline.ws.AirlineService service = new airline.ws.AirlineService();
+        airline.ws.AirlineController port = service.getAirlineControllerPort();
+        return port.bookFlight(bookingNumber, creditCardInformation);
     }
     
 }
