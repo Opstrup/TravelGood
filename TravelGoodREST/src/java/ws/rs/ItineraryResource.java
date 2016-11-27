@@ -1,5 +1,6 @@
 package ws.rs;
 
+import airline.ws.FlightInformation;
 import ws.rs.Itinerary;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
@@ -44,6 +45,17 @@ public class ItineraryResource {
         return newItinerary;
     }
     
+    @PUT
+    @Path{"/{itineraryId}/book"}
+    @Produces("application/json")
+    public Itinerary bookItinerary(@PathParam("itineraryId") String id){
+        for(Itinerary itinerary: itineraryDb){
+            
+        }
+        
+    }
+    
+    
     /**
      * @param id of the itinerary
      * @return the specified itinerary
@@ -85,6 +97,27 @@ public class ItineraryResource {
         return null;
                
     }
+    
+    @PUT
+    @Path("/{itineraryId}/flight/{bookingNumber}")
+    @Produces("application/json")
+    public Itinerary addFlightToItinerary(
+            @PathParam ("itineraryId") String itineraryID,
+            @PathParam ("bookingNumber") String bookingNumber){
+        
+        for(Itinerary itinerary:itineraryDb){
+            if(itinerary.ID.equals(itineraryID)){
+                for(FlightInformation flightInfo: AirlineResource.getSearchedFlights())
+                    if(flightInfo.getBookingNumber() == Integer.parseInt(bookingNumber)){
+                        itinerary.flights.add(flightInfo);
+                        return itinerary;
+                    }
+            }
+            return null;
+        }
+        return null;
+    }
+    
     
     @DELETE
     @Path("/reset")

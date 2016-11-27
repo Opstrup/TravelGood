@@ -42,5 +42,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/airline/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/AirlineService"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-AirlineService"/>
+    <target name="wsimport-client-HotelService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/HotelService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/HotelService" destdir="${build.generated.dir}/jax-wsCache/HotelService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/HotelService/wsdl/localhost_8080/Hotel_NiceView/HotelService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/Hotel_NiceView/HotelService?wsdl" xnocompile="true" xendorsed="true" package="hotel.ws">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/HotelService/wsdl/localhost_8080/Hotel_NiceView/HotelService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/HotelService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/HotelService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-HotelService" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/hotel/ws"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/HotelService"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-AirlineService, wsimport-client-HotelService"/>
 </project>
