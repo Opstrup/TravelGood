@@ -78,8 +78,8 @@ public interface AirlineController {
      * @param flightPrice
      * @param creditCardInformation
      * @param bookingNumber
-     * @throws Exception_Exception
      * @throws CreditCardFaultMessage
+     * @throws Exception_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "cancelFlight", targetNamespace = "http://ws.airline/", className = "airline.ws.CancelFlight")

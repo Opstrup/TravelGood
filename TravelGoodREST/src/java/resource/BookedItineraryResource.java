@@ -18,6 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import static resource.ItineraryResource.itineraryDb;
+import representation.ItineraryRepresentation;
 
 @Path("bookings")
 public class BookedItineraryResource {
@@ -27,7 +28,7 @@ public class BookedItineraryResource {
     @POST
     @Path("/{itineraryId}/")
     @Produces("application/json")
-    public Itinerary bookItinerary(@PathParam("itineraryId") String id,
+    public ItineraryRepresentation bookItinerary(@PathParam("itineraryId") String id,
             @QueryParam ("name") String name,
             @QueryParam("number") String number,
             @QueryParam("expMonth") int expMonth,
@@ -70,7 +71,9 @@ public class BookedItineraryResource {
                         }
                 }
                 itinerary.status = Itinerary.BookingStatus.BOOKED;
-                return itinerary;
+                ItineraryRepresentation itRep = new ItineraryRepresentation();
+                itRep.setItinerary(itinerary);
+                return itRep;
             }
         }   
         } catch (Exception e) {
@@ -99,8 +102,10 @@ public class BookedItineraryResource {
                 }
             }
         }
-              
-        return it;
+         
+        ItineraryRepresentation itRep = new ItineraryRepresentation();
+        itRep.setItinerary(it);
+        return itRep;
     }
 
     private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws CreditCardFaultMessage {
