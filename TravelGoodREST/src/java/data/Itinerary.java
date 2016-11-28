@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Itinerary {
 
     public enum BookingStatus {
-        NOTBOOKED, BOOKED
+        UNCONFIRMED, BOOKED, CANCELLED
     }
 
     public String ID;
@@ -25,7 +25,7 @@ public class Itinerary {
     
     public Itinerary(String ID) {
         this.ID = ID;
-        this.status = BookingStatus.NOTBOOKED;
+        this.status = BookingStatus.UNCONFIRMED;
     }
 
     public String getID() {

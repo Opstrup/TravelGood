@@ -1,12 +1,11 @@
 package resource;
 
 import data.Itinerary;
-import airline.ws.Exception_Exception;
 import airline.ws.FlightInformation;
-import hotel.ws.CreditCardFaultMessage;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -60,13 +59,17 @@ public class ItineraryResource {
     @Path("/{itineraryId}")
     @Produces("application/json")
     public Itinerary getItinerary(@PathParam("itineraryId") String id) {
-        Itinerary newItinerary = this.itineraryDb.get(Integer.parseInt(id));
         
-        /*
-         * TODO:
-         * This could fail if no itinerary with the id is found
-         * return 404 error code.
-         */
+        Itinerary newItinerary;
+        
+        try{
+            newItinerary = this.itineraryDb.get(Integer.parseInt(id));
+        } catch(Exception e){
+            throw new BadRequestException(Response.
+               status(Response.Status.BAD_REQUEST).
+               entity("Id is not valid").
+               build());
+        }
         
         return newItinerary;
     }
@@ -83,6 +86,13 @@ public class ItineraryResource {
                itineraryToBeRemoved = itinerary;
             }
         }
+        
+        if(itineraryToBeRemoved==null)
+            throw new BadRequestException(Response.
+               status(Response.Status.BAD_REQUEST).
+               entity("Id is not valid").
+               build());
+        
         itineraryDb.remove(itineraryToBeRemoved);
         
         List<ItineraryRepresentation> itReps = new ArrayList<>();
@@ -113,11 +123,18 @@ public class ItineraryResource {
                         itRep.setItinerary(itinerary);
                         return itRep;
                     }
-                //no hotel: 404
+                
+                throw new BadRequestException(Response.
+                    status(Response.Status.BAD_REQUEST).
+                    entity("hotelID not valid").
+                    build());
             }
         }
-        //no itineraryID: 404
-        return null;
+        
+        throw new BadRequestException(Response.
+                    status(Response.Status.BAD_REQUEST).
+                    entity("itineraryID not valid").
+                    build());
                
     }
     
@@ -139,11 +156,17 @@ public class ItineraryResource {
                         itRep.setItinerary(itinerary);
                         return itRep;
                     }
-                //no flight: 404
+                throw new BadRequestException(Response.
+                    status(Response.Status.BAD_REQUEST).
+                    entity("flightID not valid").
+                    build());
             }
         }
-        //no itineraryID: 404
-        return null;
+        
+        throw new BadRequestException(Response.
+                    status(Response.Status.BAD_REQUEST).
+                    entity("itineraryID not valid").
+                    build());
     }    
     
     @PUT
@@ -153,7 +176,7 @@ public class ItineraryResource {
         return Response.ok().build();
     }
     
-    static void addHotelsLink(Representation response) {
+    private static void addHotelsLink(Representation response) {
         Link link = new Link();
         link.setUri(String.format("http://localhost:8080/ws.pr/webresources/hotels/"));
         link.setRel("http://travelgood.ws/relations/searchHotels");

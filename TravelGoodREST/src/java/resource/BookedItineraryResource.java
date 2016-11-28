@@ -6,13 +6,20 @@
 package resource;
 
 import data.Itinerary;
-import airline.ws.CreditCardFaultMessage;
-import airline.ws.Exception_Exception;
+import airline.ws.FlightBookException_Exception;
+import airline.ws.FlightCancelException;
+import airline.ws.FlightCancelException_Exception;
 import airline.ws.FlightInformation;
+import hotel.ws.BookingStatus;
 import hotel.ws.CreditCardInfoType;
+import hotel.ws.HotelBookException_Exception;
+import hotel.ws.HotelCancelException_Exception;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -33,72 +40,40 @@ public class BookedItineraryResource {
             @QueryParam ("name") String name,
             @QueryParam("number") String number,
             @QueryParam("expMonth") int expMonth,
-            @QueryParam("expYear") int expYear)
-            throws hotel.ws.CreditCardFaultMessage, airline.ws.CreditCardFaultMessage, Exception_Exception, Exception{
-        
+            @QueryParam("expYear") int expYear){
         
         CreditCardInfoType ccInfo = createCcInfo(expMonth, expYear, name, number);
         dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = createCCInfoFast(expMonth, expYear, name, number);
         
-        Itinerary it = null;
-        
         //try to book all bookings. if one fails, catch exception
-        try {
-            for(Itinerary itinerary: itineraryDb){     
-                if(itinerary.ID.equals(id)){
-                    it = itinerary;
+        for(Itinerary itinerary: itineraryDb)   
+            if(itinerary.ID.equals(id) && itinerary.getStatus() == Itinerary.BookingStatus.UNCONFIRMED){
+                try{
                     for(HotelInformation hotelInfo: itinerary.hotels)
                         if(bookHotel(hotelInfo.getBookingNumber(), ccInfo))
-                            hotelInfo.setStatus("Confirmed");
-                
-                     for(FlightInformation flightInfo : itinerary.flights)
+                            hotelInfo.setStatus(hotel.ws.BookingStatus.BOOKED);
+
+                    for(FlightInformation flightInfo : itinerary.flights)
                         if(bookFlight(flightInfo.getBookingNumber(), ccInfoFast))
-                            flightInfo.setStatus("Confirmed");
-                        
+                            flightInfo.setStatus(airline.ws.BookingStatus.BOOKED);
+
+                }catch(FlightBookException_Exception | HotelBookException_Exception e){
+                    cancelBookings(itinerary, ccInfoFast);
+                    //throw exception: booking failed
                 }
-                itinerary.status = Itinerary.BookingStatus.BOOKED;
+                
+                itinerary.setStatus(Itinerary.BookingStatus.BOOKED);
                 ItineraryRepresentation itRep = new ItineraryRepresentation();
                 itRep.setItinerary(itinerary);
-                //booking successful
                 return itRep;
-            }   
-        //if one booking fails, we should cancel the previously booked bookings
-        } catch (Exception e) {
-            if(it!= null){
-                for(HotelInformation hotelInfo: it.hotels){
-                    if(hotelInfo.getStatus().equals("Confirmed")){                       
-                        //try to cancel. if fails, catch exception
-                        try {
-                            cancelHotel(hotelInfo.getBookingNumber());
-                            hotelInfo.setStatus("Cancelled");
-                        //if cancelling fails, we proceed with the cancellation of other bookings
-                        // and the operation returns with a fault
-                        } catch (Exception t) {
-                            throw new Exception("Failed to cancel hotel reservation");
-                        }
-                    }       
-                }
-                for(FlightInformation flightInfo: it.flights){
-                    if(flightInfo.getStatus().equals("Confirmed")){
-                        try {
-                            cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
-                            flightInfo.setStatus("Cancelled");
-                        //if cancelling fails, we proceed with the cancellation of other bookings
-                        // and the operation returns with a fault
-                        } catch (Exception t) {
-                            throw  new Exception("Failed to cancel flight reservation");
-                        }
-                    }
-                }
+
             }
-        }
-         
-        ItineraryRepresentation itRep = new ItineraryRepresentation();
-        itRep.setItinerary(it);
-        return itRep;
+        //404 it not found
+        return null;
+        
     }
-    /**
-    @POST
+    
+    @DELETE
     @Path("/{itineraryId}/")
     @Produces("application/itinerary+json")
     public ItineraryRepresentation cancelBookedItinerary(
@@ -111,53 +86,41 @@ public class BookedItineraryResource {
         CreditCardInfoType ccInfo = createCcInfo(expMonth, expYear, name, number);
         dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = createCCInfoFast(expMonth, expYear, name, number);
         
-        Itinerary itinerary = null;
-        
-        for(Itinerary it: bookedItineraries)
-            if(it.ID.equals(itineraryID)){
-                itinerary = it;
-                try{
-                    for(FlightInformation flightInfo : itinerary.flights){
-                        cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
-                        flightInfo.setStatus("Cancelled");
-                    }
-                } 
+        for(Itinerary itinerary: bookedItineraries)
+            if(itinerary.ID.equals(itineraryID)){
                 
+                //can throw exception
+                cancelBookings(itinerary, ccInfoFast);
                 
+                //cancellation successful
+                itinerary.status=Itinerary.BookingStatus.CANCELLED;
+                ItineraryRepresentation itRep = new ItineraryRepresentation();
+                itRep.setItinerary(itinerary);
+                return itRep;
             }
-                
-          
-     */  
-                
-            
         
+        //404 itinerary not found
+        return null;
+        
+    }
     
+    private void cancelBookings(Itinerary itinerary, dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast) {
+        try{
+            for(FlightInformation flightInfo : itinerary.flights){
+                if(flightInfo.getStatus() == airline.ws.BookingStatus.BOOKED)
+                cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
+                flightInfo.setStatus(airline.ws.BookingStatus.CANCELLED);
+            }
+            
+            for(HotelInformation hotelInfo: itinerary.hotels){
+                cancelHotel(hotelInfo.getBookingNumber());
+                hotelInfo.setStatus(BookingStatus.CANCELLED);
+            }
+        } catch (FlightCancelException_Exception | HotelCancelException_Exception e) { 
+        // continue cancelling others and throw exception
+        } 
+    }
     
-
-    private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws CreditCardFaultMessage {
-        airline.ws.AirlineService service = new airline.ws.AirlineService();
-        airline.ws.AirlineController port = service.getAirlineControllerPort();
-        return port.bookFlight(bookingNumber, creditCardInformation);
-    }
-
-    private static void cancelFlight(int bookingNumber, int flightPrice, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws Exception_Exception, CreditCardFaultMessage {
-        airline.ws.AirlineService service = new airline.ws.AirlineService();
-        airline.ws.AirlineController port = service.getAirlineControllerPort();
-        port.cancelFlight(bookingNumber, flightPrice, creditCardInformation);
-    }
-
-    private static boolean bookHotel(int bookingNumber, hotel.ws.CreditCardInfoType creditCardInformation) throws hotel.ws.Exception_Exception, hotel.ws.CreditCardFaultMessage {
-        hotel.ws.HotelService service = new hotel.ws.HotelService();
-        hotel.ws.HotelController port = service.getHotelControllerPort();
-        return port.bookHotel(bookingNumber, creditCardInformation);
-    }
-
-    private static void cancelHotel(int bookingNumber) throws hotel.ws.Exception_Exception {
-        hotel.ws.HotelService service = new hotel.ws.HotelService();
-        hotel.ws.HotelController port = service.getHotelControllerPort();
-        port.cancelHotel(bookingNumber);
-    }
-
     private CreditCardInfoType createCcInfo(int expMonth, int expYear, String name, String number) {
         hotel.ws.CreditCardInfoType ccInfo = new hotel.ws.CreditCardInfoType();
         hotel.ws.CreditCardInfoType.ExpirationDate expDate = new hotel.ws.CreditCardInfoType.ExpirationDate();
@@ -186,5 +149,30 @@ public class BookedItineraryResource {
         
         return ccInfoFast;
     }
+
+    private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws FlightBookException_Exception {
+        airline.ws.AirlineService service = new airline.ws.AirlineService();
+        airline.ws.AirlineController port = service.getAirlineControllerPort();
+        return port.bookFlight(bookingNumber, creditCardInformation);
+    }
+
+    private static boolean cancelFlight(int bookingNumber, int flightPrice, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws FlightCancelException_Exception {
+        airline.ws.AirlineService service = new airline.ws.AirlineService();
+        airline.ws.AirlineController port = service.getAirlineControllerPort();
+        return port.cancelFlight(bookingNumber, flightPrice, creditCardInformation);
+    }
+
+    private static boolean bookHotel(int bookingNumber, hotel.ws.CreditCardInfoType creditCardInformation) throws HotelBookException_Exception {
+        hotel.ws.HotelService service = new hotel.ws.HotelService();
+        hotel.ws.HotelController port = service.getHotelControllerPort();
+        return port.bookHotel(bookingNumber, creditCardInformation);
+    }
+
+    private static void cancelHotel(int bookingNumber) throws HotelCancelException_Exception {
+        hotel.ws.HotelService service = new hotel.ws.HotelService();
+        hotel.ws.HotelController port = service.getHotelControllerPort();
+        port.cancelHotel(bookingNumber);
+    }
+
     
 }

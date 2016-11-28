@@ -34,7 +34,7 @@ public class HotelModel {
     
     public boolean bookHotel(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws HotelBookException{
         for(HotelInformation hotelInfo : hotelInformationDB)
-            if(hotelInfo.getBookingNumber() == bookingNumber){
+            if(hotelInfo.getBookingNumber() == bookingNumber && hotelInfo.getStatus() == HotelInformation.BookingStatus.UNCONFIRMED){
                 if(hotelInfo.getHotel().isCreditCardNeeded()){
                     try{
                         validateCreditCard(7, ccInfo, hotelInfo.getPriceForStay());
@@ -42,7 +42,7 @@ public class HotelModel {
                         throw new HotelBookException("Validation of credit card failed!");
                     }    
                 }
-                hotelInfo.setStatus("Confirmed");
+                hotelInfo.setStatus(HotelInformation.BookingStatus.BOOKED);
                 return true;
             }
         throw new HotelBookException("No Hotel with provided booking number");      
@@ -50,17 +50,17 @@ public class HotelModel {
     
     public boolean cancelHotel(int bookingNumber) throws HotelCancelException{
         for(HotelInformation hotelInfo: hotelInformationDB){
-            if(hotelInfo.getBookingNumber() == bookingNumber && hotelInfo.getStatus() == "Confirmed"){
-                if(hotelInfo.getHotel().getHotelName().equals("Failing Hotel"))
+            if(hotelInfo.getBookingNumber() == bookingNumber && hotelInfo.getStatus() == HotelInformation.BookingStatus.BOOKED){
+                if(hotelInfo.getHotel().getHotelName().equals("Failure"))
                     throw new HotelCancelException("Canceling the booked hotel failed");
                 else{
-                    hotelInfo.setStatus("Cancelled");
+                    hotelInfo.setStatus(HotelInformation.BookingStatus.CANCELLED);
                     return true;
                 }
             }
         }
         
-        throw new HotelCancelException("No hotel with provided booking number");
+        throw new HotelCancelException("This hotel can't be cancelled");
     }
     
     private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {

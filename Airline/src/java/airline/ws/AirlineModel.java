@@ -53,7 +53,7 @@ public class AirlineModel {
                         throw new FlightBookException("Validation of credit card failed!");
                     }
                 }
-                flightInfo.setStatus("Confirmed");
+                flightInfo.setStatus(FlightInformation.BookingStatus.BOOKED);
                 return true;
             }
         
@@ -72,7 +72,7 @@ public class AirlineModel {
                         throw new FlightCancelException("Refund of CC failed!");
                     }
                 }
-                flightInfo.setStatus("Canceled");
+                flightInfo.setStatus(FlightInformation.BookingStatus.CANCELLED);
                 return true;
             }
         
@@ -80,18 +80,18 @@ public class AirlineModel {
     }
 
     private void populateDb () throws DatatypeConfigurationException {
-        XMLGregorianCalendar depatureDateFlightOne = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
-        XMLGregorianCalendar arrivalDateFlightOne = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 27));
+        XMLGregorianCalendar depatureDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
+        XMLGregorianCalendar arrivalDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 27));
 
-        Flight flightOne = new Flight(1, "Copenhagen", "Rome", depatureDateFlightOne, arrivalDateFlightOne, "EasyJet", 10, true, 100);
-        
-        XMLGregorianCalendar depatureDateFlightTwo = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 26));
-        XMLGregorianCalendar arrivalDateFlightTwo = DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar(2016, 11, 27));
-
-        Flight flightTwo = new Flight(1, "Copenhagen", "Rome", depatureDateFlightTwo, arrivalDateFlightTwo, "EasyJet", 10, true, 10000);
+        Flight flightOne = new Flight(1, "Copenhagen", "Rome", depatureDate, arrivalDate, "EasyJet", 10, true, 100);
+        Flight flightTwo = new Flight(1, "Copenhagen", "Milan", depatureDate, arrivalDate, "EasyJet", 10, true, 100);
+        Flight flightThree = new Flight(1, "Copenhagen", "Turin", depatureDate, arrivalDate, "EasyJet", 10, true, 100);
+        Flight flightFail = new Flight(1, "Failure", "Rome", depatureDate, arrivalDate, "EasyJet", 10, true, 10000);
         
         flightsDB.add(flightOne);
         flightsDB.add(flightTwo);
+        flightsDB.add(flightThree);
+        flightsDB.add(flightFail);
     }
     
     private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {
