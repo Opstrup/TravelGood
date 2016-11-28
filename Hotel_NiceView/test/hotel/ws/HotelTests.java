@@ -1,6 +1,7 @@
 package hotel.ws;
 
 import bankservice.ws.CreditCardFaultMessage;
+import hotel.ws.exception.HotelBookException;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -62,7 +63,7 @@ public class HotelTests {
     }
     
     @Test
-    public void bookHotelTest1() throws bankservice.ws.CreditCardFaultMessage{
+    public void bookHotelTest1() throws bankservice.ws.CreditCardFaultMessage, HotelBookException{
        setDates(2016, 11, 28, 2016, 12, 4);
        List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
        assertEquals(2, result.size());
@@ -78,7 +79,7 @@ public class HotelTests {
     }
        
     @Test (expected=bankservice.ws.CreditCardFaultMessage.class) 
-    public void bookHotelTest2() throws bankservice.ws.CreditCardFaultMessage{
+    public void bookHotelTest2() throws bankservice.ws.CreditCardFaultMessage, HotelBookException{
        setDates(2016, 11, 28, 2016, 12, 4);
        List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);
        assertEquals(2, result.size());
