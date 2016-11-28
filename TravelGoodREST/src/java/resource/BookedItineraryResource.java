@@ -9,6 +9,7 @@ import data.Itinerary;
 import airline.ws.CreditCardFaultMessage;
 import airline.ws.Exception_Exception;
 import airline.ws.FlightInformation;
+import hotel.ws.CreditCardInfoType;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class BookedItineraryResource {
     
     @POST
     @Path("/{itineraryId}/")
-    @Produces("application/json")
+    @Produces("application/itinerary+json")
     public ItineraryRepresentation bookItinerary(@PathParam("itineraryId") String id,
             @QueryParam ("name") String name,
             @QueryParam("number") String number,
@@ -35,66 +36,55 @@ public class BookedItineraryResource {
             @QueryParam("expYear") int expYear)
             throws hotel.ws.CreditCardFaultMessage, airline.ws.CreditCardFaultMessage, Exception_Exception, Exception{
         
-        hotel.ws.CreditCardInfoType ccInfo = new hotel.ws.CreditCardInfoType();
-        hotel.ws.CreditCardInfoType.ExpirationDate expDate = new hotel.ws.CreditCardInfoType.ExpirationDate();
         
-        expDate.setMonth(expMonth);
-        expDate.setYear(expYear);
+        CreditCardInfoType ccInfo = createCcInfo(expMonth, expYear, name, number);
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = createCCInfoFast(expMonth, expYear, name, number);
         
-        ccInfo.setExpirationDate(expDate);
-        ccInfo.setName(name);
-        ccInfo.setNumber(number);
-        
-        
-        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = new dk.dtu.imm.fastmoney.types.CreditCardInfoType();
-        dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate expDateFast = new dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate();
-        
-        expDateFast.setMonth(expMonth);
-        expDateFast.setYear(expYear);
-        
-        ccInfoFast.setExpirationDate(expDateFast);
-        ccInfoFast.setName(name);
-        ccInfoFast.setNumber(number);
         Itinerary it = null;
+        
+        //try to book all bookings. if one fails, catch exception
         try {
             for(Itinerary itinerary: itineraryDb){     
                 if(itinerary.ID.equals(id)){
                     it = itinerary;
-                    for(HotelInformation hotelInfo: itinerary.hotels){
-                        if(bookHotel(hotelInfo.getBookingNumber(), ccInfo)){
+                    for(HotelInformation hotelInfo: itinerary.hotels)
+                        if(bookHotel(hotelInfo.getBookingNumber(), ccInfo))
                             hotelInfo.setStatus("Confirmed");
-                        }
-                 }
-                     for(FlightInformation flightInfo : itinerary.flights){
-                        if(bookFlight(flightInfo.getBookingNumber(), ccInfoFast)){
+                
+                     for(FlightInformation flightInfo : itinerary.flights)
+                        if(bookFlight(flightInfo.getBookingNumber(), ccInfoFast))
                             flightInfo.setStatus("Confirmed");
-                        }
+                        
                 }
                 itinerary.status = Itinerary.BookingStatus.BOOKED;
                 ItineraryRepresentation itRep = new ItineraryRepresentation();
                 itRep.setItinerary(itinerary);
+                //booking successful
                 return itRep;
-            }
-        }   
+            }   
+        //if one booking fails, we should cancel the previously booked bookings
         } catch (Exception e) {
             if(it!= null){
                 for(HotelInformation hotelInfo: it.hotels){
-                    if(hotelInfo.getStatus().equals("Confirmed")){                        
+                    if(hotelInfo.getStatus().equals("Confirmed")){                       
+                        //try to cancel. if fails, catch exception
                         try {
                             cancelHotel(hotelInfo.getBookingNumber());
                             hotelInfo.setStatus("Cancelled");
+                        //if cancelling fails, we proceed with the cancellation of other bookings
+                        // and the operation returns with a fault
                         } catch (Exception t) {
                             throw new Exception("Failed to cancel hotel reservation");
                         }
-                        
-                        
-                    }
+                    }       
                 }
                 for(FlightInformation flightInfo: it.flights){
                     if(flightInfo.getStatus().equals("Confirmed")){
                         try {
                             cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
                             flightInfo.setStatus("Cancelled");
+                        //if cancelling fails, we proceed with the cancellation of other bookings
+                        // and the operation returns with a fault
                         } catch (Exception t) {
                             throw  new Exception("Failed to cancel flight reservation");
                         }
@@ -107,6 +97,44 @@ public class BookedItineraryResource {
         itRep.setItinerary(it);
         return itRep;
     }
+    
+    @POST
+    @Path("/{itineraryId}/")
+    @Produces("application/itinerary+json")
+    public ItineraryRepresentation cancelBookedItinerary(
+        @PathParam("itineraryID") String itineraryID,
+        @QueryParam ("name") String name,
+        @QueryParam("number") String number,
+        @QueryParam("expMonth") int expMonth,
+        @QueryParam("expYear") int expYear){
+        
+        CreditCardInfoType ccInfo = createCcInfo(expMonth, expYear, name, number);
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = createCCInfoFast(expMonth, expYear, name, number);
+        
+        Itinerary itinerary = null;
+        
+        for(Itinerary it: bookedItineraries)
+            if(it.ID.equals(itineraryID)){
+                itinerary = it;
+                try{
+                    for(FlightInformation flightInfo : itinerary.flights){
+                        cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
+                        flightInfo.setStatus("Cancelled");
+                    }
+                } catch(Exception t){
+                    
+                } catch(){
+                    
+                }
+                
+            }
+                
+           
+                
+            
+        
+    }
+    
 
     private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws CreditCardFaultMessage {
         airline.ws.AirlineService service = new airline.ws.AirlineService();
@@ -130,6 +158,35 @@ public class BookedItineraryResource {
         hotel.ws.HotelService service = new hotel.ws.HotelService();
         hotel.ws.HotelController port = service.getHotelControllerPort();
         port.cancelHotel(bookingNumber);
+    }
+
+    private CreditCardInfoType createCcInfo(int expMonth, int expYear, String name, String number) {
+        hotel.ws.CreditCardInfoType ccInfo = new hotel.ws.CreditCardInfoType();
+        hotel.ws.CreditCardInfoType.ExpirationDate expDate = new hotel.ws.CreditCardInfoType.ExpirationDate();
+        
+        expDate.setMonth(expMonth);
+        expDate.setYear(expYear);
+        
+        ccInfo.setExpirationDate(expDate);
+        ccInfo.setName(name);
+        ccInfo.setNumber(number);
+        
+        return ccInfo;
+    }
+
+    private dk.dtu.imm.fastmoney.types.CreditCardInfoType createCCInfoFast(int expMonth, int expYear, String name, String number) {
+        
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = new dk.dtu.imm.fastmoney.types.CreditCardInfoType();
+        dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate expDateFast = new dk.dtu.imm.fastmoney.types.CreditCardInfoType.ExpirationDate();
+        
+        expDateFast.setMonth(expMonth);
+        expDateFast.setYear(expYear);
+        
+        ccInfoFast.setExpirationDate(expDateFast);
+        ccInfoFast.setName(name);
+        ccInfoFast.setNumber(number);
+        
+        return ccInfoFast;
     }
     
 }

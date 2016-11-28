@@ -1,5 +1,7 @@
 package hotel.ws;
 
+import hotel.ws.exception.HotelCancelException;
+import hotel.ws.exception.HotelBookException;
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -32,9 +34,10 @@ public class HotelController {
     
     @WebMethod(operationName ="bookHotel")
     public boolean bookHotel(@WebParam (name = "bookingNumber") int bookingNumber, 
-                             @WebParam (name = "CreditCardInformation") bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception{
+                             @WebParam (name = "CreditCardInformation") bankservice.ws.CreditCardInfoType ccInfo) 
+                throws bankservice.ws.CreditCardFaultMessage, Exception{
         if (!hotelModel.bookHotel(bookingNumber, ccInfo))
-            throw new Exception("Not able to book hotel");
+            throw new HotelBookException("Booking of hotel failed!");
         else
             return true;
     }
@@ -42,6 +45,6 @@ public class HotelController {
     @WebMethod(operationName = "cancelHotel")
     public void cancelHotel(@WebParam(name = "bookingNumber") int bookingNumber) throws Exception{
         if (!hotelModel.cancelHotel(bookingNumber))
-            throw new Exception("Not able to cancel booked hotel");
+            throw new HotelCancelException("Cancellation of booked hotel failed!");
     }
 }

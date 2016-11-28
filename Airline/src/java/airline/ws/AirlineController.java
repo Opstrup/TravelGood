@@ -1,5 +1,6 @@
 package airline.ws;
 
+import airline.ws.exception.FlightCancelException;
 import java.io.IOException;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -40,6 +41,6 @@ public class AirlineController {
                               bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception {
       
         if (!model.cancelFlight(bookingNumber, ccInfo))
-            throw new Exception("BookingNo. do not exsist");
+            throw new FlightCancelException("Cancellation of booked flight failed!");
     }
 }

@@ -5,6 +5,7 @@
  */
 package rs;
 
+import airline.ws.FlightInformation;
 import data.Itinerary;
 import dk.dtu.imm.fastmoney.HotelInformation;
 import static java.lang.String.valueOf;
@@ -32,56 +33,47 @@ import representation.Representation;
 public class TestItineraryResource {
     
     Client client = ClientBuilder.newClient(); 
-    WebTarget itTarget = client.target("http://localhost:8080/ws.pr/webresources/itineraries");
-    WebTarget hotTarget = client.target("http://localhost:8080/ws.pr/webresources/hotels");
-    WebTarget bookTarget = client.target("http://localhost:8080/ws.pr/webresources/bookings");
+    WebTarget itinerariesTarget = client.target("http://localhost:8080/ws.pr/webresources/itineraries");
+    WebTarget hotelsTarget = client.target("http://localhost:8080/ws.pr/webresources/hotels");
+    WebTarget flightsTarget = client.target("http://localhost:8080/ws.pr/webresources/flights");
     
     @Before
     public void reset_itineraries(){
-        itTarget.path("/reset")
+        itinerariesTarget.path("/reset")
                 .request()
                 .put(Entity.entity("reset", "application/json"));
     }
     
     @Test
     public void should_create_itinerary(){
-        ItineraryRepresentation newItinerary = itTarget
-                    .request()
-                    .accept("application/itinerary+json")
-                    .put(Entity.entity(new ItineraryRepresentation(), "application/itinerary+json"), ItineraryRepresentation.class);
+        ItineraryRepresentation newItinerary = createItinerary();
         assertNotNull(newItinerary);
     }
     
     @Test
     public void should_link_to_hotels(){
-        Representation newItinerary = itTarget
-                    .request()
-                    .accept("application/itinerary+json")
-                    .put(Entity.entity(new Itinerary(), "application/itinerary+json"), ItineraryRepresentation.class);
+        ItineraryRepresentation newItinerary = createItinerary();
         Link hotelsLink = newItinerary.getLinkByRelation("http://travelgood.ws/relations/searchHotels"); 
         assertNotNull(hotelsLink);
     }
     
     @Test
     public void should_add_hotel(){
-        ItineraryRepresentation newItinerary = itTarget
-                    .request()
-                    .accept("application/itinerary+json")
-                    .put(Entity.entity(new ItineraryRepresentation(), "application/itinerary+json"), ItineraryRepresentation.class);
+        ItineraryRepresentation newItinerary = createItinerary();
         
         String itineraryID = newItinerary.getItinerary().getID();
         
-        List<HotelInformation> hotels = hotTarget.path("/Copenhagen")
+        List<HotelInformation> hotels = hotelsTarget.path("/Copenhagen")
                     .queryParam("start", "25-11-2016")
                     .queryParam("end", "31-11-2016")
-                    .request("application/json")
+                    .request()
                     .accept("application/json")
                     .get(new GenericType<List<HotelInformation>>() {});
         
         HotelInformation hotel = hotels.get(0);
         String hotelID = valueOf(hotel.getBookingNumber());
         
-        ItineraryRepresentation updated = itTarget.path("/" + itineraryID + "/hotels/" + hotelID)
+        ItineraryRepresentation updated = itinerariesTarget.path("/" + itineraryID + "/hotels/" + hotelID)
                     .request()
                     .accept("application/itinerary+json")
                     .put(Entity.entity(new Itinerary(), "application/itinerary+json"), ItineraryRepresentation.class);
@@ -90,42 +82,35 @@ public class TestItineraryResource {
         
     }
     
-    //@Test
-    public void bookItinerary(){
-        ItineraryRepresentation newItinerary = itTarget
-                    .request()
-                    .accept("application/itinerary+json")
-                    .put(Entity.entity(new Itinerary(), "application/itinerary+json"), ItineraryRepresentation.class);
+    @Test
+    public void should_add_flight(){
+        ItineraryRepresentation newItinerary = createItinerary();
         
         String itineraryID = newItinerary.getItinerary().getID();
         
-        List<HotelInformation> hotels = hotTarget.path("/Copenhagen")
-                    .queryParam("start", "25-11-2016")
-                    .queryParam("end", "31-11-2016")
-                    .request("application/json")
+        List<FlightInformation> flights = flightsTarget.path("/Copenhagen/Rome")
+                    .queryParam("departureDate", "26-11-2016")
+                    .request()
                     .accept("application/json")
-                    .get(new GenericType<List<HotelInformation>>() {});
+                    .get(new GenericType<List<FlightInformation>>() {});
         
-        HotelInformation hotel = hotels.get(0);
-        String hotelID = valueOf(hotel.getBookingNumber());
+        FlightInformation flight = flights.get(0);
+        String flightID = valueOf(flight.getBookingNumber());
         
-        ItineraryRepresentation updated = itTarget.path("/" + itineraryID + "/hotels/" + hotelID)
+        ItineraryRepresentation updated = itinerariesTarget.path("/" + itineraryID + "/flights/" + flightID)
                     .request()
                     .accept("application/itinerary+json")
                     .put(Entity.entity(new Itinerary(), "application/itinerary+json"), ItineraryRepresentation.class);
         
+        assert(updated.getItinerary().getFlights().size()==1);
         
-        
- 
-        ItineraryRepresentation booked = bookTarget.path("/"+itineraryID)
-                                        .queryParam("name", "Tobiasen Inge")
-                                        .queryParam("number", "50408823")
-                                        .queryParam("expMonth", 9)
-                                        .queryParam("expYear", 10)
-                                        .request()
-                                        .accept("application/itinerary+json")
-                                        .post(Entity.entity(new Itinerary(), "application/itinerary+json"), ItineraryRepresentation.class);
-        
-        assertEquals(booked.getItinerary().getStatus(), Itinerary.BookingStatus.BOOKED);
-    } 
+    }
+    
+    public ItineraryRepresentation createItinerary(){
+            return itinerariesTarget
+                    .request()
+                    .accept("application/itinerary+json")
+                    .put(Entity.entity(new ItineraryRepresentation(), "application/itinerary+json"), ItineraryRepresentation.class);
+        }
+    
 }

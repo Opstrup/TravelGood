@@ -23,24 +23,22 @@ import resource.HotelResource;
 
 @Path("itineraries")
 public class ItineraryResource {
-    /**
-     * Simple list for storing the itineraries
-     */
+    
     public static List<Itinerary> itineraryDb = new ArrayList<>();
     
-    /**
-     * @return a list of all user's itineraries
-     */
     @GET
-    @Produces("application/json,application/xml")
-    public List<Itinerary> getItineraries() {
-        return itineraryDb;
+    @Produces("application/itinerary+json")
+    public List<ItineraryRepresentation> getItineraries() {
+        List<ItineraryRepresentation> itReps = new ArrayList<>();
+        for(Itinerary itinerary: itineraryDb){
+            ItineraryRepresentation itRep = new ItineraryRepresentation();
+            itRep.setItinerary(itinerary);
+            itReps.add(itRep);
+            //links
+        }
+        return itReps;
     }
     
-    /**
-     * Adds an itinerary to the database and returns the newly created itinerary
-     * @return 
-     */
     @PUT
     @Produces("application/itinerary+json")
     public ItineraryRepresentation createItinerary(ItineraryRepresentation ignored) {
@@ -53,28 +51,11 @@ public class ItineraryResource {
         itRep.setItinerary(newItinerary);
         
         addHotelsLink(itRep);
+        //more links
         
         return itRep;
     }
     
-    @DELETE
-    @Path("/{itineraryId}")
-    @Produces("application/json")
-    public List<Itinerary> cancelPlannedItinerary(@PathParam("itineraryId") String id){
-        Itinerary itineraryToBeRemoved = null;
-        for(Itinerary itinerary: itineraryDb){
-            if(itinerary.ID.equals(id)){
-               itineraryToBeRemoved = itinerary;
-            }
-        }
-        itineraryDb.remove(itineraryToBeRemoved);
-        return itineraryDb;
-    }
-    
-    /**
-     * @param id of the itinerary
-     * @return the specified itinerary
-     */
     @GET 
     @Path("/{itineraryId}")
     @Produces("application/json")
@@ -89,22 +70,50 @@ public class ItineraryResource {
         
         return newItinerary;
     }
-      
+    
+    @DELETE
+    @Path("/{itineraryId}")
+    @Produces("application/itinerary+json")
+    public List<ItineraryRepresentation> cancelPlannedItinerary(
+            Itinerary ignored,
+            @PathParam("itineraryId") String id){
+        Itinerary itineraryToBeRemoved = null;
+        for(Itinerary itinerary: itineraryDb){
+            if(itinerary.ID.equals(id)){
+               itineraryToBeRemoved = itinerary;
+            }
+        }
+        itineraryDb.remove(itineraryToBeRemoved);
+        
+        List<ItineraryRepresentation> itReps = new ArrayList<>();
+        for(Itinerary itinerary: itineraryDb){
+            ItineraryRepresentation itRep = new ItineraryRepresentation();
+            itRep.setItinerary(itinerary);
+            itReps.add(itRep);
+            //links
+        }
+        return itReps;
+    }
+   
     @PUT
     @Path("/{itineraryId}/hotels/{bookingNumber}")
-    @Produces("application/json")
-    public Itinerary addHotelToItinerary(
+    @Produces("application/itinerary+json")
+    public ItineraryRepresentation addHotelToItinerary(
             Itinerary ignored,
             @PathParam("itineraryId") String itineraryID,
             @PathParam("bookingNumber") String bookingNumber){
+        
+        ItineraryRepresentation itRep = new ItineraryRepresentation();
         
         for(Itinerary itinerary : itineraryDb){
             if(itinerary.ID.equals(itineraryID)){
                 for(HotelInformation hotelInfo: HotelResource.getSearchedHotels())
                     if(hotelInfo.getBookingNumber() == Integer.parseInt(bookingNumber)){
                         itinerary.hotels.add(hotelInfo);
-                        return itinerary;
+                        itRep.setItinerary(itinerary);
+                        return itRep;
                     }
+                //no hotel: 404
             }
         }
         //no itineraryID: 404
@@ -114,20 +123,26 @@ public class ItineraryResource {
     
     @PUT
     @Path("/{itineraryId}/flights/{bookingNumber}")
-    @Produces("application/json")
-    public Itinerary addFlightToItinerary(
+    @Produces("application/itinerary+json")
+    public ItineraryRepresentation addFlightToItinerary(
+            Itinerary ignored,
             @PathParam ("itineraryId") String itineraryID,
             @PathParam ("bookingNumber") String bookingNumber){
+        
+        ItineraryRepresentation itRep = new ItineraryRepresentation();
         
         for(Itinerary itinerary:itineraryDb){
             if(itinerary.ID.equals(itineraryID)){
                 for(FlightInformation flightInfo: AirlineResource.getSearchedFlights())
                     if(flightInfo.getBookingNumber() == Integer.parseInt(bookingNumber)){
                         itinerary.flights.add(flightInfo);
-                        return itinerary;
+                        itRep.setItinerary(itinerary);
+                        return itRep;
                     }
+                //no flight: 404
             }
         }
+        //no itineraryID: 404
         return null;
     }    
     

@@ -13,8 +13,9 @@
     <import namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" location="travelGoodBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://ws.airline/" location="http://localhost:8080/Airline/AirlineService?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper1" location="AirlineServiceWrapper1.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper" location="AirlineServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
-        <partnerLink name="PartnerLink2" xmlns:tns="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper1" partnerLinkType="tns:AirlineControllerLinkType" partnerRole="AirlineControllerRole"/>
+        <partnerLink name="PartnerLink2" xmlns:tns="http://enterprise.netbeans.org/bpel/AirlineServiceWrapper" partnerLinkType="tns:AirlineLinkType" partnerRole="AirlineRole"/>
         <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" partnerLinkType="tns:travelGoodBPEL" myRole="travelGoodBPELPortTypeRole"/>
     </partnerLinks>
     <variables>
