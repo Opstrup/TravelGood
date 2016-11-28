@@ -1,6 +1,6 @@
-package ws.rs.resource;
+package resource;
 
-import ws.rs.data.Itinerary;
+import data.Itinerary;
 import airline.ws.FlightInformation;
 import java.util.List;
 import java.util.Set;
@@ -25,10 +25,10 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(ws.rs.resource.AirlineResource.class);
-        resources.add(ws.rs.resource.BookedItineraryResource.class);
-        resources.add(ws.rs.resource.HotelResource.class);
-        resources.add(ws.rs.resource.ItineraryResource.class);
+        resources.add(resource.AirlineResource.class);
+        resources.add(resource.BookedItineraryResource.class);
+        resources.add(resource.HotelResource.class);
+        resources.add(resource.ItineraryResource.class);
     }
     
 }

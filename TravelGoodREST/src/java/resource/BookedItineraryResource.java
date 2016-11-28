@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ws.rs.resource;
+package resource;
 
-import ws.rs.data.Itinerary;
+import data.Itinerary;
 import airline.ws.CreditCardFaultMessage;
 import airline.ws.Exception_Exception;
 import airline.ws.FlightInformation;
@@ -17,7 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import static ws.rs.resource.ItineraryResource.itineraryDb;
+import static resource.ItineraryResource.itineraryDb;
 
 @Path("bookings")
 public class BookedItineraryResource {
