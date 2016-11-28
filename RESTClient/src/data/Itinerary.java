@@ -1,4 +1,4 @@
-package rs;
+package data;
 
 import airline.ws.FlightInformation;
 import dk.dtu.imm.fastmoney.HotelInformation;
@@ -14,7 +14,7 @@ public class Itinerary {
     public enum BookingStatus {
         NOTBOOKED, BOOKED
     }
-    
+
     public String ID;
     public BookingStatus status;
     public List<HotelInformation> hotels = new ArrayList<>();

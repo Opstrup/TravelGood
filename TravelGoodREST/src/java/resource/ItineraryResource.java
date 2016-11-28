@@ -16,6 +16,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import representation.ItineraryRepresentation;
+import representation.Link;
+import representation.Representation;
 import resource.HotelResource;
 
 @Path("itineraries")
@@ -39,13 +42,19 @@ public class ItineraryResource {
      * @return 
      */
     @PUT
-    @Produces("application/json,application/xml")
-    public Itinerary createItinerary(Itinerary ignored) {
+    @Produces("application/itinerary+json")
+    public ItineraryRepresentation createItinerary(ItineraryRepresentation ignored) {
         int itineraryId = itineraryDb.size();
+        
         Itinerary newItinerary = new Itinerary(String.valueOf(itineraryId));
         itineraryDb.add(newItinerary);
         
-        return newItinerary;
+        ItineraryRepresentation itRep = new ItineraryRepresentation();
+        itRep.setItinerary(newItinerary);
+        
+        addHotelsLink(itRep);
+        
+        return itRep;
     }
     
     @DELETE
@@ -127,6 +136,13 @@ public class ItineraryResource {
     public Response resetItineraryDB(String ignored){
         itineraryDb = new ArrayList<>();
         return Response.ok().build();
+    }
+    
+    static void addHotelsLink(Representation response) {
+        Link link = new Link();
+        link.setUri(String.format("http://localhost:8080/ws.pr/webresources/hotels/"));
+        link.setRel("http://travelgood.ws/relations/searchHotels");
+        response.getLinks().add(link);
     }
     
 }
