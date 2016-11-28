@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -36,6 +37,24 @@ import representation.ItineraryRepresentation;
 public class BookedResource {
     
     public static List<Itinerary> bookedItineraries = new ArrayList<>();
+    
+    @GET 
+    @Path("/{itineraryId}")
+    @Produces("application/itinerary+json")
+    public ItineraryRepresentation getBooking(@PathParam("itineraryId") String id) {
+        
+        ItineraryRepresentation itRep = new ItineraryRepresentation();
+        for(Itinerary itinerary: bookedItineraries)
+            if(itinerary.getID().equals(id)){
+                itRep.setItinerary(itinerary);
+                return itRep;
+            } 
+        
+        throw new BadRequestException(Response.
+               status(Response.Status.BAD_REQUEST).
+               entity("Booking not found").
+               build());
+    }
     
     @POST
     @Path("/{itineraryId}/")

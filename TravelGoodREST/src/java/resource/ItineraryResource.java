@@ -60,18 +60,18 @@ public class ItineraryResource {
     @Produces("application/json")
     public Itinerary getItinerary(@PathParam("itineraryId") String id) {
         
-        Itinerary newItinerary;
+        Itinerary itinerary;
         
         try{
-            newItinerary = this.itineraryDb.get(Integer.parseInt(id));
+            itinerary = this.itineraryDb.get(Integer.parseInt(id));
         } catch(Exception e){
             throw new BadRequestException(Response.
                status(Response.Status.BAD_REQUEST).
-               entity("Id is not valid").
+               entity("Itinerary not found").
                build());
         }
         
-        return newItinerary;
+        return itinerary;
     }
     
     @DELETE

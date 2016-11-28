@@ -88,25 +88,33 @@ public class TestItineraryResource {
         
         String itineraryID = newItinerary.getItinerary().getID();
         
-        List<FlightInformation> flights = flightsTarget.path("/Copenhagen/Rome")
-                    .queryParam("departureDate", "26-11-2016")
-                    .request()
-                    .accept("application/json")
-                    .get(new GenericType<List<FlightInformation>>() {});
+        List<FlightInformation> flights = searchFlights("Copenhagen", "Rome"); 
         
         FlightInformation flight = flights.get(0);
         String flightID = valueOf(flight.getBookingNumber());
         
-        ItineraryRepresentation updated = itinerariesTarget.path("/" + itineraryID + "/flights/" + flightID)
-                    .request()
-                    .accept("application/itinerary+json")
-                    .put(Entity.entity(new Itinerary("ignored"), "application/itinerary+json"), ItineraryRepresentation.class);
+        ItineraryRepresentation updated = addFlightToItinerary(itineraryID, flightID);
         
         assert(updated.getItinerary().getFlights().size()==1);
         
     }
     
-    public ItineraryRepresentation createItinerary(){
+    private List<FlightInformation> searchFlights(String startAirport, String endAirport){
+        return flightsTarget.path("/" + startAirport + "/" + endAirport)
+                    .queryParam("departureDate", "26-11-2016")
+                    .request()
+                    .accept("application/json")
+                    .get(new GenericType<List<FlightInformation>>() {});
+    }
+    
+    private ItineraryRepresentation addFlightToItinerary(String itineraryID, String flightID){
+        return itinerariesTarget.path("/" + itineraryID + "/flights/" + flightID)
+                    .request()
+                    .accept("application/itinerary+json")
+                    .put(Entity.entity(new Itinerary("ignored"), "application/itinerary+json"), ItineraryRepresentation.class);
+    }
+    
+    private ItineraryRepresentation createItinerary(){
             return itinerariesTarget
                     .request()
                     .accept("application/itinerary+json")
