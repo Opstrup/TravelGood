@@ -97,7 +97,7 @@ public class BookedItineraryResource {
         itRep.setItinerary(it);
         return itRep;
     }
-    
+    /**
     @POST
     @Path("/{itineraryId}/")
     @Produces("application/itinerary+json")
@@ -121,19 +121,17 @@ public class BookedItineraryResource {
                         cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
                         flightInfo.setStatus("Cancelled");
                     }
-                } catch(Exception t){
-                    
-                } catch(){
-                    
-                }
+                } 
+                
                 
             }
                 
-           
+          
+     */  
                 
             
         
-    }
+    
     
 
     private static boolean bookFlight(int bookingNumber, dk.dtu.imm.fastmoney.types.CreditCardInfoType creditCardInformation) throws CreditCardFaultMessage {

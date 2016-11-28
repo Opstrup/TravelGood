@@ -35,11 +35,11 @@ public class HotelController {
     @WebMethod(operationName ="bookHotel")
     public boolean bookHotel(@WebParam (name = "bookingNumber") int bookingNumber, 
                              @WebParam (name = "CreditCardInformation") bankservice.ws.CreditCardInfoType ccInfo) 
-                throws bankservice.ws.CreditCardFaultMessage, Exception{
-        if (!hotelModel.bookHotel(bookingNumber, ccInfo))
-            throw new HotelBookException("Booking of hotel failed!");
-        else
-            return true;
+                throws HotelBookException{
+
+        //can throw HotelBookException
+        return hotelModel.bookHotel(bookingNumber, ccInfo);
+        
     }
     
     @WebMethod(operationName = "cancelHotel")
