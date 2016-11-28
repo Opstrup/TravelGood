@@ -1,8 +1,7 @@
 
-package hotel.ws;
+package airline.ws;
 
 import javax.xml.ws.WebFault;
-import dk.dtu.imm.fastmoney.CreditCardFaultType;
 
 
 /**
@@ -11,23 +10,23 @@ import dk.dtu.imm.fastmoney.CreditCardFaultType;
  * Generated source version: 2.2
  * 
  */
-@WebFault(name = "CreditCardFault", targetNamespace = "http://fastmoney.imm.dtu.dk")
-public class CreditCardFaultMessage
-    extends java.lang.Exception
+@WebFault(name = "FlightCancelException", targetNamespace = "http://ws.airline/")
+public class FlightCancelException_Exception
+    extends Exception
 {
 
     /**
      * Java type that goes as soapenv:Fault detail element.
      * 
      */
-    private CreditCardFaultType faultInfo;
+    private FlightCancelException faultInfo;
 
     /**
      * 
      * @param faultInfo
      * @param message
      */
-    public CreditCardFaultMessage(String message, CreditCardFaultType faultInfo) {
+    public FlightCancelException_Exception(String message, FlightCancelException faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -38,7 +37,7 @@ public class CreditCardFaultMessage
      * @param cause
      * @param message
      */
-    public CreditCardFaultMessage(String message, CreditCardFaultType faultInfo, Throwable cause) {
+    public FlightCancelException_Exception(String message, FlightCancelException faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
@@ -46,9 +45,9 @@ public class CreditCardFaultMessage
     /**
      * 
      * @return
-     *     returns fault bean: dk.dtu.imm.fastmoney.CreditCardFaultType
+     *     returns fault bean: airline.ws.FlightCancelException
      */
-    public CreditCardFaultType getFaultInfo() {
+    public FlightCancelException getFaultInfo() {
         return faultInfo;
     }
 

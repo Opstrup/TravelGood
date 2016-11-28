@@ -4,7 +4,9 @@
 
 <xs:import namespace="http://types.fastmoney.imm.dtu.dk" schemaLocation="http://localhost:8080/Hotel_NiceView/HotelService?xsd=2"/>
 
-<xs:element name="Exception" type="tns:Exception"/>
+<xs:element name="HotelBookException" type="tns:HotelBookException"/>
+
+<xs:element name="HotelCancelException" type="tns:HotelCancelException"/>
 
 <xs:element name="bookHotel" type="tns:bookHotel"/>
 
@@ -28,7 +30,7 @@
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="Exception">
+<xs:complexType name="HotelCancelException">
 <xs:sequence>
 <xs:element name="message" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -58,6 +60,12 @@
 <xs:complexType name="bookHotelResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="HotelBookException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

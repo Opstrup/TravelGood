@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="hotel" type="{http://fastmoney.imm.dtu.dk}hotel" minOccurs="0"/>
  *         &lt;element name="nameOfHotelService" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="priceForStay" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="status" type="{http://fastmoney.imm.dtu.dk}bookingStatus" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,7 +43,7 @@ public class HotelInformation {
     protected Hotel hotel;
     protected String nameOfHotelService;
     protected int priceForStay;
-    protected String status;
+    protected BookingStatus status;
 
     /**
      * Gets the value of the bookingNumber property.
@@ -130,10 +130,10 @@ public class HotelInformation {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link BookingStatus }
      *     
      */
-    public String getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
 
@@ -142,10 +142,10 @@ public class HotelInformation {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link BookingStatus }
      *     
      */
-    public void setStatus(String value) {
+    public void setStatus(BookingStatus value) {
         this.status = value;
     }
 

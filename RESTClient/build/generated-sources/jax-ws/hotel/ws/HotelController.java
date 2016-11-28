@@ -57,40 +57,38 @@ public interface HotelController {
      * @param bookingNumber
      * @return
      *     returns boolean
-     * @throws CreditCardFaultMessage
-     * @throws Exception_Exception
+     * @throws HotelBookException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "bookHotel", targetNamespace = "http://ws.hotel/", className = "hotel.ws.BookHotel")
     @ResponseWrapper(localName = "bookHotelResponse", targetNamespace = "http://ws.hotel/", className = "hotel.ws.BookHotelResponse")
     @Action(input = "http://ws.hotel/HotelController/bookHotelRequest", output = "http://ws.hotel/HotelController/bookHotelResponse", fault = {
-        @FaultAction(className = CreditCardFaultMessage.class, value = "http://ws.hotel/HotelController/bookHotel/Fault/CreditCardFaultMessage"),
-        @FaultAction(className = Exception_Exception.class, value = "http://ws.hotel/HotelController/bookHotel/Fault/Exception")
+        @FaultAction(className = HotelBookException_Exception.class, value = "http://ws.hotel/HotelController/bookHotel/Fault/HotelBookException")
     })
     public boolean bookHotel(
         @WebParam(name = "bookingNumber", targetNamespace = "")
         int bookingNumber,
         @WebParam(name = "CreditCardInformation", targetNamespace = "")
         CreditCardInfoType creditCardInformation)
-        throws CreditCardFaultMessage, Exception_Exception
+        throws HotelBookException_Exception
     ;
 
     /**
      * 
      * @param bookingNumber
-     * @throws Exception_Exception
+     * @throws HotelCancelException_Exception
      */
     @WebMethod
     @RequestWrapper(localName = "cancelHotel", targetNamespace = "http://ws.hotel/", className = "hotel.ws.CancelHotel")
     @ResponseWrapper(localName = "cancelHotelResponse", targetNamespace = "http://ws.hotel/", className = "hotel.ws.CancelHotelResponse")
     @Action(input = "http://ws.hotel/HotelController/cancelHotelRequest", output = "http://ws.hotel/HotelController/cancelHotelResponse", fault = {
-        @FaultAction(className = Exception_Exception.class, value = "http://ws.hotel/HotelController/cancelHotel/Fault/Exception")
+        @FaultAction(className = HotelCancelException_Exception.class, value = "http://ws.hotel/HotelController/cancelHotel/Fault/HotelCancelException")
     })
     public void cancelHotel(
         @WebParam(name = "bookingNumber", targetNamespace = "")
         int bookingNumber)
-        throws Exception_Exception
+        throws HotelCancelException_Exception
     ;
 
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/Airline/AirlineService?xsd=3" uri="src/conf/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.xsd_3.xsd"/>
+    <system systemId="http://localhost:8080/Airline/AirlineService?wsdl" uri="src/conf/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.wsdl"/>
+    <system systemId="http://localhost:8080/Airline/AirlineService?xsd=1" uri="src/conf/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/Airline/AirlineService?xsd=2" uri="src/conf/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.xsd_2.xsd"/>
     <system systemId="http://localhost:8080/Hotel_NiceView/HotelService?wsdl" uri="src/conf/xml-resources/web-service-references/HotelService/wsdl/localhost_8080/Hotel_NiceView/HotelService.wsdl"/>
     <system systemId="http://localhost:8080/Hotel_NiceView/HotelService?xsd=1" uri="src/conf/xml-resources/web-service-references/HotelService/wsdl/localhost_8080/Hotel_NiceView/HotelService.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/Hotel_NiceView/HotelService?xsd=2" uri="src/conf/xml-resources/web-service-references/HotelService/wsdl/localhost_8080/Hotel_NiceView/HotelService.xsd_2.xsd"/>
     <system systemId="http://localhost:8080/Hotel_NiceView/HotelService?xsd=3" uri="src/conf/xml-resources/web-service-references/HotelService/wsdl/localhost_8080/Hotel_NiceView/HotelService.xsd_3.xsd"/>
-    <system systemId="http://localhost:8080/Airline/AirlineService?wsdl" uri="src/conf/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.wsdl"/>
-    <system systemId="http://localhost:8080/Airline/AirlineService?xsd=1" uri="src/conf/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.xsd_1.xsd"/>
-    <system systemId="http://localhost:8080/Airline/AirlineService?xsd=2" uri="src/conf/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.xsd_2.xsd"/>
 </catalog>

@@ -1,10 +1,7 @@
 
 package dk.dtu.imm.fastmoney;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -24,21 +21,12 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CreditCardFault_QNAME = new QName("http://fastmoney.imm.dtu.dk", "CreditCardFault");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: dk.dtu.imm.fastmoney
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link CreditCardFaultType }
-     * 
-     */
-    public CreditCardFaultType createCreditCardFaultType() {
-        return new CreditCardFaultType();
     }
 
     /**
@@ -63,15 +51,6 @@ public class ObjectFactory {
      */
     public Hotel createHotel() {
         return new Hotel();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreditCardFaultType }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://fastmoney.imm.dtu.dk", name = "CreditCardFault")
-    public JAXBElement<CreditCardFaultType> createCreditCardFault(CreditCardFaultType value) {
-        return new JAXBElement<CreditCardFaultType>(_CreditCardFault_QNAME, CreditCardFaultType.class, null, value);
     }
 
 }

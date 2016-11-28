@@ -8,25 +8,18 @@ package rs;
 import airline.ws.FlightInformation;
 import data.Itinerary;
 import dk.dtu.imm.fastmoney.HotelInformation;
-import static java.lang.String.valueOf;
 import java.util.List;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
 import representation.ItineraryRepresentation;
 
-/**
- *
- * @author lucacambiaghi
- */
-public class TestBookingResource {
+
+public class TestCases {
     
     Client client = ClientBuilder.newClient(); 
     WebTarget itinerariesTarget = client.target("http://localhost:8080/ws.pr/webresources/itineraries");
@@ -46,88 +39,16 @@ public class TestBookingResource {
     }
     
     @Test
-    public void should_book_itinerary(){
+    public void P1(){
         ItineraryRepresentation newItinerary = createItinerary();
         
         String itineraryID = newItinerary.getItinerary().getID();
         
-        List<HotelInformation> hotels = searchHotels("Copenhagen");
         
-        HotelInformation hotel = hotels.get(0);
         
-        String hotelID = valueOf(hotel.getBookingNumber());
-        
-        ItineraryRepresentation updated = addHotel(itineraryID, hotelID);
-        
-        ItineraryRepresentation booked = bookItinerary(itineraryID);
-        
-        assertEquals(Itinerary.BookingStatus.BOOKED, booked.getItinerary().getStatus());
-        
-    } 
-    
-    @Test
-    public void should_cancel_itinerary(){
-        ItineraryRepresentation newItinerary = createItinerary();
-        
-        String itineraryID = newItinerary.getItinerary().getID();
-        
-        List<HotelInformation> hotels = searchHotels("Copenhagen");
-        
-        HotelInformation hotel = hotels.get(0);
-        String hotelID = valueOf(hotel.getBookingNumber());
-        
-        ItineraryRepresentation updated = addHotel(itineraryID, hotelID);
- 
-        ItineraryRepresentation booked = bookItinerary(itineraryID);
-        
-        ItineraryRepresentation canceled = cancelItinerary(itineraryID);
-        
-        assertEquals(Itinerary.BookingStatus.CANCELLED, canceled.getItinerary().getStatus());
         
     }
     
-    @Test
-    public void should_fail_booking(){
-        ItineraryRepresentation newItinerary = createItinerary();
-        
-        String itineraryID = newItinerary.getItinerary().getID();
-        
-        List<HotelInformation> hotels = searchHotels("BookingFailure");
-        
-        HotelInformation hotel = hotels.get(0);
-        String hotelID = valueOf(hotel.getBookingNumber());
-        
-        ItineraryRepresentation updated = addHotel(itineraryID, hotelID);
-        
-        try{
-            ItineraryRepresentation booked = bookItinerary(itineraryID);
-        }catch(Exception e){
-            assertTrue(e instanceof InternalServerErrorException);
-        }
-    }
-    
-    @Test
-    public void should_fail_canceling(){
-        ItineraryRepresentation newItinerary = createItinerary();
-        
-        String itineraryID = newItinerary.getItinerary().getID();
-        
-        List<HotelInformation> hotels = searchHotels("CancelingFailure");
-        
-        HotelInformation hotel = hotels.get(0);
-        
-        String hotelID = valueOf(hotel.getBookingNumber());
-        
-        ItineraryRepresentation updated = addHotel(itineraryID, hotelID);
-        
-        ItineraryRepresentation booked = bookItinerary(itineraryID);
-        
-        try{
-            ItineraryRepresentation canceled = cancelItinerary(itineraryID);
-        }catch(Exception e){
-            assertTrue(e instanceof InternalServerErrorException);
-        }
-    }
     
     private ItineraryRepresentation createItinerary(){
             return itinerariesTarget
@@ -143,6 +64,14 @@ public class TestBookingResource {
                     .request("application/json")
                     .accept("application/json")
                     .get(new GenericType<List<HotelInformation>>() {});
+    }
+    
+    private List<FlightInformation> searchFlights(String startAirport, String endAirport){
+        return flightsTarget.path("/" + startAirport + "/" + endAirport)
+                    .queryParam("departureDate", "26-11-2016")
+                    .request("application/json")
+                    .accept("application/json")
+                    .get(new GenericType<List<FlightInformation>>() {});
     }
     
     private ItineraryRepresentation addHotel(String itineraryID, String hotelID){

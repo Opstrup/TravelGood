@@ -16,10 +16,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="bookingStatus" type="{http://ws.airline/}bookingStatus" minOccurs="0"/>
  *         &lt;element name="bookingNumber" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="flight" type="{http://ws.airline/}flight" minOccurs="0"/>
  *         &lt;element name="reservationAgency" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="status" type="{http://ws.airline/}bookingStatus" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,6 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "flightInformation", propOrder = {
+    "bookingStatus",
     "bookingNumber",
     "flight",
     "reservationAgency",
@@ -37,10 +39,35 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class FlightInformation {
 
+    protected BookingStatus bookingStatus;
     protected int bookingNumber;
     protected Flight flight;
     protected String reservationAgency;
-    protected String status;
+    protected BookingStatus status;
+
+    /**
+     * Gets the value of the bookingStatus property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BookingStatus }
+     *     
+     */
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
+    }
+
+    /**
+     * Sets the value of the bookingStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BookingStatus }
+     *     
+     */
+    public void setBookingStatus(BookingStatus value) {
+        this.bookingStatus = value;
+    }
 
     /**
      * Gets the value of the bookingNumber property.
@@ -111,10 +138,10 @@ public class FlightInformation {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link BookingStatus }
      *     
      */
-    public String getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
 
@@ -123,10 +150,10 @@ public class FlightInformation {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link BookingStatus }
      *     
      */
-    public void setStatus(String value) {
+    public void setStatus(BookingStatus value) {
         this.status = value;
     }
 

@@ -26,11 +26,12 @@ public class ObjectFactory {
 
     private final static QName _BookHotel_QNAME = new QName("http://ws.hotel/", "bookHotel");
     private final static QName _GetHotelsResponse_QNAME = new QName("http://ws.hotel/", "getHotelsResponse");
+    private final static QName _HotelBookException_QNAME = new QName("http://ws.hotel/", "HotelBookException");
     private final static QName _CancelHotel_QNAME = new QName("http://ws.hotel/", "cancelHotel");
     private final static QName _CancelHotelResponse_QNAME = new QName("http://ws.hotel/", "cancelHotelResponse");
     private final static QName _GetHotels_QNAME = new QName("http://ws.hotel/", "getHotels");
     private final static QName _BookHotelResponse_QNAME = new QName("http://ws.hotel/", "bookHotelResponse");
-    private final static QName _Exception_QNAME = new QName("http://ws.hotel/", "Exception");
+    private final static QName _HotelCancelException_QNAME = new QName("http://ws.hotel/", "HotelCancelException");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: hotel.ws
@@ -80,19 +81,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link HotelBookException }
+     * 
+     */
+    public HotelBookException createHotelBookException() {
+        return new HotelBookException();
+    }
+
+    /**
+     * Create an instance of {@link HotelCancelException }
+     * 
+     */
+    public HotelCancelException createHotelCancelException() {
+        return new HotelCancelException();
+    }
+
+    /**
      * Create an instance of {@link BookHotelResponse }
      * 
      */
     public BookHotelResponse createBookHotelResponse() {
         return new BookHotelResponse();
-    }
-
-    /**
-     * Create an instance of {@link Exception }
-     * 
-     */
-    public Exception createException() {
-        return new Exception();
     }
 
     /**
@@ -111,6 +120,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.hotel/", name = "getHotelsResponse")
     public JAXBElement<GetHotelsResponse> createGetHotelsResponse(GetHotelsResponse value) {
         return new JAXBElement<GetHotelsResponse>(_GetHotelsResponse_QNAME, GetHotelsResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HotelBookException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.hotel/", name = "HotelBookException")
+    public JAXBElement<HotelBookException> createHotelBookException(HotelBookException value) {
+        return new JAXBElement<HotelBookException>(_HotelBookException_QNAME, HotelBookException.class, null, value);
     }
 
     /**
@@ -150,12 +168,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Exception }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link HotelCancelException }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://ws.hotel/", name = "Exception")
-    public JAXBElement<Exception> createException(Exception value) {
-        return new JAXBElement<Exception>(_Exception_QNAME, Exception.class, null, value);
+    @XmlElementDecl(namespace = "http://ws.hotel/", name = "HotelCancelException")
+    public JAXBElement<HotelCancelException> createHotelCancelException(HotelCancelException value) {
+        return new JAXBElement<HotelCancelException>(_HotelCancelException_QNAME, HotelCancelException.class, null, value);
     }
 
 }

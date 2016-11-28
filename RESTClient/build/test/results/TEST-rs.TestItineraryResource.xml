@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="MacBook-Pro.local" name="rs.TestItineraryResource" skipped="0" tests="4" time="15.381" timestamp="2016-11-28T18:03:01">
+<testsuite errors="0" failures="0" hostname="MacBook-Pro.local" name="rs.TestItineraryResource" skipped="0" tests="4" time="14.702" timestamp="2016-11-28T20:45:36">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="US" />
@@ -60,7 +60,7 @@
     <property name="copylibs.rebase" value="true" />
     <property name="libs.spring-webmvc3.0.maven-pom" value="" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner rs.TestItineraryResource skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/lucacambiaghi/TravelGood/RESTClient/build/test/results/TEST-rs.TestItineraryResource.xml crashfile=/Users/lucacambiaghi/TravelGood/RESTClient/build/junitvmwatcher4480274213910034467.properties propsfile=/Users/lucacambiaghi/TravelGood/RESTClient/build/junit1886966861993322684.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner rs.TestItineraryResource skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/lucacambiaghi/TravelGood/RESTClient/build/test/results/TEST-rs.TestItineraryResource.xml crashfile=/Users/lucacambiaghi/TravelGood/RESTClient/build/junitvmwatcher2526266343157232155.properties propsfile=/Users/lucacambiaghi/TravelGood/RESTClient/build/junit8224242195798117283.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="build.sysclasspath" value="ignore" />
     <property name="ap.supported.internal" value="true" />
@@ -101,7 +101,7 @@
     <property name="javadoc.splitindex" value="true" />
     <property name="file.separator" value="/" />
     <property name="libs.Java-EE-GlassFish-v3-Prelude.maven-pom" value="" />
-    <property name="javac.includesfile.binary" value="/Users/lucacambiaghi/TravelGood/RESTClient/null1667582344" />
+    <property name="javac.includesfile.binary" value="/Users/lucacambiaghi/TravelGood/RESTClient/null209876591" />
     <property name="libs.junit_4.maven-pom" value="" />
     <property name="mkdist.disabled" value="false" />
     <property name="javac.test.processorpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jaxrs-2.0/javax.ws.rs-api-2.0.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/asm-all-repackaged-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/cglib-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/guava-14.0.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/hk2-api-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/hk2-locator-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/hk2-utils-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/javax.annotation-api-1.2.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/javax.inject-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/javax.servlet-api-3.0.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/jaxb-api-2.2.7.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/jersey-entity-filtering-2.5.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/jersey-media-moxy-2.5.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/org.osgi.core-4.2.0.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/osgi-resource-locator-1.0.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/persistence-api-1.0.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/validation-api-1.1.0.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-client.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-common.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-container-servlet.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-container-servlet-core.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-server.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/eclipselink/eclipselink.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/platform/modules/ext/junit-4.10.jar:build/classes" />
@@ -300,8 +300,8 @@
     <property name="libs.jaxb.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/jaxb-impl.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/jaxb-xjc.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/jaxb1-impl.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/activation.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/api/jaxb-api.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/api/jsr173_1.0_api.jar" />
     <property name="do.depend" value="false" />
     <property name="dist.javadoc.dir" value="dist/javadoc" />
-    <property name="libs.swing-layout.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/platform/modules/ext/swing-layout-1.0.4.jar" />
     <property name="libs.spring-webmvc3.0.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/spring-3.0/spring-webmvc-3.2.7.RELEASE.jar" />
+    <property name="libs.swing-layout.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/platform/modules/ext/swing-layout-1.0.4.jar" />
     <property name="libs.javaee-web-api-7.0.maven-pom" value="" />
     <property name="libs.restlib.src" value="" />
     <property name="javac.source" value="1.8" />
@@ -317,16 +317,17 @@
     <property name="javac.target" value="1.8" />
     <property name="built-jar.properties" value="/Users/lucacambiaghi/TravelGood/RESTClient/build/built-jar.properties" />
     <property name="build.test.classes.dir" value="build/test/classes" />
-    <property name="libs.Encoder-Framework.maven-pom" value="" />
     <property name="src.dir" value="src" />
-    <property name="libs.jpa2-persistence.src" value="" />
+    <property name="libs.Encoder-Framework.maven-pom" value="" />
     <property name="annotation.processing.enabled" value="true" />
+    <property name="libs.jpa2-persistence.src" value="" />
     <property name="ant.file.type.RESTClient-impl" value="file" />
     <property name="libs.jsf20.src" value="" />
     <property name="libs.jpa20-persistence.src" value="" />
     <property name="libs.jsf12.src" value="" />
     <property name="libs.JAVADB_DRIVER_LABEL.maven-pom" value="" />
     <property name="libs.struts.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/docs/struts-1.3.10-javadoc.zip" />
+    <property name="ignore.failing.tests" value="true" />
     <property name="libs.Comet-GlassFish-v3.classpath" value="" />
     <property name="libs.javaee-web-api-7.0.src" value="" />
     <property name="libs.primefaces.src" value="" />
@@ -349,14 +350,14 @@
     <property name="libs.JAVADB_DRIVER_LABEL.javadoc" value="" />
     <property name="libs.javaee-endorsed-api-6.0.maven-pom" value="" />
     <property name="netbeans.dirs" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../soa:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../extide:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../apisupport:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../enterprise:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../ergonomics:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../harness:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../ide:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../java:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../nb:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../profiler:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../webcommon:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/bin/../websvccommon:" />
-    <property name="libs.jstl.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/docs/javaee-doc-api.jar" />
     <property name="libs.jsf20.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/docs/javaee-doc-api.jar" />
+    <property name="libs.jstl.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/docs/javaee-doc-api.jar" />
     <property name="java.ext.dirs" value="/Users/lucacambiaghi/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
     <property name="libs.metro.src" value="" />
     <property name="libs.absolutelayout.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/AbsoluteLayout.jar" />
     <property name="excludes" value="" />
-    <property name="libs.metro.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/activation.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-api.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-extra-api.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-extra.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-rt.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-tools.jar" />
     <property name="libs.restlib.maven-pom" value="" />
+    <property name="libs.metro.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/activation.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-api.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-extra-api.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-extra.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-rt.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/metro/webservices-tools.jar" />
     <property name="libs.jpa2-persistence.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/docs/javax.persistence-2.1.0-doc.zip" />
     <property name="java.class.path" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jaxrs-2.0/javax.ws.rs-api-2.0.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/asm-all-repackaged-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/cglib-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/guava-14.0.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/hk2-api-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/hk2-locator-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/hk2-utils-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/javax.annotation-api-1.2.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/javax.inject-2.2.0-b21.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/javax.servlet-api-3.0.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/jaxb-api-2.2.7.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/jersey-entity-filtering-2.5.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/jersey-media-moxy-2.5.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/org.osgi.core-4.2.0.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/osgi-resource-locator-1.0.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/persistence-api-1.0.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/ext/validation-api-1.1.0.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-client.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-common.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-container-servlet.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-container-servlet-core.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/modules/ext/jersey2/jersey-server.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/eclipselink/eclipselink.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/platform/modules/ext/junit-4.10.jar:/Users/lucacambiaghi/TravelGood/RESTClient/build/classes:/Users/lucacambiaghi/TravelGood/RESTClient/build/test/classes:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/extide/ant/lib/ant-launcher.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/extide/ant/lib/ant.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/extide/ant/lib/ant-junit.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/extide/ant/lib/ant-junit4.jar" />
     <property name="apple.laf.useScreenMenuBar" value="true" />
@@ -371,13 +372,13 @@
     <property name="main.class.available" value="true" />
     <property name="sun.awt.enableExtraMouseButtons" value="true" />
     <property name="libs.PojoSELib.maven-pom" value="" />
-    <property name="libs.hibernate4-persistence.src" value="" />
     <property name="compile.on.save.unsupported.jaxws" value="true" />
+    <property name="libs.hibernate4-persistence.src" value="" />
     <property name="libs.hibernate4-support.maven-pom" value="" />
     <property name="libs.Comet-GlassFish-v3.src" value="" />
     <property name="libs.restlib.javadoc" value="" />
-    <property name="nb.internal.action.name" value="run.single" />
     <property name="libs.JAXB-ENDORSED.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/jaxb/api/jaxb-api.jar" />
+    <property name="nb.internal.action.name" value="test.single" />
     <property name="libs.javaee-api-7.0.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/docs/javaee-doc-api.jar" />
     <property name="libs.eclipselink.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/eclipselink/eclipselink.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/eclipselink/javax.persistence_2.1.0.v201304241213.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/eclipselink/org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar" />
     <property name="libs.beans-binding.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/docs/beansbinding-1.2.1-doc.zip" />
@@ -389,8 +390,8 @@
     <property name="libs.Encoder-COCO.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/soa/modules/ext/coco.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/soa/modules/ext/cocoencoder-xsdextension.jar" />
     <property name="run.jvmargs" value="" />
     <property name="libs.hibernate4-persistence.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/antlr-2.7.7.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/c3p0-0.9.2.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/hibernate-c3p0-4.3.1.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/mchange-commons-java-0.2.3.4.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/dom4j-1.6.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/ehcache-core-2.4.3.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/hibernate-ehcache-4.3.1.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/hibernate-core-4.3.1.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/jboss-logging-3.1.3.GA.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/hibernate-commons-annotations-4.0.4.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/hibernate-entitymanager-4.3.1.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/javassist-3.18.1-GA.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/jboss-transaction-api_1.2_spec-1.0.0.Final.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/slf4j-api-1.6.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/slf4j-simple-1.6.1.jar:/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/hibernate4/hibernate-jpa-2.1-api-1.0.0.Final.jar" />
-    <property name="dist.archive.excludes" value="" />
     <property name="libs.JAXB-ENDORSED.src" value="" />
+    <property name="dist.archive.excludes" value="" />
     <property name="libs.testng.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/platform/docs/testng-6.8.1-javadoc.zip" />
     <property name="libs.PostgreSQLDriver.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/ide/modules/ext/postgresql-9.2-1002.jdbc4.jar" />
     <property name="libs.jsf12.maven-pom" value="" />
@@ -408,16 +409,16 @@
     <property name="build.classes.excludes" value="**/*.java,**/*.form" />
     <property name="jdkBug6558476" value="false" />
     <property name="javadoc.nonavbar" value="false" />
-    <property name="libs.spring-webmvc4.0.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/spring-4/spring-webmvc-4.0.1.RELEASE.jar" />
     <property name="wsdl-AirlineService" value="/Users/lucacambiaghi/TravelGood/RESTClient/xml-resources/web-service-references/AirlineService/wsdl/localhost_8080/Airline/AirlineService.wsdl" />
+    <property name="libs.spring-webmvc4.0.classpath" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/java/modules/ext/spring-4/spring-webmvc-4.0.1.RELEASE.jar" />
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
     <property name="libs.javaee-web-api-7.0.javadoc" value="/Users/lucacambiaghi/Downloads/OpenESB-SE-3.0.5/OE-Studio/netbeans/enterprise/docs/javaee-doc-api.jar" />
   </properties>
-  <testcase classname="rs.TestItineraryResource" name="should_link_to_hotels" time="3.817" />
-  <testcase classname="rs.TestItineraryResource" name="should_add_hotel" time="4.747" />
-  <testcase classname="rs.TestItineraryResource" name="should_add_flight" time="0.78" />
-  <testcase classname="rs.TestItineraryResource" name="should_create_itinerary" time="0.27" />
+  <testcase classname="rs.TestItineraryResource" name="should_create_itinerary" time="3.546" />
+  <testcase classname="rs.TestItineraryResource" name="should_link_to_hotels" time="0.25" />
+  <testcase classname="rs.TestItineraryResource" name="should_add_hotel" time="3.981" />
+  <testcase classname="rs.TestItineraryResource" name="should_add_flight" time="1.041" />
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

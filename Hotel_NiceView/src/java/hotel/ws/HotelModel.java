@@ -35,7 +35,12 @@ public class HotelModel {
     public boolean bookHotel(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws HotelBookException{
         for(HotelInformation hotelInfo : hotelInformationDB)
             if(hotelInfo.getBookingNumber() == bookingNumber && hotelInfo.getStatus() == HotelInformation.BookingStatus.UNCONFIRMED){
+                
+                if(hotelInfo.getHotel().getAddress().getCity().equals("BookingFailure"))
+                        throw new HotelBookException("Booking of hotel failed by design");
+                
                 if(hotelInfo.getHotel().isCreditCardNeeded()){
+                    
                     try{
                         validateCreditCard(7, ccInfo, hotelInfo.getPriceForStay());
                     } catch(bankservice.ws.CreditCardFaultMessage e){
@@ -51,8 +56,8 @@ public class HotelModel {
     public boolean cancelHotel(int bookingNumber) throws HotelCancelException{
         for(HotelInformation hotelInfo: hotelInformationDB){
             if(hotelInfo.getBookingNumber() == bookingNumber && hotelInfo.getStatus() == HotelInformation.BookingStatus.BOOKED){
-                if(hotelInfo.getHotel().getHotelName().equals("Failure"))
-                    throw new HotelCancelException("Canceling the booked hotel failed");
+                if(hotelInfo.getHotel().getAddress().getCity().equals("CancelingFailure"))
+                    throw new HotelCancelException("Canceling of hotel failed by design");
                 else{
                     hotelInfo.setStatus(HotelInformation.BookingStatus.CANCELLED);
                     return true;

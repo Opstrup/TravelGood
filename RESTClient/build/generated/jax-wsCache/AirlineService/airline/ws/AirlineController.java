@@ -23,11 +23,33 @@ import dk.dtu.imm.fastmoney.types.CreditCardInfoType;
 @WebService(name = "AirlineController", targetNamespace = "http://ws.airline/")
 @XmlSeeAlso({
     dk.dtu.imm.fastmoney.types.ObjectFactory.class,
-    airline.ws.ObjectFactory.class,
-    dk.dtu.imm.fastmoney.ObjectFactory.class
+    airline.ws.ObjectFactory.class
 })
 public interface AirlineController {
 
+
+    /**
+     * 
+     * @param creditCardInformation
+     * @param bookingNumber
+     * @return
+     *     returns boolean
+     * @throws FlightBookException_Exception
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "bookFlight", targetNamespace = "http://ws.airline/", className = "airline.ws.BookFlight")
+    @ResponseWrapper(localName = "bookFlightResponse", targetNamespace = "http://ws.airline/", className = "airline.ws.BookFlightResponse")
+    @Action(input = "http://ws.airline/AirlineController/bookFlightRequest", output = "http://ws.airline/AirlineController/bookFlightResponse", fault = {
+        @FaultAction(className = FlightBookException_Exception.class, value = "http://ws.airline/AirlineController/bookFlight/Fault/FlightBookException")
+    })
+    public boolean bookFlight(
+        @WebParam(name = "bookingNumber", targetNamespace = "")
+        int bookingNumber,
+        @WebParam(name = "CreditCardInformation", targetNamespace = "")
+        CreditCardInfoType creditCardInformation)
+        throws FlightBookException_Exception
+    ;
 
     /**
      * 
@@ -52,50 +74,28 @@ public interface AirlineController {
 
     /**
      * 
+     * @param flightPrice
      * @param creditCardInformation
      * @param bookingNumber
      * @return
      *     returns boolean
-     * @throws CreditCardFaultMessage
+     * @throws FlightCancelException_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "bookFlight", targetNamespace = "http://ws.airline/", className = "airline.ws.BookFlight")
-    @ResponseWrapper(localName = "bookFlightResponse", targetNamespace = "http://ws.airline/", className = "airline.ws.BookFlightResponse")
-    @Action(input = "http://ws.airline/AirlineController/bookFlightRequest", output = "http://ws.airline/AirlineController/bookFlightResponse", fault = {
-        @FaultAction(className = CreditCardFaultMessage.class, value = "http://ws.airline/AirlineController/bookFlight/Fault/CreditCardFaultMessage")
-    })
-    public boolean bookFlight(
-        @WebParam(name = "bookingNumber", targetNamespace = "")
-        int bookingNumber,
-        @WebParam(name = "CreditCardInformation", targetNamespace = "")
-        CreditCardInfoType creditCardInformation)
-        throws CreditCardFaultMessage
-    ;
-
-    /**
-     * 
-     * @param flightPrice
-     * @param creditCardInformation
-     * @param bookingNumber
-     * @throws CreditCardFaultMessage
-     * @throws Exception_Exception
-     */
-    @WebMethod
     @RequestWrapper(localName = "cancelFlight", targetNamespace = "http://ws.airline/", className = "airline.ws.CancelFlight")
     @ResponseWrapper(localName = "cancelFlightResponse", targetNamespace = "http://ws.airline/", className = "airline.ws.CancelFlightResponse")
     @Action(input = "http://ws.airline/AirlineController/cancelFlightRequest", output = "http://ws.airline/AirlineController/cancelFlightResponse", fault = {
-        @FaultAction(className = CreditCardFaultMessage.class, value = "http://ws.airline/AirlineController/cancelFlight/Fault/CreditCardFaultMessage"),
-        @FaultAction(className = Exception_Exception.class, value = "http://ws.airline/AirlineController/cancelFlight/Fault/Exception")
+        @FaultAction(className = FlightCancelException_Exception.class, value = "http://ws.airline/AirlineController/cancelFlight/Fault/FlightCancelException")
     })
-    public void cancelFlight(
+    public boolean cancelFlight(
         @WebParam(name = "bookingNumber", targetNamespace = "")
         int bookingNumber,
         @WebParam(name = "flightPrice", targetNamespace = "")
         int flightPrice,
         @WebParam(name = "CreditCardInformation", targetNamespace = "")
         CreditCardInfoType creditCardInformation)
-        throws CreditCardFaultMessage, Exception_Exception
+        throws FlightCancelException_Exception
     ;
 
 }

@@ -22,17 +22,17 @@
 <message name="bookHotelResponse">
 <part name="parameters" element="tns:bookHotelResponse"/>
 </message>
-<message name="CreditCardFaultMessage">
-<part xmlns:ns1="http://fastmoney.imm.dtu.dk" name="fault" element="ns1:CreditCardFault"/>
-</message>
-<message name="Exception">
-<part name="fault" element="tns:Exception"/>
+<message name="HotelBookException">
+<part name="fault" element="tns:HotelBookException"/>
 </message>
 <message name="cancelHotel">
 <part name="parameters" element="tns:cancelHotel"/>
 </message>
 <message name="cancelHotelResponse">
 <part name="parameters" element="tns:cancelHotelResponse"/>
+</message>
+<message name="HotelCancelException">
+<part name="fault" element="tns:HotelCancelException"/>
 </message>
 <portType name="HotelController">
 <operation name="getHotels">
@@ -42,13 +42,12 @@
 <operation name="bookHotel">
 <input wsam:Action="http://ws.hotel/HotelController/bookHotelRequest" message="tns:bookHotel"/>
 <output wsam:Action="http://ws.hotel/HotelController/bookHotelResponse" message="tns:bookHotelResponse"/>
-<fault message="tns:CreditCardFaultMessage" name="CreditCardFaultMessage" wsam:Action="http://ws.hotel/HotelController/bookHotel/Fault/CreditCardFaultMessage"/>
-<fault message="tns:Exception" name="Exception" wsam:Action="http://ws.hotel/HotelController/bookHotel/Fault/Exception"/>
+<fault message="tns:HotelBookException" name="HotelBookException" wsam:Action="http://ws.hotel/HotelController/bookHotel/Fault/HotelBookException"/>
 </operation>
 <operation name="cancelHotel">
 <input wsam:Action="http://ws.hotel/HotelController/cancelHotelRequest" message="tns:cancelHotel"/>
 <output wsam:Action="http://ws.hotel/HotelController/cancelHotelResponse" message="tns:cancelHotelResponse"/>
-<fault message="tns:Exception" name="Exception" wsam:Action="http://ws.hotel/HotelController/cancelHotel/Fault/Exception"/>
+<fault message="tns:HotelCancelException" name="HotelCancelException" wsam:Action="http://ws.hotel/HotelController/cancelHotel/Fault/HotelCancelException"/>
 </operation>
 </portType>
 <binding name="HotelControllerPortBinding" type="tns:HotelController">
@@ -70,11 +69,8 @@
 <output>
 <soap:body use="literal"/>
 </output>
-<fault name="CreditCardFaultMessage">
-<soap:fault name="CreditCardFaultMessage" use="literal"/>
-</fault>
-<fault name="Exception">
-<soap:fault name="Exception" use="literal"/>
+<fault name="HotelBookException">
+<soap:fault name="HotelBookException" use="literal"/>
 </fault>
 </operation>
 <operation name="cancelHotel">
@@ -85,8 +81,8 @@
 <output>
 <soap:body use="literal"/>
 </output>
-<fault name="Exception">
-<soap:fault name="Exception" use="literal"/>
+<fault name="HotelCancelException">
+<soap:fault name="HotelCancelException" use="literal"/>
 </fault>
 </operation>
 </binding>

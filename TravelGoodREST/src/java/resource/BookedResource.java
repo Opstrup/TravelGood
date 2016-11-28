@@ -19,17 +19,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 import static resource.ItineraryResource.itineraryDb;
 import representation.ItineraryRepresentation;
 
 @Path("bookings")
-public class BookedItineraryResource {
+public class BookedResource {
     
     public static List<Itinerary> bookedItineraries = new ArrayList<>();
     
@@ -59,17 +63,28 @@ public class BookedItineraryResource {
 
                 }catch(FlightBookException_Exception | HotelBookException_Exception e){
                     cancelBookings(itinerary, ccInfoFast);
-                    //throw exception: booking failed
+                    //booking failed, cancellations successful
+                    throw new InternalServerErrorException(Response.
+                        status(Response.Status.INTERNAL_SERVER_ERROR).
+                        entity("Booking of the itinerary has failed. All succedeed bookings have been successfully cancelled.").
+                        build());
                 }
                 
                 itinerary.setStatus(Itinerary.BookingStatus.BOOKED);
+                Itinerary booking = itinerary;
+                itineraryDb.remove(itinerary);
+                bookedItineraries.add(booking);
+                
                 ItineraryRepresentation itRep = new ItineraryRepresentation();
-                itRep.setItinerary(itinerary);
+                itRep.setItinerary(booking);
                 return itRep;
 
             }
-        //404 it not found
-        return null;
+        
+        throw new BadRequestException(Response.
+               status(Response.Status.BAD_REQUEST).
+               entity("This itinerary does not exist or cannot be booked").
+               build());
         
     }
     
@@ -77,7 +92,7 @@ public class BookedItineraryResource {
     @Path("/{itineraryId}/")
     @Produces("application/itinerary+json")
     public ItineraryRepresentation cancelBookedItinerary(
-        @PathParam("itineraryID") String itineraryID,
+        @PathParam("itineraryId") String itineraryID,
         @QueryParam ("name") String name,
         @QueryParam("number") String number,
         @QueryParam("expMonth") int expMonth,
@@ -87,38 +102,61 @@ public class BookedItineraryResource {
         dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast = createCCInfoFast(expMonth, expYear, name, number);
         
         for(Itinerary itinerary: bookedItineraries)
-            if(itinerary.ID.equals(itineraryID)){
+            if(itinerary.ID.equals(itineraryID) && itinerary.getStatus() == Itinerary.BookingStatus.BOOKED){
                 
                 //can throw exception
                 cancelBookings(itinerary, ccInfoFast);
                 
                 //cancellation successful
-                itinerary.status=Itinerary.BookingStatus.CANCELLED;
+                itinerary.setStatus(Itinerary.BookingStatus.CANCELLED);
                 ItineraryRepresentation itRep = new ItineraryRepresentation();
                 itRep.setItinerary(itinerary);
                 return itRep;
             }
         
-        //404 itinerary not found
-        return null;
+        throw new BadRequestException(Response.
+               status(Response.Status.BAD_REQUEST).
+               entity("This itinerary does not exist or cannot be cancelled").
+               build());
         
     }
     
+    @PUT
+    @Path("/reset")
+    public Response resetBookingsDB(String ignored){
+        bookedItineraries = new ArrayList<>();
+        return Response.ok().build();
+    }
+    
     private void cancelBookings(Itinerary itinerary, dk.dtu.imm.fastmoney.types.CreditCardInfoType ccInfoFast) {
-        try{
-            for(FlightInformation flightInfo : itinerary.flights){
-                if(flightInfo.getStatus() == airline.ws.BookingStatus.BOOKED)
-                cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
-                flightInfo.setStatus(airline.ws.BookingStatus.CANCELLED);
-            }
+        
+        boolean failed = false;
+        
+        for(FlightInformation flightInfo : itinerary.flights)
+            if(flightInfo.getStatus() == airline.ws.BookingStatus.BOOKED){
+                try{
+                    cancelFlight(flightInfo.getBookingNumber(),flightInfo.getFlight().getFlightPrice(),ccInfoFast);
+                    flightInfo.setStatus(airline.ws.BookingStatus.CANCELLED);
+                }catch(FlightCancelException_Exception e){
+                    failed = true;
+                }
+            }      
             
-            for(HotelInformation hotelInfo: itinerary.hotels){
-                cancelHotel(hotelInfo.getBookingNumber());
-                hotelInfo.setStatus(BookingStatus.CANCELLED);
+        for(HotelInformation hotelInfo: itinerary.hotels)
+            if(hotelInfo.getStatus() == BookingStatus.BOOKED){
+                try{
+                    cancelHotel(hotelInfo.getBookingNumber());
+                    hotelInfo.setStatus(BookingStatus.CANCELLED);
+                }catch(HotelCancelException_Exception e){
+                    failed = true;
+                }
             }
-        } catch (FlightCancelException_Exception | HotelCancelException_Exception e) { 
-        // continue cancelling others and throw exception
-        } 
+        
+        if(failed)
+            throw new InternalServerErrorException(Response.
+                        status(Response.Status.INTERNAL_SERVER_ERROR).
+                        entity("Cancellation of one of the bookings has failed").
+                        build()); 
     }
     
     private CreditCardInfoType createCcInfo(int expMonth, int expYear, String name, String number) {

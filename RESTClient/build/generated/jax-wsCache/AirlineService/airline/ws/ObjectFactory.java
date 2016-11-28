@@ -24,13 +24,14 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _FlightCancelException_QNAME = new QName("http://ws.airline/", "FlightCancelException");
     private final static QName _CancelFlightResponse_QNAME = new QName("http://ws.airline/", "cancelFlightResponse");
     private final static QName _BookFlightResponse_QNAME = new QName("http://ws.airline/", "bookFlightResponse");
     private final static QName _GetFlights_QNAME = new QName("http://ws.airline/", "getFlights");
     private final static QName _BookFlight_QNAME = new QName("http://ws.airline/", "bookFlight");
     private final static QName _CancelFlight_QNAME = new QName("http://ws.airline/", "cancelFlight");
+    private final static QName _FlightBookException_QNAME = new QName("http://ws.airline/", "FlightBookException");
     private final static QName _GetFlightsResponse_QNAME = new QName("http://ws.airline/", "getFlightsResponse");
-    private final static QName _Exception_QNAME = new QName("http://ws.airline/", "Exception");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: airline.ws
@@ -53,6 +54,14 @@ public class ObjectFactory {
      */
     public GetFlights createGetFlights() {
         return new GetFlights();
+    }
+
+    /**
+     * Create an instance of {@link FlightCancelException }
+     * 
+     */
+    public FlightCancelException createFlightCancelException() {
+        return new FlightCancelException();
     }
 
     /**
@@ -80,19 +89,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link FlightBookException }
+     * 
+     */
+    public FlightBookException createFlightBookException() {
+        return new FlightBookException();
+    }
+
+    /**
      * Create an instance of {@link GetFlightsResponse }
      * 
      */
     public GetFlightsResponse createGetFlightsResponse() {
         return new GetFlightsResponse();
-    }
-
-    /**
-     * Create an instance of {@link Exception }
-     * 
-     */
-    public Exception createException() {
-        return new Exception();
     }
 
     /**
@@ -109,6 +118,15 @@ public class ObjectFactory {
      */
     public Flight createFlight() {
         return new Flight();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FlightCancelException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.airline/", name = "FlightCancelException")
+    public JAXBElement<FlightCancelException> createFlightCancelException(FlightCancelException value) {
+        return new JAXBElement<FlightCancelException>(_FlightCancelException_QNAME, FlightCancelException.class, null, value);
     }
 
     /**
@@ -157,21 +175,21 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link FlightBookException }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://ws.airline/", name = "FlightBookException")
+    public JAXBElement<FlightBookException> createFlightBookException(FlightBookException value) {
+        return new JAXBElement<FlightBookException>(_FlightBookException_QNAME, FlightBookException.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetFlightsResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://ws.airline/", name = "getFlightsResponse")
     public JAXBElement<GetFlightsResponse> createGetFlightsResponse(GetFlightsResponse value) {
         return new JAXBElement<GetFlightsResponse>(_GetFlightsResponse_QNAME, GetFlightsResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Exception }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://ws.airline/", name = "Exception")
-    public JAXBElement<Exception> createException(Exception value) {
-        return new JAXBElement<Exception>(_Exception_QNAME, Exception.class, null, value);
     }
 
 }

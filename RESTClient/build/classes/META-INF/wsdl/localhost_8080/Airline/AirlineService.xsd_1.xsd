@@ -2,7 +2,9 @@
 
 <xs:import namespace="http://types.fastmoney.imm.dtu.dk" schemaLocation="http://localhost:8080/Airline/AirlineService?xsd=2"/>
 
-<xs:element name="Exception" type="tns:Exception"/>
+<xs:element name="FlightBookException" type="tns:FlightBookException"/>
+
+<xs:element name="FlightCancelException" type="tns:FlightCancelException"/>
 
 <xs:element name="bookFlight" type="tns:bookFlight"/>
 
@@ -32,10 +34,11 @@
 
 <xs:complexType name="flightInformation">
 <xs:sequence>
+<xs:element name="bookingStatus" type="tns:bookingStatus" minOccurs="0"/>
 <xs:element name="bookingNumber" type="xs:int"/>
 <xs:element name="flight" type="tns:flight" minOccurs="0"/>
 <xs:element name="reservationAgency" type="xs:string" minOccurs="0"/>
-<xs:element name="status" type="xs:string" minOccurs="0"/>
+<xs:element name="status" type="tns:bookingStatus" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -65,6 +68,12 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="FlightBookException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="cancelFlight">
 <xs:sequence>
 <xs:element name="bookingNumber" type="xs:int"/>
@@ -74,12 +83,22 @@
 </xs:complexType>
 
 <xs:complexType name="cancelFlightResponse">
-<xs:sequence/>
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="Exception">
+<xs:complexType name="FlightCancelException">
 <xs:sequence>
 <xs:element name="message" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
+
+<xs:simpleType name="bookingStatus">
+<xs:restriction base="xs:string">
+<xs:enumeration value="UNCONFIRMED"/>
+<xs:enumeration value="BOOKED"/>
+<xs:enumeration value="CANCELLED"/>
+</xs:restriction>
+</xs:simpleType>
 </xs:schema>

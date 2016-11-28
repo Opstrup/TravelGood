@@ -45,6 +45,10 @@ public class AirlineModel {
     public boolean bookFlight(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws FlightBookException{
         for(FlightInformation flightInfo : flightsInformationDB)
             if(flightInfo.getBookingNumber() == bookingNumber){
+                
+                if(flightInfo.getFlight().getStartAirport().equals("BookingFailure"))
+                    throw new FlightBookException("Booking of flight failed by design");
+                
                 if(flightInfo.getFlight().isCreditCardNeeded()){
                     try{
                         validateCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice());
@@ -63,15 +67,16 @@ public class AirlineModel {
     public boolean cancelFlight(int bookingNumber, bankservice.ws.CreditCardInfoType ccInfo) throws FlightCancelException {
         for(FlightInformation flightInfo : flightsInformationDB)
             if(flightInfo.getBookingNumber() == bookingNumber){
-                if(flightInfo.getFlight().getStartAirport().equals("Fail"))
+  
+                if(flightInfo.getFlight().getStartAirport().equals("CancelingFailure"))
+                    throw new FlightCancelException("Cancellation of flight failed by design");
+                
+                try{
+                    refundCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice()/2, lameDuckAccountType);
+                } catch(bankservice.ws.CreditCardFaultMessage e){
                     throw new FlightCancelException("Refund of CC failed!");
-                else{
-                    try{
-                        refundCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice()/2, lameDuckAccountType);
-                    } catch(bankservice.ws.CreditCardFaultMessage e){
-                        throw new FlightCancelException("Refund of CC failed!");
-                    }
                 }
+                
                 flightInfo.setStatus(FlightInformation.BookingStatus.CANCELLED);
                 return true;
             }
@@ -86,12 +91,14 @@ public class AirlineModel {
         Flight flightOne = new Flight(1, "Copenhagen", "Rome", depatureDate, arrivalDate, "EasyJet", 10, true, 100);
         Flight flightTwo = new Flight(1, "Copenhagen", "Milan", depatureDate, arrivalDate, "EasyJet", 10, true, 100);
         Flight flightThree = new Flight(1, "Copenhagen", "Turin", depatureDate, arrivalDate, "EasyJet", 10, true, 100);
-        Flight flightFail = new Flight(1, "Failure", "Rome", depatureDate, arrivalDate, "EasyJet", 10, true, 10000);
+        Flight flightBookFail = new Flight(1, "BookingFailure", "Rome", depatureDate, arrivalDate, "EasyJet", 10, true, 10000);
+        Flight flightCancFail = new Flight(1, "CancelingFailure", "Rome", depatureDate, arrivalDate, "EasyJet", 10, true, 10000);
         
         flightsDB.add(flightOne);
         flightsDB.add(flightTwo);
         flightsDB.add(flightThree);
-        flightsDB.add(flightFail);
+        flightsDB.add(flightBookFail);
+        flightsDB.add(flightCancFail);
     }
     
     private static boolean validateCreditCard(int group, bankservice.ws.CreditCardInfoType creditCardInfo, int amount) throws bankservice.ws.CreditCardFaultMessage {

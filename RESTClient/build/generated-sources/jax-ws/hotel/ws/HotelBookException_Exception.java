@@ -1,5 +1,5 @@
 
-package airline.ws;
+package hotel.ws;
 
 import javax.xml.ws.WebFault;
 
@@ -10,23 +10,23 @@ import javax.xml.ws.WebFault;
  * Generated source version: 2.2
  * 
  */
-@WebFault(name = "Exception", targetNamespace = "http://ws.airline/")
-public class Exception_Exception
-    extends java.lang.Exception
+@WebFault(name = "HotelBookException", targetNamespace = "http://ws.hotel/")
+public class HotelBookException_Exception
+    extends Exception
 {
 
     /**
      * Java type that goes as soapenv:Fault detail element.
      * 
      */
-    private airline.ws.Exception faultInfo;
+    private HotelBookException faultInfo;
 
     /**
      * 
      * @param faultInfo
      * @param message
      */
-    public Exception_Exception(String message, airline.ws.Exception faultInfo) {
+    public HotelBookException_Exception(String message, HotelBookException faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -37,7 +37,7 @@ public class Exception_Exception
      * @param cause
      * @param message
      */
-    public Exception_Exception(String message, airline.ws.Exception faultInfo, Throwable cause) {
+    public HotelBookException_Exception(String message, HotelBookException faultInfo, Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
@@ -45,9 +45,9 @@ public class Exception_Exception
     /**
      * 
      * @return
-     *     returns fault bean: airline.ws.Exception
+     *     returns fault bean: hotel.ws.HotelBookException
      */
-    public airline.ws.Exception getFaultInfo() {
+    public HotelBookException getFaultInfo() {
         return faultInfo;
     }
 

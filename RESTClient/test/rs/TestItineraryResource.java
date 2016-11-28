@@ -76,7 +76,7 @@ public class TestItineraryResource {
         ItineraryRepresentation updated = itinerariesTarget.path("/" + itineraryID + "/hotels/" + hotelID)
                     .request()
                     .accept("application/itinerary+json")
-                    .put(Entity.entity(new Itinerary(), "application/itinerary+json"), ItineraryRepresentation.class);
+                    .put(Entity.entity(new Itinerary("ignored"), "application/itinerary+json"), ItineraryRepresentation.class);
         
         assert(updated.getItinerary().getHotels().size()==1);
         
@@ -100,7 +100,7 @@ public class TestItineraryResource {
         ItineraryRepresentation updated = itinerariesTarget.path("/" + itineraryID + "/flights/" + flightID)
                     .request()
                     .accept("application/itinerary+json")
-                    .put(Entity.entity(new Itinerary(), "application/itinerary+json"), ItineraryRepresentation.class);
+                    .put(Entity.entity(new Itinerary("ignored"), "application/itinerary+json"), ItineraryRepresentation.class);
         
         assert(updated.getItinerary().getFlights().size()==1);
         
