@@ -66,6 +66,27 @@ public class TestBookingResource {
     } 
     
     @Test
+    public void should_get_booking(){
+        ItineraryRepresentation newItinerary = createItinerary();
+        
+        String itineraryID = newItinerary.getItinerary().getID();
+        
+        List<HotelInformation> hotels = searchHotels("Copenhagen");
+        
+        HotelInformation hotel = hotels.get(0);
+        
+        String hotelID = valueOf(hotel.getBookingNumber());
+        
+        ItineraryRepresentation updated = addHotel(itineraryID, hotelID);
+        
+        ItineraryRepresentation booked = bookItinerary(itineraryID);
+        
+        ItineraryRepresentation booking = getBooking(itineraryID);
+        
+        assertTrue(booking.getItinerary().hotels.size()>0);
+    }
+    
+    @Test
     public void should_cancel_itinerary(){
         ItineraryRepresentation newItinerary = createItinerary();
         
@@ -135,6 +156,13 @@ public class TestBookingResource {
                     .accept("application/itinerary+json")
                     .put(Entity.entity(new ItineraryRepresentation(), "application/itinerary+json"), ItineraryRepresentation.class);
         }
+    
+    private ItineraryRepresentation getBooking(String itineraryID){
+        return bookingsTarget.path("/" + itineraryID)
+                    .request()
+                    .accept("application/itinerary+json")
+                    .get(ItineraryRepresentation.class);
+    }
     
     private List<HotelInformation> searchHotels(String city){
         return hotelTarget.path("/" + city)
