@@ -8,16 +8,21 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * @author arhjo
  */
 public class HotelInformation {
+    
+    public enum BookingStatus {
+        UNCONFIRMED, BOOKED, CANCELLED
+    }
+    
     private Hotel hotel;
     private int bookingNumber;   
     private int priceForStay;
     private String nameOfHotelService = "NiceView";
-    private String status;
+    private BookingStatus status;
 
     public HotelInformation(Hotel hotel) {
         this.hotel = hotel;
         bookingNumber = new Random().nextInt(50) +1;
-        status = "Unconfirmed";
+        status = BookingStatus.UNCONFIRMED;
     }
     public Hotel getHotel() {
         return hotel;
@@ -34,23 +39,20 @@ public class HotelInformation {
     public void setHotel(Hotel hotel){
         this.hotel = hotel;
     }
-    public String getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(BookingStatus status) {
         this.status = status;
     } 
     public int getPriceForStay() {
         return priceForStay;
     }
+
     public String getNameOfHotelService() {
         return nameOfHotelService;
     }    
-    public void calculatePrice(XMLGregorianCalendar arrivalDate, XMLGregorianCalendar departureDate) {
-        //long diff = departureDate. - arrivalDate.getTime();
-       // this.priceForStay =  (int) (hotel.getPricePerDay()*(diff/86400000)); /*Miliseconds pr. day, rewrite is needed to find price*/
-        this.priceForStay = (int)(departureDate.toGregorianCalendar().compareTo(arrivalDate.toGregorianCalendar()) / 86400000);
-    }
+   
     public int getBookingNumber() {
         return bookingNumber;
     }

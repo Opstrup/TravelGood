@@ -1,5 +1,7 @@
 package airline.ws;
 
+import airline.ws.exception.FlightBookException;
+import airline.ws.exception.FlightCancelException;
 import java.io.IOException;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -28,18 +30,18 @@ public class AirlineController {
     @WebMethod(operationName = "bookFlight")
     public boolean bookFlight(@WebParam (name = "bookingNumber") int bookingNumber, 
                                @WebParam (name = "CreditCardInformation") 
-                               bankservice.ws.CreditCardInfoType ccInfo)throws bankservice.ws.CreditCardFaultMessage{
+                               bankservice.ws.CreditCardInfoType ccInfo)throws FlightBookException{
         
+        //can throw FlightBookException
         return model.bookFlight(bookingNumber,ccInfo);
     }
     
     @WebMethod(operationName = "cancelFlight")
-    public void cancelFlight (@WebParam (name = "bookingNumber") int bookingNumber,
+    public boolean cancelFlight (@WebParam (name = "bookingNumber") int bookingNumber,
                               @WebParam (name = "flightPrice") int flightPrice,
                               @WebParam (name = "CreditCardInformation") 
-                              bankservice.ws.CreditCardInfoType ccInfo) throws bankservice.ws.CreditCardFaultMessage, Exception {
-      
-        if (!model.cancelFlight(bookingNumber, ccInfo))
-            throw new Exception("BookingNo. do not exsist");
+                              bankservice.ws.CreditCardInfoType ccInfo) throws FlightCancelException {
+        //can throw FlightCancelException
+        return model.cancelFlight(bookingNumber, ccInfo);
     }
 }

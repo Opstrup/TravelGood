@@ -3,4 +3,6 @@
     <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
     <system systemId="http://localhost:8080/Airline/AirlineService?wsdl" uri="src/localhost_8080/Airline/AirlineService.wsdl"/>
     <system systemId="http://localhost:8080/Airline/AirlineService?xsd=1" uri="src/localhost_8080/Airline/AirlineService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/Airline/AirlineService?xsd=2" uri="src/localhost_8080/Airline/AirlineService.xsd_2.xsd"/>
+    <system systemId="http://localhost:8080/Airline/AirlineService?xsd=3" uri="src/localhost_8080/Airline/AirlineService.xsd_3.xsd"/>
 </catalog>

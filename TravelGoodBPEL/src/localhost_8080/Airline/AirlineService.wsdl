@@ -3,6 +3,12 @@
 <xsd:schema>
 <xsd:import namespace="http://ws.airline/" schemaLocation="http://localhost:8080/Airline/AirlineService?xsd=1"/>
 </xsd:schema>
+<xsd:schema>
+<xsd:import namespace="http://types.fastmoney.imm.dtu.dk" schemaLocation="http://localhost:8080/Airline/AirlineService?xsd=2"/>
+</xsd:schema>
+<xsd:schema>
+<xsd:import namespace="http://fastmoney.imm.dtu.dk" schemaLocation="http://localhost:8080/Airline/AirlineService?xsd=3"/>
+</xsd:schema>
 </types>
 <message name="getFlights">
 <part name="parameters" element="tns:getFlights"/>
@@ -10,10 +16,39 @@
 <message name="getFlightsResponse">
 <part name="parameters" element="tns:getFlightsResponse"/>
 </message>
+<message name="bookFlight">
+<part name="parameters" element="tns:bookFlight"/>
+</message>
+<message name="bookFlightResponse">
+<part name="parameters" element="tns:bookFlightResponse"/>
+</message>
+<message name="CreditCardFaultMessage">
+<part xmlns:ns1="http://fastmoney.imm.dtu.dk" name="fault" element="ns1:CreditCardFault"/>
+</message>
+<message name="cancelFlight">
+<part name="parameters" element="tns:cancelFlight"/>
+</message>
+<message name="cancelFlightResponse">
+<part name="parameters" element="tns:cancelFlightResponse"/>
+</message>
+<message name="Exception">
+<part name="fault" element="tns:Exception"/>
+</message>
 <portType name="AirlineController">
 <operation name="getFlights">
 <input wsam:Action="http://ws.airline/AirlineController/getFlightsRequest" message="tns:getFlights"/>
 <output wsam:Action="http://ws.airline/AirlineController/getFlightsResponse" message="tns:getFlightsResponse"/>
+</operation>
+<operation name="bookFlight">
+<input wsam:Action="http://ws.airline/AirlineController/bookFlightRequest" message="tns:bookFlight"/>
+<output wsam:Action="http://ws.airline/AirlineController/bookFlightResponse" message="tns:bookFlightResponse"/>
+<fault message="tns:CreditCardFaultMessage" name="CreditCardFaultMessage" wsam:Action="http://ws.airline/AirlineController/bookFlight/Fault/CreditCardFaultMessage"/>
+</operation>
+<operation name="cancelFlight">
+<input wsam:Action="http://ws.airline/AirlineController/cancelFlightRequest" message="tns:cancelFlight"/>
+<output wsam:Action="http://ws.airline/AirlineController/cancelFlightResponse" message="tns:cancelFlightResponse"/>
+<fault message="tns:CreditCardFaultMessage" name="CreditCardFaultMessage" wsam:Action="http://ws.airline/AirlineController/cancelFlight/Fault/CreditCardFaultMessage"/>
+<fault message="tns:Exception" name="Exception" wsam:Action="http://ws.airline/AirlineController/cancelFlight/Fault/Exception"/>
 </operation>
 </portType>
 <binding name="AirlineControllerPortBinding" type="tns:AirlineController">
@@ -26,6 +61,33 @@
 <output>
 <soap:body use="literal"/>
 </output>
+</operation>
+<operation name="bookFlight">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="CreditCardFaultMessage">
+<soap:fault name="CreditCardFaultMessage" use="literal"/>
+</fault>
+</operation>
+<operation name="cancelFlight">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="CreditCardFaultMessage">
+<soap:fault name="CreditCardFaultMessage" use="literal"/>
+</fault>
+<fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</fault>
 </operation>
 </binding>
 <service name="AirlineService">

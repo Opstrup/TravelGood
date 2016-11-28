@@ -3,17 +3,22 @@ package airline.ws;
 import java.util.Random;
 
 public class FlightInformation {
+    
+    public enum BookingStatus {
+        UNCONFIRMED, BOOKED, CANCELLED
+    }
+    
     private int bookingNumber;
     
     private String reservationAgency;
     private Flight flight;
-    private String status;
+    public BookingStatus bookingStatus;
     
     public FlightInformation(Flight flight) {
         bookingNumber = new Random().nextInt(50) +1;
         reservationAgency = "LameDuck";
         this.flight = flight;
-        status = "Unconfirmed";
+        bookingStatus = BookingStatus.UNCONFIRMED;
     }
     public int getBookingNumber() {
         return bookingNumber;
@@ -33,10 +38,10 @@ public class FlightInformation {
     public void setFlight(Flight flight) {
         this.flight = flight;
     }
-    public String getStatus(){
-        return status;
+    public BookingStatus getStatus(){
+        return bookingStatus;
     }
-    public void setStatus(String status){
-        this.status = status;
+    public void setStatus(BookingStatus status){
+        this.bookingStatus = status;
     }
 }

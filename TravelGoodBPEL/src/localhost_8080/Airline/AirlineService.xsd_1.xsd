@@ -1,4 +1,16 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.airline/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.airline/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.airline/" xmlns:ns1="http://types.fastmoney.imm.dtu.dk" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.airline/">
+
+<xs:import namespace="http://types.fastmoney.imm.dtu.dk" schemaLocation="http://localhost:8080/Airline/AirlineService?xsd=2"/>
+
+<xs:element name="Exception" type="tns:Exception"/>
+
+<xs:element name="bookFlight" type="tns:bookFlight"/>
+
+<xs:element name="bookFlightResponse" type="tns:bookFlightResponse"/>
+
+<xs:element name="cancelFlight" type="tns:cancelFlight"/>
+
+<xs:element name="cancelFlightResponse" type="tns:cancelFlightResponse"/>
 
 <xs:element name="getFlights" type="tns:getFlights"/>
 
@@ -22,8 +34,8 @@
 <xs:sequence>
 <xs:element name="bookingNumber" type="xs:int"/>
 <xs:element name="flight" type="tns:flight" minOccurs="0"/>
-<xs:element name="flightPrice" type="xs:int"/>
 <xs:element name="reservationAgency" type="xs:string" minOccurs="0"/>
+<xs:element name="status" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -35,7 +47,39 @@
 <xs:element name="departureDate" type="xs:anySimpleType" minOccurs="0"/>
 <xs:element name="destinationAirport" type="xs:string" minOccurs="0"/>
 <xs:element name="flightID" type="xs:int"/>
+<xs:element name="flightPrice" type="xs:int"/>
 <xs:element name="startAirport" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bookFlight">
+<xs:sequence>
+<xs:element name="bookingNumber" type="xs:int"/>
+<xs:element name="CreditCardInformation" type="ns1:creditCardInfoType" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bookFlightResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cancelFlight">
+<xs:sequence>
+<xs:element name="bookingNumber" type="xs:int"/>
+<xs:element name="flightPrice" type="xs:int"/>
+<xs:element name="CreditCardInformation" type="ns1:creditCardInfoType" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cancelFlightResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="Exception">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>
