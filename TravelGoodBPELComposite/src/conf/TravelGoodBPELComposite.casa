@@ -13,12 +13,12 @@
         </service-engine-service-unit>
         <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="TravelGoodBPELComposite-sun-http-binding" unit-name="sun-http-binding">
             <ports>
-                <port x="67" y="114">
+                <port state="deleted" x="67" y="114">
                     <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/localhost_8080/Airline/AirlineService.wsdl#xpointer(/definitions/service[@name='AirlineService']/port[@name='AirlineControllerPort'])" xlink:type="simple"/>
                     <consumes endpoint="endpoint1"/>
                     <provides endpoint="endpoint1"/>
                 </port>
-                <port x="67" y="37">
+                <port state="deleted" x="67" y="37">
                     <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/travelGoodBPEL.wsdl#xpointer(/definitions/service[@name='travelGoodBPELService']/port[@name='travelGoodBPELPort'])" xlink:type="simple"/>
                     <consumes endpoint="endpoint2"/>
                     <provides endpoint="endpoint2"/>
@@ -31,8 +31,10 @@
         <connection consumer="endpoint2" provider="endpoint3" state="unchanged"/>
     </connections>
     <porttypes>
+        <link xlink:href="../jbiasa/TravelGoodBPELComposite.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
         <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/localhost_8080/Airline/AirlineService.wsdl#xpointer(/definitions/portType[@name='AirlineController'])" xlink:type="simple"/>
         <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/travelGoodBPEL.wsdl#xpointer(/definitions/portType[@name='travelGoodBPELPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/TravelGoodBPELComposite.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
     </porttypes>
     <bindings>
         <link xlink:href="../jbiServiceUnits/TravelGoodBPEL/localhost_8080/Airline/AirlineService.wsdl#xpointer(/definitions/binding[@name='AirlineControllerPortBinding'])" xlink:type="simple"/>

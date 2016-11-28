@@ -8,6 +8,7 @@
                     <xsd:element name="hotelsList"/>
                 </xsd:sequence>
                 <xsd:attribute name="itineraryID" type="xsd:string"/>
+                <xsd:attribute name="itineraryStatus" type="xsd:string"/>
             </xsd:complexType>
             <xsd:complexType name="flightType">
                 <xsd:sequence>
@@ -37,14 +38,22 @@
     <part name="itineraryID_getFlights_resp" type="xsd:string">
     </part>
   </message>
+  <message name="bookItineraryResponse">
+    <part name="bookedItinerary" type="tns:itineraryType">
+    </part>
+    <part name="itineraryID_bookItinerary_resp" type="xsd:string">
+    </part>
+  </message>
   <message name="createItinerayRequest">
     <part name="createItinerary_req" type="xsd:string">
     </part>
   </message>
   <message name="createItinerayResponse">
-    <part name="emptyItinerary" type="tns:itineraryType">
-    </part>
     <part name="createItinerary_resp" type="xsd:string">
+    </part>
+  </message>
+  <message name="bookItineraryRequest">
+    <part name="itineraryID_bookItinerary_req" type="xsd:string">
     </part>
   </message>
   <message name="getFlightsRequest">
@@ -70,6 +79,12 @@
       <output message="tns:getFlightsResponse" name="output2">
     </output>
     </operation>
+    <operation name="bookItinerary">
+      <input message="tns:bookItineraryRequest" name="input3">
+    </input>
+      <output message="tns:bookItineraryResponse" name="output3">
+    </output>
+    </operation>
   </portType>
   <binding name="travelGoodBPELBinding" type="tns:travelGoodBPELPortType">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -79,7 +94,7 @@
         <soap:body namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" use="literal"/>
       </input>
       <output name="output1">
-        <soap:body namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" parts="emptyItinerary" use="literal"/>
+        <soap:body namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" parts="createItinerary_resp" use="literal"/>
       </output>
     </operation>
     <operation name="getFlights">
@@ -91,10 +106,19 @@
         <soap:body namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" use="literal"/>
       </output>
     </operation>
+    <operation name="bookItinerary">
+      <soap:operation style="rpc"/>
+      <input name="input3">
+        <soap:body namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" use="literal"/>
+      </input>
+      <output name="output3">
+        <soap:body namespace="http://j2ee.netbeans.org/wsdl/TravelGoodBPEL/src/travelGoodBPEL" use="literal"/>
+      </output>
+    </operation>
   </binding>
   <service name="travelGoodBPELService">
     <port binding="tns:travelGoodBPELBinding" name="travelGoodBPELPort">
-      <soap:address location="http://macbook-pro.eduroam.wireless.dtu.dk:9080/travelGoodBPELService/travelGoodBPELPort"/>
+      <soap:address location="http://anderss-air.eduroam.wireless.dtu.dk:9080/travelGoodBPELService/travelGoodBPELPort"/>
     </port>
   </service>
     <plnk:partnerLinkType name="travelGoodBPEL">
@@ -108,4 +132,6 @@ A partner link type characterizes the conversational relationship between two se
     <vprop:propertyAlias messageType="tns:createItinerayResponse" part="createItinerary_resp" propertyName="tns:ClientIdentifier"/>
     <vprop:propertyAlias messageType="tns:getFlightsRequest" part="itineraryID_getFlights_req" propertyName="tns:ClientIdentifier"/>
     <vprop:propertyAlias messageType="tns:getFlightsResponse" part="itineraryID_getFlights_resp" propertyName="tns:ClientIdentifier"/>
+    <vprop:propertyAlias messageType="tns:bookItineraryRequest" part="itineraryID_bookItinerary_req" propertyName="tns:ClientIdentifier"/>
+    <vprop:propertyAlias messageType="tns:bookItineraryResponse" part="itineraryID_bookItinerary_resp" propertyName="tns:ClientIdentifier"/>
 </definitions>
