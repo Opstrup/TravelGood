@@ -1,4 +1,4 @@
-package ws.rs;
+package ws.rs.data;
 
 import airline.ws.FlightInformation;
 import hotel.ws.HotelInformation;

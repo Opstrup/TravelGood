@@ -1,6 +1,6 @@
-package ws.rs;
+package ws.rs.resource;
 
-import ws.rs.DateParser;
+import ws.rs.data.util.DateParser;
 import hotel.ws.HotelInformation;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

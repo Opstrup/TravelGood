@@ -1,5 +1,6 @@
-package ws.rs;
+package ws.rs.resource;
 
+import ws.rs.data.util.DateParser;
 import airline.ws.FlightInformation;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;

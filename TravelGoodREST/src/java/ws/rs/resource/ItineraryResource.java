@@ -1,5 +1,6 @@
-package ws.rs;
+package ws.rs.resource;
 
+import ws.rs.data.Itinerary;
 import airline.ws.Exception_Exception;
 import airline.ws.FlightInformation;
 import hotel.ws.CreditCardFaultMessage;
@@ -15,7 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
-import ws.rs.HotelResource;
+import ws.rs.resource.HotelResource;
 
 @Path("itineraries")
 public class ItineraryResource {
