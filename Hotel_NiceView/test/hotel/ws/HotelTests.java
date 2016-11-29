@@ -78,7 +78,7 @@ public class HotelTests {
        boolean res = hm.bookHotel(hotelWithoutCreditGuarantee.getBookingNumber(),ccInfo);
     }
        
-    @Test (expected=bankservice.ws.CreditCardFaultMessage.class) 
+    @Test (expected=hotel.ws.exception.HotelBookException.class) 
     public void bookHotelTest2() throws bankservice.ws.CreditCardFaultMessage, HotelBookException{
        setDates(2016, 11, 28, 2016, 12, 4);
        List<HotelInformation> result = hm.getHotels("Copenhagen", arrivalDate, departureDate);

@@ -49,7 +49,7 @@ public class NiceViewTest {
         for(niceview.ws.HotelInformation hotelInfo: results){
             if(!hotelInfo.getHotel().isCreditCardNeeded()){
 
-                assertEquals("Unconfirmed", hotelInfo.getStatus());
+                assertEquals("UNCONFIRMED", hotelInfo.getStatus());
                 
                 niceview.ws.CreditCardInfoType ccInfo = new niceview.ws.CreditCardInfoType();
                 niceview.ws.CreditCardInfoType.ExpirationDate expDate = new niceview.ws.CreditCardInfoType.ExpirationDate();
