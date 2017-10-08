@@ -72,26 +72,28 @@ public class BookedResource {
         for(Itinerary itinerary: itineraryDb)   
             if(itinerary.ID.equals(id) && itinerary.getStatus() == Itinerary.BookingStatus.UNCONFIRMED){
                 try{
-                    for(HotelInformation hotelInfo: itinerary.hotels)
-                        if(bookHotel(hotelInfo.getBookingNumber(), ccInfo))
-                            hotelInfo.setStatus(hotel.ws.BookingStatus.BOOKED);
-
                     for(FlightInformation flightInfo : itinerary.flights)
                         if(bookFlight(flightInfo.getBookingNumber(), ccInfoFast))
                             flightInfo.setStatus(airline.ws.BookingStatus.BOOKED);
 
+                    for(HotelInformation hotelInfo: itinerary.hotels)
+                        if(bookHotel(hotelInfo.getBookingNumber(), ccInfo))
+                            hotelInfo.setStatus(hotel.ws.BookingStatus.BOOKED);
+                    
                 }catch(FlightBookException_Exception | HotelBookException_Exception e){
                     cancelBookings(itinerary, ccInfoFast);
+                    bookedItineraries.add(itinerary);
                     //booking failed, cancellations successful
                     throw new InternalServerErrorException(Response.
                         status(Response.Status.INTERNAL_SERVER_ERROR).
                         entity("Booking of the itinerary has failed. All succedeed bookings have been successfully cancelled.").
                         build());
+                    
                 }
                 
                 itinerary.setStatus(Itinerary.BookingStatus.BOOKED);
                 Itinerary booking = itinerary;
-                itineraryDb.remove(itinerary);
+                //itineraryDb.remove(itinerary);
                 bookedItineraries.add(booking);
                 
                 ItineraryRepresentation itRep = new ItineraryRepresentation();

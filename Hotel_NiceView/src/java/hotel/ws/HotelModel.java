@@ -39,14 +39,14 @@ public class HotelModel {
                 if(hotelInfo.getHotel().getAddress().getCity().equals("BookingFailure"))
                         throw new HotelBookException("Booking of hotel failed by design");
                 
-                if(hotelInfo.getHotel().isCreditCardNeeded()){
-                    
-                    try{
-                        validateCreditCard(7, ccInfo, hotelInfo.getPriceForStay());
-                    } catch(bankservice.ws.CreditCardFaultMessage e){
-                        throw new HotelBookException("Validation of credit card failed!");
-                    }    
-                }
+//                if(hotelInfo.getHotel().isCreditCardNeeded()){
+//                    
+//                    try{
+//                        validateCreditCard(7, ccInfo, hotelInfo.getPriceForStay());
+//                    } catch(bankservice.ws.CreditCardFaultMessage e){
+//                        throw new HotelBookException("Validation of credit card failed!");
+//                    }    
+//                }
                 hotelInfo.setStatus(HotelInformation.BookingStatus.BOOKED);
                 return true;
             }

@@ -77,7 +77,7 @@ public class ItineraryResource {
     @DELETE
     @Path("/{itineraryId}")
     @Produces("application/itinerary+json")
-    public List<ItineraryRepresentation> cancelPlannedItinerary(
+    public ItineraryRepresentation cancelPlannedItinerary(
             Itinerary ignored,
             @PathParam("itineraryId") String id){
         Itinerary itineraryToBeRemoved = null;
@@ -93,16 +93,12 @@ public class ItineraryResource {
                entity("Id is not valid").
                build());
         
-        itineraryDb.remove(itineraryToBeRemoved);
+        itineraryToBeRemoved.setStatus(Itinerary.BookingStatus.CANCELLED);
+//        itineraryDb.remove(itineraryToBeRemoved);
         
-        List<ItineraryRepresentation> itReps = new ArrayList<>();
-        for(Itinerary itinerary: itineraryDb){
-            ItineraryRepresentation itRep = new ItineraryRepresentation();
-            itRep.setItinerary(itinerary);
-            itReps.add(itRep);
-            //links
-        }
-        return itReps;
+        ItineraryRepresentation itRep = new ItineraryRepresentation();
+        itRep.setItinerary(itineraryToBeRemoved);
+        return itRep;
     }
    
     @PUT

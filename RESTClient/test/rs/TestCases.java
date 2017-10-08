@@ -16,6 +16,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -33,6 +34,17 @@ public class TestCases {
     
     @Before
     public void reset_itineraries_and_bookings(){
+        itinerariesTarget.path("/reset")
+                .request()
+                .put(Entity.entity("reset", "application/json"));
+        
+        bookingsTarget.path("/reset")
+                .request()
+                .put(Entity.entity("reset", "application/json"));
+    }
+    
+    @After
+    public void reset_itineraries_and_bookings_post(){
         itinerariesTarget.path("/reset")
                 .request()
                 .put(Entity.entity("reset", "application/json"));
@@ -60,7 +72,7 @@ public class TestCases {
         updated = addFlightToItinerary(itineraryID, flightID);
         //add third flight
         flightInfos = searchFlights("Copenhagen", "Turin");
-        flightID = valueOf(flightInfos.get(2).getBookingNumber());
+        flightID = valueOf(flightInfos.get(0).getBookingNumber());
         updated = addFlightToItinerary(itineraryID, flightID);  
         //add second hotel
         hotelInfos = searchHotels("Copenhagen");
@@ -82,7 +94,7 @@ public class TestCases {
         String flightID = valueOf(flightInfos.get(0).getBookingNumber());
         ItineraryRepresentation updated = addFlightToItinerary(itineraryID, flightID);
         //cancel
-        ItineraryRepresentation canceled = cancelItinerary(itineraryID);
+        ItineraryRepresentation canceled = cancelPlannedItinerary(itineraryID);
         assertEquals(canceled.getItinerary().getStatus(), data.Itinerary.BookingStatus.CANCELLED);
     }
     
@@ -117,10 +129,10 @@ public class TestCases {
         //check bookings
         ItineraryRepresentation cancelled = getBooking(itineraryID);
         List <FlightInformation> flights = cancelled.getItinerary().getFlights();
-        assertEquals(airline.ws.BookingStatus.CANCELLED, flights.get(0).getBookingStatus());
-        assertEquals(airline.ws.BookingStatus.UNCONFIRMED, flights.get(1).getBookingStatus());
+        assertEquals(airline.ws.BookingStatus.CANCELLED, flights.get(0).getStatus());
+        assertEquals(airline.ws.BookingStatus.UNCONFIRMED, flights.get(1).getStatus());
         List<HotelInformation> hotels = cancelled.getItinerary().getHotels();
-        assertEquals(dk.dtu.imm.fastmoney.BookingStatus.UNCONFIRMED, hotels.get(1).getStatus());
+        assertEquals(dk.dtu.imm.fastmoney.BookingStatus.UNCONFIRMED, hotels.get(0).getStatus());
     }
     
     @Test
@@ -142,16 +154,16 @@ public class TestCases {
         //book
         ItineraryRepresentation booked = bookItinerary(itineraryID);
         //check confirmed status
-        for(FlightInformation flights : updated.getItinerary().getFlights())
-            assertEquals(airline.ws.BookingStatus.BOOKED,flights.getBookingStatus());
-        for(HotelInformation hotels : updated.getItinerary().getHotels())
+        for(FlightInformation flights : booked.getItinerary().getFlights())
+            assertEquals(airline.ws.BookingStatus.BOOKED,flights.getStatus());
+        for(HotelInformation hotels : booked.getItinerary().getHotels())
             assertEquals(dk.dtu.imm.fastmoney.BookingStatus.BOOKED,hotels.getStatus());
         //cancel
-        ItineraryRepresentation cancelled = cancelItinerary(itineraryID);
+        ItineraryRepresentation cancelled = cancelBookedItinerary(itineraryID);
         //check cancelled status
-        for(FlightInformation flights : updated.getItinerary().getFlights())
-            assertEquals(airline.ws.BookingStatus.CANCELLED,flights.getBookingStatus());
-        for(HotelInformation hotels : updated.getItinerary().getHotels())
+        for(FlightInformation flights : cancelled.getItinerary().getFlights())
+            assertEquals(airline.ws.BookingStatus.CANCELLED,flights.getStatus());
+        for(HotelInformation hotels : cancelled.getItinerary().getHotels())
             assertEquals(dk.dtu.imm.fastmoney.BookingStatus.CANCELLED,hotels.getStatus());
     }
     
@@ -174,24 +186,24 @@ public class TestCases {
         //book
         ItineraryRepresentation booked = bookItinerary(itineraryID);
         //check confirmed status
-        for(FlightInformation flights : updated.getItinerary().getFlights())
-            assertEquals(airline.ws.BookingStatus.BOOKED,flights.getBookingStatus());
-        for(HotelInformation hotels : updated.getItinerary().getHotels())
+        for(FlightInformation flights : booked.getItinerary().getFlights())
+            assertEquals(airline.ws.BookingStatus.BOOKED,flights.getStatus());
+        for(HotelInformation hotels : booked.getItinerary().getHotels())
             assertEquals(dk.dtu.imm.fastmoney.BookingStatus.BOOKED,hotels.getStatus());
         //cancel
         ItineraryRepresentation cancelled;
         try{
-            cancelled = cancelItinerary(itineraryID);
+            cancelled = cancelBookedItinerary(itineraryID);
         } catch(Exception e){
             assertTrue(e instanceof InternalServerErrorException);
         }
         //check bookings
         ItineraryRepresentation failedCancel = getBooking(itineraryID);
         List <FlightInformation> flights = failedCancel.getItinerary().getFlights();
-        assertEquals(airline.ws.BookingStatus.CANCELLED, flights.get(0).getBookingStatus());
-        assertEquals(airline.ws.BookingStatus.BOOKED, flights.get(1).getBookingStatus());
+        assertEquals(airline.ws.BookingStatus.CANCELLED, flights.get(0).getStatus());
+        assertEquals(airline.ws.BookingStatus.BOOKED, flights.get(1).getStatus());
         List<HotelInformation> hotels = failedCancel.getItinerary().getHotels();
-        assertEquals(dk.dtu.imm.fastmoney.BookingStatus.CANCELLED, hotels.get(1).getStatus());
+        assertEquals(dk.dtu.imm.fastmoney.BookingStatus.CANCELLED, hotels.get(0).getStatus());
     }
     
     private ItineraryRepresentation createItinerary(){
@@ -203,6 +215,13 @@ public class TestCases {
     
     private ItineraryRepresentation getBooking(String itineraryID){
         return bookingsTarget.path("/" + itineraryID)
+                    .request()
+                    .accept("application/itinerary+json")
+                    .get(ItineraryRepresentation.class);
+    }
+    
+    private ItineraryRepresentation getItinerary(String itineraryID){
+        return itinerariesTarget.path("/" + itineraryID)
                     .request()
                     .accept("application/itinerary+json")
                     .get(ItineraryRepresentation.class);
@@ -250,12 +269,23 @@ public class TestCases {
                                         .post(Entity.entity(new Itinerary("ignored"), "application/itinerary+json"), ItineraryRepresentation.class);
     }
     
-    private ItineraryRepresentation cancelItinerary(String itineraryID){
+    private ItineraryRepresentation cancelBookedItinerary(String itineraryID){
         return bookingsTarget.path("/"+itineraryID)
                                         .queryParam("name", "Tobiasen Inge")
                                         .queryParam("number", "50408823")
                                         .queryParam("expMonth", 9)
                                         .queryParam("expYear", 10)
+                                        .request()
+                                        .accept("application/itinerary+json")
+                                        .delete(ItineraryRepresentation.class);
+    }
+    
+    private ItineraryRepresentation cancelPlannedItinerary(String itineraryID){
+        return itinerariesTarget.path("/"+itineraryID)
+//                                        .queryParam("name", "Tobiasen Inge")
+//                                        .queryParam("number", "50408823")
+//                                        .queryParam("expMonth", 9)
+//                                        .queryParam("expYear", 10)
                                         .request()
                                         .accept("application/itinerary+json")
                                         .delete(ItineraryRepresentation.class);

@@ -49,14 +49,14 @@ public class AirlineModel {
                 if(flightInfo.getFlight().getStartAirport().equals("BookingFailure"))
                     throw new FlightBookException("Booking of flight failed by design");
                 
-                if(flightInfo.getFlight().isCreditCardNeeded()){
-                    try{
-                        validateCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice());
-                        chargeCreditCard(7, ccInfo, bookingNumber, lameDuckAccountType);
-                    } catch(bankservice.ws.CreditCardFaultMessage e){
-                        throw new FlightBookException("Validation of credit card failed!");
-                    }
-                }
+//                if(flightInfo.getFlight().isCreditCardNeeded()){
+//                    try{
+//                        validateCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice());
+//                        chargeCreditCard(7, ccInfo, bookingNumber, lameDuckAccountType);
+//                    } catch(bankservice.ws.CreditCardFaultMessage e){
+//                        throw new FlightBookException("Validation of credit card failed!");
+//                    }
+//                }
                 flightInfo.setStatus(FlightInformation.BookingStatus.BOOKED);
                 return true;
             }
@@ -71,11 +71,11 @@ public class AirlineModel {
                 if(flightInfo.getFlight().getStartAirport().equals("CancelingFailure"))
                     throw new FlightCancelException("Cancellation of flight failed by design");
                 
-                try{
-                    refundCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice()/2, lameDuckAccountType);
-                } catch(bankservice.ws.CreditCardFaultMessage e){
-                    throw new FlightCancelException("Refund of CC failed!");
-                }
+//                try{
+//                    refundCreditCard(7, ccInfo, flightInfo.getFlight().getFlightPrice()/2, lameDuckAccountType);
+//                } catch(bankservice.ws.CreditCardFaultMessage e){
+//                    throw new FlightCancelException("Refund of CC failed!");
+//                }
                 
                 flightInfo.setStatus(FlightInformation.BookingStatus.CANCELLED);
                 return true;

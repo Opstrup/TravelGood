@@ -50,6 +50,7 @@ public class TestItineraryResource {
         assertNotNull(newItinerary);
     }
     
+    
     @Test
     public void should_link_to_hotels(){
         ItineraryRepresentation newItinerary = createItinerary();
